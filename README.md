@@ -42,7 +42,9 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 
 ## 📄 Licença
 
-A licença do projeto ainda está em definição com a professora orientadora. Até que ela seja confirmada e incluída neste repositório, não considere o projeto liberado para reutilização ou redistribuição.
+O código e os materiais originais do projeto PCEDUC neste repositório são disponibilizados sob a [Apache License 2.0](LICENSE). Você pode usar, modificar e redistribuir esse conteúdo, inclusive para fins comerciais, desde que mantenha uma cópia da licença e os avisos de autoria e indique as alterações feitas.
+
+A licença não concede permissão para usar marcas ou nomes do projeto como se houvesse endosso da equipe. Materiais de terceiros podem estar sujeitos a licenças próprias e não são automaticamente cobertos pela licença deste projeto.
 
 ## 💬 Contato
 
