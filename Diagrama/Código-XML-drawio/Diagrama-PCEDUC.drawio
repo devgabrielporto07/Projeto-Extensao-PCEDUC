@@ -1,0 +1,103 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="ArKTbxqm6VGakIlV3FqB">
+    <mxGraphModel dx="1414" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;PCEDUC — Diagrama de Casos de Uso&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="400" x="350" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;strokeColor=none;fillColor=none;fontSize=10;fontColor=#666666;" value="Linha contínua = associação ator/caso de uso - Linha tracejada = relação entre casos de uso (rótulo indica include/extend)" vertex="1">
+          <mxGeometry height="20" width="600" x="250" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="line" edge="1" parent="1" style="endArrow=none;html=1;rounded=0;strokeColor=#B3B3B3;">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="40" y="80" as="sourcePoint" />
+            <mxPoint x="1060" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" value="&lt;b&gt;Usuário&lt;/b&gt;" vertex="1">
+          <mxGeometry height="80" width="40" x="60" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="uc1" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" value="&lt;b&gt;Estudar trilha de&lt;br&gt;aprendizado&lt;/b&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="240" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="uc2" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" value="&lt;b&gt;Acompanhar progresso&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="uc3" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" value="&lt;b&gt;Gerenciar cadastro&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="uc4" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" value="&lt;b&gt;Consultar conteúdo&lt;br&gt;de apoio&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="240" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_val" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Validar respostas" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_xp" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Conceder XP por acerto" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_reg" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Registrar progresso&lt;br&gt;do usuário" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_rev" parent="1" style="ellipse;whiteSpace=wrap;html=1;dashed=1;" value="Revisar erros" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_pec" parent="1" style="ellipse;whiteSpace=wrap;html=1;dashed=1;" value="Conceder peças&lt;br&gt;colecionáveis" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_feed" parent="1" style="ellipse;whiteSpace=wrap;html=1;dashed=1;" value="Exibir feedback do&lt;br&gt;mascote" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_pc" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Exibir PC virtual&lt;br&gt;montado" vertex="1">
+          <mxGeometry height="60" width="140" x="540" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_calc" parent="1" style="ellipse;whiteSpace=wrap;html=1;" value="Calcular nível do usuário" vertex="1">
+          <mxGeometry height="60" width="150" x="800" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_rara" parent="1" style="ellipse;whiteSpace=wrap;html=1;dashed=1;" value="Conceder peça rara&lt;br&gt;(&quot;baú&quot;)" vertex="1">
+          <mxGeometry height="60" width="150" x="800" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="e_a1" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_a2" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_a3" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_a4" edge="1" parent="1" source="actor1" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="uc4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc1" edge="1" parent="1" source="uc1" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc_val" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc2" edge="1" parent="1" source="uc1" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc_xp" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc3" edge="1" parent="1" source="uc1" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc_reg" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ext1" edge="1" parent="1" source="uc_rev" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc1" value="«extend»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ext2" edge="1" parent="1" source="uc_pec" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc1" value="«extend»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ext3" edge="1" parent="1" source="uc_feed" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc1" value="«extend»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc4" edge="1" parent="1" source="uc_xp" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc_calc" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ext4" edge="1" parent="1" source="uc_rara" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc_pec" value="«extend»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_inc5" edge="1" parent="1" source="uc2" style="endArrow=open;endSize=10;dashed=1;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=none;" target="uc_pc" value="«include»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
