@@ -1,0 +1,16 @@
+# Agentes e configuração local do Claude Code (não versionar)
+.claude/
+CLAUDE.md
+
+# Arquivos de sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+
+# Ferramentas locais (ex.: npx serve)
+node_modules/
+*.log
