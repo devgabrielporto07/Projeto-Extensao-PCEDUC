@@ -253,7 +253,8 @@ body {
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--pc-largura-painel);
-    grid-template-rows: repeat(10, auto);
+    /* Uma linha por filho do <main> fora o painel (faixa + 10 seções): o painel cobre todas com 1 / -1 */
+    grid-template-rows: repeat(11, auto);
     column-gap: var(--pc-espaco-5);
     align-items: start;
   }

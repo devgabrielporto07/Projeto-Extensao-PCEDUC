@@ -1,31 +1,15 @@
 /*
   PCEDUC — trilha.css
-  Trilha em zigue-zague da seção "O que se aprende": nós 3D, baú da peça rara, balões e divisor.
-  Separada de components.css para manter cada arquivo abaixo de ~600 linhas (PADROES §1).
+  Trilha em zigue-zague da seção "O que se aprende": nós 3D, baú da peça rara (botão), balões e divisor.
+  O mascote da trilha (posição e troca de pose) fica em mascote.css. Separada de components.css
+  para manter cada arquivo abaixo de 600 linhas (PADROES §1).
 */
 
 /* ===== Trilha ===== */
 .pc-trilha {
   --pc-passo: clamp(2.75rem, 11vw, 4.5rem);
-  --pc-tamanho-mascote: clamp(6rem, 26vw, 10rem);
   position: relative;
   padding-block: var(--pc-espaco-3);
-}
-
-/* Mascote decorativo ao lado dos nós que desviam para a direita (como o personagem da referência) */
-.pc-trilha__mascote {
-  position: absolute;
-  top: 8rem;
-  left: max(0px, calc(50% - 1.7 * var(--pc-passo) - var(--pc-tamanho-mascote)));
-  width: var(--pc-tamanho-mascote);
-  height: var(--pc-tamanho-mascote);
-  object-fit: cover;
-  pointer-events: none;
-}
-
-/* Sem JS os balões ficam abertos e cobririam o mascote (decorativo): ele só aparece com a trilha interativa */
-.pc-trilha:not(.pc-trilha--interativa) .pc-trilha__mascote {
-  display: none;
 }
 
 .pc-trilha__lista {
@@ -130,9 +114,36 @@
   text-align: center;
 }
 
+/* ===== Baú da peça rara (RF09): botão que abre balão amarelo, como os nós ===== */
+.pc-trilha__bau {
+  --pc-no-cor: var(--pc-amarelo);
+  --pc-no-sombra: var(--pc-cinza);
+  --pc-no-anel: var(--pc-anel-amarelo);
+}
+
 .pc-bau {
   width: 4rem;
   height: 4rem;
+  border-radius: var(--pc-raio-pequeno);
+  transition: transform var(--pc-transicao);
+}
+
+.pc-no--bau {
+  gap: 0;
+}
+
+.pc-no--bau:hover .pc-bau {
+  transform: translateY(-4px);
+}
+
+.pc-no--bau:active .pc-bau {
+  transform: translateY(2px);
+}
+
+/* Aberto: anel como nos nós (estado visível além do balão) */
+.pc-no--bau[aria-expanded="true"] .pc-bau {
+  outline: 4px solid var(--pc-no-anel);
+  outline-offset: 4px;
 }
 
 .pc-bau__legenda {

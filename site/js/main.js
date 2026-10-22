@@ -1,7 +1,8 @@
 /*
   PCEDUC — main.js
   Comportamentos da página: tema claro/escuro, navegação ativa (menu, abas e faixa), trilha com balões,
-  barras das missões, revelar ao rolar, galeria, download e ano do rodapé.
+  mascote Benchware (entrada e troca de pose), mini quiz, barras das missões, revelar ao rolar, galeria,
+  download e ano do rodapé.
   Dados editáveis ficam no topo (DEC007, DEC008). Sem bibliotecas e sem innerHTML.
 */
 (function () {
@@ -18,6 +19,7 @@
   const TELAS = [];
 
   const PASTA_TELAS = 'assets/telas/';
+  const PASTA_MASCOTE = 'assets/img/mascote/';
   const movimentoReduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ===== Rolagem: um único listener passivo, agrupado por requestAnimationFrame =====
@@ -230,6 +232,83 @@
     });
   }
 
+  // ===== Mascote: poses (PNG 320×320) =====
+  function caminhoDaPose(pose) {
+    return PASTA_MASCOTE + pose + '.png';
+  }
+
+  // Baixa as poses de reação antes do clique, para a troca não piscar
+  function preCarregarPoses(poses) {
+    poses.forEach(function (pose) {
+      const imagem = new Image();
+      imagem.src = caminhoDaPose(pose);
+    });
+  }
+
+  // Crossfade + pulinho: uma cópia da pose atual some por cima enquanto a nova entra (CSS)
+  function trocarPose(imagem, pose) {
+    const caminho = caminhoDaPose(pose);
+    if (!imagem || imagem.getAttribute('src') === caminho) {
+      return;
+    }
+    if (movimentoReduzido) {
+      imagem.setAttribute('src', caminho);
+      return;
+    }
+
+    const caixa = imagem.parentElement;
+    caixa.querySelectorAll('.pc-mascote__fantasma').forEach(function (antigo) {
+      antigo.remove();
+    });
+
+    const fantasma = imagem.cloneNode(false);
+    fantasma.classList.remove('is-trocando');
+    fantasma.classList.add('pc-mascote__fantasma');
+    fantasma.loading = 'eager';
+    Array.from(fantasma.attributes).forEach(function (atributo) {
+      if (atributo.name.indexOf('data-') === 0) {
+        fantasma.removeAttribute(atributo.name);
+      }
+    });
+    caixa.appendChild(fantasma);
+
+    imagem.setAttribute('src', caminho);
+    // Reinicia a animação mesmo se a troca anterior ainda não terminou
+    imagem.classList.remove('is-trocando');
+    void imagem.offsetWidth;
+    imagem.classList.add('is-trocando');
+
+    const remover = function () {
+      fantasma.remove();
+    };
+    fantasma.addEventListener('animationend', remover, { once: true });
+    window.setTimeout(remover, 500);
+  }
+
+  // ===== Mascote: "pula" para dentro quando a seção entra na tela =====
+  function configurarMascotes() {
+    const mascotes = document.querySelectorAll('.pc-mascote');
+    // Sem suporte ou com movimento reduzido: os mascotes ficam visíveis, parados no lugar
+    if (movimentoReduzido || !('IntersectionObserver' in window) || mascotes.length === 0) {
+      return;
+    }
+
+    document.documentElement.classList.add('pc-mascote-ativo');
+
+    const observador = new IntersectionObserver(function (entradas, obs) {
+      entradas.forEach(function (entrada) {
+        if (entrada.isIntersecting) {
+          entrada.target.classList.add('is-visivel');
+          obs.unobserve(entrada.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.3 });
+
+    mascotes.forEach(function (mascote) {
+      observador.observe(mascote);
+    });
+  }
+
   // ===== Trilha: nós abrem balões com a descrição da peça =====
   function configurarTrilha() {
     const trilha = document.querySelector('.pc-trilha');
@@ -238,7 +317,18 @@
     }
 
     const botoes = Array.from(trilha.querySelectorAll('.pc-no'));
+    const mascote = trilha.querySelector('[data-pc-mascote-trilha]');
     let aberto = null;
+
+    if (mascote) {
+      preCarregarPoses(['trofeu']);
+    }
+
+    // RF09: com o baú da peça rara aberto, o Benchware comemora com o troféu
+    function atualizarMascote() {
+      const bauAberto = aberto !== null && aberto.classList.contains('pc-no--bau');
+      trocarPose(mascote, bauAberto ? 'trofeu' : 'construindo');
+    }
 
     function balaoDe(botao) {
       return document.getElementById(botao.getAttribute('aria-controls'));
@@ -255,6 +345,7 @@
       }
       botao.setAttribute('aria-expanded', 'false');
       aberto = null;
+      atualizarMascote();
       if (devolverFoco) {
         botao.focus();
       }
@@ -269,6 +360,7 @@
       balao.classList.add('is-aberto');
       botao.setAttribute('aria-expanded', 'true');
       aberto = botao;
+      atualizarMascote();
     }
 
     botoes.forEach(function (botao) {
@@ -297,6 +389,95 @@
 
     // Só agora os balões passam a ficar escondidos (se algo acima falhar, continuam visíveis)
     trilha.classList.add('pc-trilha--interativa');
+  }
+
+  // ===== Mini quiz "Experimente": troca o <details> pelas opções em botões =====
+  const QUIZ_ACERTO = 'Isso aí! +XP';
+  const QUIZ_EXPLICACAO = 'O processador é o cérebro do computador: ele executa as instruções.';
+
+  function configurarQuiz() {
+    const quiz = document.querySelector('[data-pc-quiz]');
+    if (!quiz) {
+      return;
+    }
+
+    const estatico = quiz.querySelector('[data-pc-quiz-estatico]');
+    const interativo = quiz.querySelector('[data-pc-quiz-interativo]');
+    const opcoes = Array.from(quiz.querySelectorAll('[data-pc-quiz-opcao]'));
+    const feedback = quiz.querySelector('[data-pc-quiz-feedback]');
+    const tentar = quiz.querySelector('[data-pc-quiz-tentar]');
+    const mascote = document.querySelector('[data-pc-quiz-mascote]');
+
+    // Falta alguma peça: o modo sem JS (pergunta + <details>) continua valendo
+    if (!interativo || !feedback || !tentar || opcoes.length === 0) {
+      return;
+    }
+
+    preCarregarPoses(['trofeu', 'errado']);
+
+    function ehCorreta(opcao) {
+      return opcao.getAttribute('data-pc-quiz-opcao') === 'correta';
+    }
+
+    // Estado com ícone (CSS) e rótulo em texto: a cor nunca é o único sinal
+    function marcar(opcao, estado, rotulo) {
+      opcao.setAttribute('data-pc-estado', estado);
+      const status = opcao.querySelector('[data-pc-quiz-status]');
+      if (status) {
+        status.textContent = rotulo;
+      }
+    }
+
+    function responder(escolhida) {
+      const acertou = ehCorreta(escolhida);
+
+      opcoes.forEach(function (opcao) {
+        opcao.disabled = true;
+        if (ehCorreta(opcao)) {
+          marcar(opcao, 'correta', 'Correta');
+        } else if (opcao === escolhida) {
+          marcar(opcao, 'errada', 'Sua resposta');
+        }
+      });
+
+      feedback.setAttribute('data-pc-estado', acertou ? 'acerto' : 'erro');
+      feedback.textContent = acertou ? QUIZ_ACERTO : QUIZ_EXPLICACAO;
+      trocarPose(mascote, acertou ? 'trofeu' : 'errado');
+
+      // A opção clicada ficou desabilitada e perderia o foco: ele vai para "Tentar de novo"
+      // (o feedback é anunciado pela região aria-live)
+      tentar.hidden = false;
+      tentar.focus();
+    }
+
+    function reiniciar() {
+      opcoes.forEach(function (opcao) {
+        opcao.disabled = false;
+        opcao.removeAttribute('data-pc-estado');
+        const status = opcao.querySelector('[data-pc-quiz-status]');
+        if (status) {
+          status.textContent = '';
+        }
+      });
+      feedback.removeAttribute('data-pc-estado');
+      feedback.textContent = '';
+      trocarPose(mascote, 'duvida');
+      tentar.hidden = true;
+      opcoes[0].focus();
+    }
+
+    opcoes.forEach(function (opcao) {
+      opcao.addEventListener('click', function () {
+        responder(opcao);
+      });
+    });
+    tentar.addEventListener('click', reiniciar);
+
+    // Só agora troca o modo sem JS pelo interativo (se algo acima falhar, o <details> continua)
+    if (estatico) {
+      estatico.hidden = true;
+    }
+    interativo.hidden = false;
   }
 
   // ===== Missões: barras enchem com a rolagem (cada missão = 1/4 do percurso) =====
@@ -551,6 +732,9 @@
       configurarTema,
       configurarNavegacao,
       configurarTrilha,
+      configurarQuiz,
+      // Depois da trilha: o mascote dela só fica visível (observável) com a trilha interativa
+      configurarMascotes,
       configurarMissoes,
       revelarAoRolar,
       configurarDownloads,

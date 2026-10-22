@@ -55,6 +55,8 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/trilha.css">
+  <link rel="stylesheet" href="css/mascote.css">
+  <link rel="stylesheet" href="css/quiz.css">
 
   <script src="js/main.js" defer></script>
 </head>
@@ -76,6 +78,9 @@
     <symbol id="i-xp" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
     <symbol id="i-medalha" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M8 3l2.5 6.5M16 3l-2.5 6.5M8 3h8"/><path d="M12 12.5l.8 1.7 1.8.2-1.3 1.2.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.2 1.8-.2z"/></symbol>
     <symbol id="i-peca" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></symbol>
+    <symbol id="i-experimente" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 12l3 3 5-6"/></symbol>
+    <symbol id="i-certo" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-errado" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
     <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
     <symbol id="i-lua" viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z"/></symbol>
     <!-- Baú: o corpo herda fill (amarelo) do <svg>; a fechadura usa currentColor (preto) -->
@@ -97,6 +102,7 @@
         <li><a class="pc-lateral__link" href="#o-que-e"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-oque"/></svg><span class="pc-lateral__rotulo">O que é</span></a></li>
         <li><a class="pc-lateral__link" href="#como-funciona"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-como"/></svg><span class="pc-lateral__rotulo">Como funciona</span></a></li>
         <li><a class="pc-lateral__link" href="#o-que-se-aprende"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-chip"/></svg><span class="pc-lateral__rotulo">O que se aprende</span></a></li>
+        <li><a class="pc-lateral__link" href="#experimente"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-experimente"/></svg><span class="pc-lateral__rotulo">Experimente</span></a></li>
         <li><a class="pc-lateral__link" href="#para-quem"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-quem"/></svg><span class="pc-lateral__rotulo">Para quem</span></a></li>
         <li><a class="pc-lateral__link" href="#telas"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-telas"/></svg><span class="pc-lateral__rotulo">Telas</span></a></li>
         <li><a class="pc-lateral__link" href="#equipe"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-equipe"/></svg><span class="pc-lateral__rotulo">Equipe</span></a></li>
@@ -138,6 +144,7 @@
       <!-- ===== 2. Por que ensinar hardware? (F002) ===== -->
       <section class="pc-secao" id="por-que" aria-labelledby="titulo-por-que">
         <div class="pc-card pc-por-que pc-revelar">
+          <span class="pc-mascote pc-mascote--centro"><img class="pc-mascote__img" src="assets/img/mascote/sobrecarregado.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
           <h2 class="pc-secao__titulo" id="titulo-por-que">Por que ensinar hardware?</h2>
           <p class="pc-por-que__destaque">Usamos computadores todos os dias, mas poucos sabem como eles funcionam por dentro.</p>
           <p class="pc-por-que__texto">O PCEDUC transforma essa <span class="pc-sublinhado">curiosidade em aprendizado</span>, passo a passo e sem complicação.</p>
@@ -146,7 +153,10 @@
 
       <!-- ===== 3. O que é o PCEDUC (F003) ===== -->
       <section class="pc-secao" id="o-que-e" aria-labelledby="titulo-o-que-e">
-        <h2 class="pc-secao__titulo" id="titulo-o-que-e">O que é o PCEDUC?</h2>
+        <div class="pc-secao__cabeca">
+          <h2 class="pc-secao__titulo" id="titulo-o-que-e">O que é o PCEDUC?</h2>
+          <span class="pc-mascote"><img class="pc-mascote__img" src="assets/img/mascote/jogando.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
+        </div>
         <div class="pc-grade pc-grade--2">
           <article class="pc-card pc-revelar">
             <h3 class="pc-card__titulo">Um app que ensina jogando</h3>
@@ -161,7 +171,10 @@
 
       <!-- ===== 4. Como funciona (F004) ===== -->
       <section class="pc-secao" id="como-funciona" aria-labelledby="titulo-como-funciona">
-        <h2 class="pc-secao__titulo" id="titulo-como-funciona">Como funciona</h2>
+        <div class="pc-secao__cabeca">
+          <h2 class="pc-secao__titulo" id="titulo-como-funciona">Como funciona</h2>
+          <span class="pc-mascote"><img class="pc-mascote__img" src="assets/img/mascote/correndo.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
+        </div>
         <!-- Lista ordenada: a sequência dos passos tem significado (trilha → XP → conquistas → peças) -->
         <ol class="pc-lista-limpa pc-passos">
           <li class="pc-card pc-passo pc-revelar">
@@ -255,7 +268,8 @@
           Com JS (classe "js" no <html>), o nó vira um botão que abre e fecha o balão.
         -->
         <div class="pc-trilha">
-          <img class="pc-trilha__mascote" src="assets/img/benchware.png" alt="" width="424" height="236" loading="lazy" decoding="async">
+          <!-- A pose troca para "trofeu" enquanto o balão do baú estiver aberto (main.js) -->
+          <span class="pc-mascote pc-trilha__mascote"><img class="pc-mascote__img" src="assets/img/mascote/construindo.png" alt="" width="320" height="320" loading="lazy" decoding="async" data-pc-mascote-trilha></span>
           <ol class="pc-lista-limpa pc-trilha__lista">
             <li class="pc-trilha__item pc-trilha__item--azul">
               <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-1">
@@ -293,10 +307,16 @@
                 <p class="pc-balao__texto">Gera as imagens exibidas na tela.</p>
               </div>
             </li>
-            <!-- RF09: peça rara como recompensa-surpresa (baú) -->
+            <!-- RF09: peça rara como recompensa-surpresa (baú); abre um balão como os nós -->
             <li class="pc-trilha__item pc-trilha__bau">
-              <svg class="pc-bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
-              <span class="pc-bau__legenda">Peça rara</span>
+              <button class="pc-no pc-no--bau" type="button" aria-expanded="false" aria-controls="pc-balao-bau">
+                <svg class="pc-bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
+                <span class="pc-bau__legenda">Peça rara</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-bau">
+                <h3 class="pc-balao__titulo">Peça rara</h3>
+                <p class="pc-balao__texto">Às vezes, uma peça rara aparece como recompensa-surpresa.</p>
+              </div>
             </li>
             <li class="pc-trilha__item pc-trilha__item--azul">
               <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-4">
@@ -339,10 +359,58 @@
         <p class="pc-divisor">E muito mais, trilha após trilha.</p>
       </section>
 
-      <!-- ===== 6. Para quem é (F006) ===== -->
+      <!-- ===== 6. Experimente — mini quiz no estilo de lição do app ===== -->
+      <section class="pc-secao" id="experimente" aria-labelledby="titulo-experimente">
+        <div class="pc-secao__cabeca">
+          <h2 class="pc-secao__titulo" id="titulo-experimente">Experimente</h2>
+          <!-- Poses: duvida (pergunta), trofeu (acerto), errado (erro) — trocadas pelo main.js -->
+          <span class="pc-mascote"><img class="pc-mascote__img" src="assets/img/mascote/duvida.png" alt="" width="320" height="320" loading="lazy" decoding="async" data-pc-quiz-mascote></span>
+        </div>
+        <!--
+          Sem JS: a pergunta e um <details> com a resposta (funciona em qualquer navegador).
+          Com JS (configurarQuiz), o <details> some e as opções viram botões.
+          Pergunta, resposta e explicação adaptadas do pitch: Processador = "O cérebro que executa as instruções."
+        -->
+        <div class="pc-card pc-quiz" data-pc-quiz>
+          <h3 class="pc-quiz__pergunta" id="pc-quiz-pergunta">Qual peça é o cérebro que executa as instruções?</h3>
+          <details class="pc-quiz__resposta" data-pc-quiz-estatico>
+            <summary>Ver resposta</summary>
+            <p><strong>Processador.</strong> O processador é o cérebro do computador: ele executa as instruções.</p>
+          </details>
+          <div class="pc-quiz__interativo" data-pc-quiz-interativo hidden>
+            <div class="pc-quiz__opcoes" role="group" aria-labelledby="pc-quiz-pergunta">
+              <button class="pc-quiz__opcao" type="button" data-pc-quiz-opcao="correta">
+                <span class="pc-quiz__marca" aria-hidden="true"><svg class="pc-icone pc-quiz__icone pc-quiz__icone--certo" focusable="false"><use href="#i-certo"/></svg><svg class="pc-icone pc-quiz__icone pc-quiz__icone--errado" focusable="false"><use href="#i-errado"/></svg></span>
+                <span class="pc-quiz__texto">Processador</span>
+                <span class="pc-quiz__status" data-pc-quiz-status></span>
+              </button>
+              <button class="pc-quiz__opcao" type="button" data-pc-quiz-opcao>
+                <span class="pc-quiz__marca" aria-hidden="true"><svg class="pc-icone pc-quiz__icone pc-quiz__icone--certo" focusable="false"><use href="#i-certo"/></svg><svg class="pc-icone pc-quiz__icone pc-quiz__icone--errado" focusable="false"><use href="#i-errado"/></svg></span>
+                <span class="pc-quiz__texto">Memória RAM</span>
+                <span class="pc-quiz__status" data-pc-quiz-status></span>
+              </button>
+              <button class="pc-quiz__opcao" type="button" data-pc-quiz-opcao>
+                <span class="pc-quiz__marca" aria-hidden="true"><svg class="pc-icone pc-quiz__icone pc-quiz__icone--certo" focusable="false"><use href="#i-certo"/></svg><svg class="pc-icone pc-quiz__icone pc-quiz__icone--errado" focusable="false"><use href="#i-errado"/></svg></span>
+                <span class="pc-quiz__texto">Fonte de energia</span>
+                <span class="pc-quiz__status" data-pc-quiz-status></span>
+              </button>
+            </div>
+            <!-- A região já existe vazia: o leitor de tela anuncia quando o texto muda -->
+            <p class="pc-quiz__feedback" aria-live="polite" data-pc-quiz-feedback></p>
+            <button class="pc-btn pc-btn--azul pc-quiz__tentar" type="button" data-pc-quiz-tentar hidden>Tentar de novo</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 7. Para quem é (F006) ===== -->
       <section class="pc-secao" id="para-quem" aria-labelledby="titulo-para-quem">
-        <p class="pc-selo">Para quem é</p>
-        <h2 class="pc-secao__titulo" id="titulo-para-quem">Voltado ao ensino médio</h2>
+        <div class="pc-secao__cabeca">
+          <div>
+            <p class="pc-selo">Para quem é</p>
+            <h2 class="pc-secao__titulo" id="titulo-para-quem">Voltado ao ensino médio</h2>
+          </div>
+          <span class="pc-mascote"><img class="pc-mascote__img" src="assets/img/mascote/formado.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
+        </div>
         <p class="pc-secao__intro">O foco são os adolescentes em geral. Crianças e adultos também aprendem de forma entretida, no seu ritmo.</p>
         <ul class="pc-lista-limpa pc-grade pc-grade--3">
           <li class="pc-card pc-revelar">
@@ -360,7 +428,7 @@
         </ul>
       </section>
 
-      <!-- ===== 7. Galeria de telas (F007) ===== -->
+      <!-- ===== 8. Galeria de telas (F007) ===== -->
       <section class="pc-secao" id="telas" aria-labelledby="titulo-telas">
         <h2 class="pc-secao__titulo" id="titulo-telas">Telas do app</h2>
         <!--
@@ -380,9 +448,12 @@
         </p>
       </section>
 
-      <!-- ===== 8. Equipe (F008 / RN004: mesma ordem do README) ===== -->
+      <!-- ===== 9. Equipe (F008 / RN004: mesma ordem do README) ===== -->
       <section class="pc-secao" id="equipe" aria-labelledby="titulo-equipe">
-        <h2 class="pc-secao__titulo" id="titulo-equipe">Equipe</h2>
+        <div class="pc-secao__cabeca">
+          <h2 class="pc-secao__titulo" id="titulo-equipe">Equipe</h2>
+          <span class="pc-mascote"><img class="pc-mascote__img" src="assets/img/mascote/diploma.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
+        </div>
         <ul class="pc-lista-limpa pc-grade pc-grade--2 pc-equipe">
           <li class="pc-card pc-membro pc-revelar">
             <span class="pc-membro__avatar" aria-hidden="true">D</span>
@@ -437,9 +508,10 @@
         </ul>
       </section>
 
-      <!-- ===== 9. Download (F009 / RN001) ===== -->
+      <!-- ===== 10. Download (F009 / RN001) ===== -->
       <section class="pc-secao" id="download" aria-labelledby="titulo-download">
         <div class="pc-card pc-download pc-revelar">
+          <span class="pc-mascote pc-mascote--centro"><img class="pc-mascote__img" src="assets/img/mascote/acenando.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
           <h2 class="pc-secao__titulo" id="titulo-download">Baixar o app</h2>
           <p class="pc-download__texto">A aplicação está em desenvolvimento.</p>
           <!--
@@ -478,7 +550,7 @@
   <nav class="pc-abas" aria-label="Atalhos">
     <ul class="pc-lista-limpa pc-abas__lista">
       <li><a class="pc-abas__link" href="#topo" data-pc-grupo="topo por-que o-que-e como-funciona missoes"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-inicio"/></svg><span>Início</span></a></li>
-      <li><a class="pc-abas__link" href="#o-que-se-aprende" data-pc-grupo="o-que-se-aprende para-quem"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-chip"/></svg><span>Aprender</span></a></li>
+      <li><a class="pc-abas__link" href="#o-que-se-aprende" data-pc-grupo="o-que-se-aprende experimente para-quem"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-chip"/></svg><span>Aprender</span></a></li>
       <li><a class="pc-abas__link" href="#telas" data-pc-grupo="telas"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-telas"/></svg><span>Telas</span></a></li>
       <li><a class="pc-abas__link" href="#equipe" data-pc-grupo="equipe"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-equipe"/></svg><span>Equipe</span></a></li>
       <li><a class="pc-abas__link" href="#download" data-pc-grupo="download"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-baixar"/></svg><span>Baixar</span></a></li>

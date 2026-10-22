@@ -1,0 +1,198 @@
+/*
+  PCEDUC — mascote.css
+  Benchware nas seções: posição (ao lado do título ou centralizado no cartão), mascote da trilha e
+  animações (entrada ao rolar, flutuação, troca de pose, giro no hover). Carregado depois de trilha.css.
+  Poses: PNG 320×320 transparentes em assets/img/mascote/. Com movimento reduzido, nada se mexe.
+*/
+
+/* ===== Tamanho: moderado e igual em todas as seções (menor no celular) ===== */
+.pc-secao {
+  --pc-mascote-tamanho: clamp(6.5rem, 30vw, 8rem);
+}
+
+@media (min-width: 600px) {
+  .pc-secao {
+    --pc-mascote-tamanho: 8.75rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pc-secao {
+    --pc-mascote-tamanho: 9.5rem;
+  }
+}
+
+/* ===== Mascote: invólucro (entrada e flutuação) + imagem (troca de pose e giro) ===== */
+/* Duas camadas para as animações não brigarem pelo mesmo transform */
+.pc-mascote {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: var(--pc-mascote-tamanho, 8rem);
+  aspect-ratio: 1;
+}
+
+.pc-mascote__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Cópia da pose anterior, por cima da nova, que some durante a troca (crossfade) */
+.pc-mascote__fantasma {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ===== Cabeçalho da seção: título (ou bloco do título) à esquerda, mascote à direita ===== */
+.pc-secao__cabeca {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--pc-espaco-3);
+  margin-bottom: var(--pc-espaco-4);
+}
+
+.pc-secao__cabeca > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-secao__cabeca .pc-secao__titulo {
+  margin-bottom: 0;
+}
+
+/* O PNG tem margem transparente embaixo: os pés do mascote ficam perto do conteúdo */
+.pc-secao__cabeca .pc-mascote {
+  margin-bottom: calc(var(--pc-mascote-tamanho) * -0.06);
+}
+
+/* Cartões centralizados (Por quê, Download): mascote acima do título, como no topo */
+.pc-mascote--centro {
+  margin: 0 auto var(--pc-espaco-2);
+}
+
+/* ===== Mascote da trilha (DEC027): ao lado dos nós que desviam para a direita ===== */
+.pc-trilha {
+  --pc-mascote-tamanho: clamp(6.5rem, 28vw, 10.5rem);
+}
+
+.pc-trilha__mascote {
+  position: absolute;
+  top: 8rem;
+  left: max(0px, calc(50% - 1.7 * var(--pc-passo) - var(--pc-mascote-tamanho)));
+}
+
+/* Sem JS os balões ficam abertos e cobririam o mascote (decorativo): ele só aparece com a trilha interativa */
+.pc-trilha:not(.pc-trilha--interativa) .pc-trilha__mascote {
+  display: none;
+}
+
+/* ===== Ritmo: cada seção flutua fora de fase e gira para um lado ===== */
+.pc-secao:nth-of-type(3n + 1) .pc-mascote {
+  --pc-mascote-atraso: -1.2s;
+}
+
+.pc-secao:nth-of-type(3n + 2) .pc-mascote {
+  --pc-mascote-atraso: -2.4s;
+}
+
+.pc-secao:nth-of-type(2n) .pc-mascote {
+  --pc-mascote-giro: -4deg;
+}
+
+/* ===== Animações (só para quem não pediu menos movimento) ===== */
+@media (prefers-reduced-motion: no-preference) {
+  /* Repouso: flutua mesmo sem JS (usa "translate", livre do "transform" da entrada) */
+  .pc-mascote {
+    animation: pc-mascote-flutuar 3.6s ease-in-out var(--pc-mascote-atraso, 0s) infinite;
+  }
+
+  /* Entrada: o main.js põe pc-mascote-ativo no <html> só quando o IntersectionObserver existe */
+  .pc-mascote-ativo .pc-mascote {
+    opacity: 0;
+  }
+
+  /* Pulo com "mola": o cubic-bezier passa de 1 e dá o exagero antes de assentar */
+  .pc-mascote-ativo .pc-mascote.is-visivel {
+    opacity: 1;
+    animation:
+      pc-mascote-entrar 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both,
+      pc-mascote-flutuar 3.6s ease-in-out var(--pc-mascote-atraso, 0s) infinite;
+  }
+
+  .pc-mascote__img {
+    transition: rotate 250ms ease-out;
+  }
+
+  .pc-mascote__img.is-trocando {
+    animation: pc-mascote-pose 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .pc-mascote__fantasma {
+    animation: pc-mascote-sumir 220ms ease-out forwards;
+  }
+}
+
+/* Hover só em quem tem mouse: giro leve */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .pc-mascote:hover .pc-mascote__img {
+    rotate: var(--pc-mascote-giro, 4deg);
+  }
+}
+
+@keyframes pc-mascote-flutuar {
+  0%,
+  100% {
+    translate: 0 -6px;
+  }
+
+  50% {
+    translate: 0 6px;
+  }
+}
+
+@keyframes pc-mascote-entrar {
+  0% {
+    opacity: 0;
+    transform: translateY(1.5rem) scale(0.6);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(-0.25rem) scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Troca de pose: a nova entra com pulinho enquanto o fantasma da anterior some */
+@keyframes pc-mascote-pose {
+  0% {
+    opacity: 0;
+    scale: 0.85;
+    translate: 0 6px;
+  }
+
+  55% {
+    opacity: 1;
+    scale: 1.06;
+    translate: 0 -10px;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes pc-mascote-sumir {
+  to {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
