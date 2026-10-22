@@ -378,3 +378,11 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
 - **Alternativas descartadas:** manter o array `TELAS` no JS (conteúdo some sem JS e fica duplicado); moldura CSS
   sobre as PNG (moldura dupla); autoplay (atrapalha a leitura e a acessibilidade).
 - **Pendência:** conferir a rolagem suave dos botões/teclado em navegador real (Chrome, Firefox, Safari/iOS).
+
+## DEC039 — Professor orientador na equipe: Professor Daniel
+- **Data:** 2026-10-21
+- **Decisão:** a pedido do usuário, o primeiro integrante da equipe passa de "Professora Danielly"
+  (@daniellygualberto) para **"Professor Daniel"** ([@danielccosta9](https://github.com/danielccosta9)), na tabela
+  "Equipe" do `README.md` e no card da seção `#equipe` do site: papel "Professor", avatar "D" (o mesmo de antes) e
+  link para `https://github.com/danielccosta9`. A posição na lista não muda (RN004).
+- **Motivo:** troca do professor orientador informada pelo usuário; RN004 exige site e README iguais.

@@ -20,6 +20,7 @@ e o projeto adota o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ### Alterado
 - Site refeito (v2) no estilo de trilha gamificada, tema escuro, sem Bootstrap (a v1 fica no commit `0fc3109`).
+- Professor orientador na equipe: Professor Daniel (@danielccosta9).
 
 ### Removido
 - Bootstrap 5.3.

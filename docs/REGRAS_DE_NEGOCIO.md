@@ -24,7 +24,7 @@
 - **Descrição:** a seção Equipe lista exatamente os integrantes e perfis do GitHub da tabela "Equipe" do
   `README.md`, na mesma ordem. Mudou no README, muda no site.
 - **Entidades:** seção `#equipe`.
-- **Exemplo:** Professora Danielly (@daniellygualberto), Gabriel Porto (@devgabrielporto07), Daniel Mota (@dplayerf),
+- **Exemplo:** Professor Daniel (@danielccosta9), Gabriel Porto (@devgabrielporto07), Daniel Mota (@dplayerf),
   Luiz Kaynan (@kaynan-CC), Pedro Vinicius (@PedroVini09), Alfredo Alves (@Alfredinkapps), Sara Arruda (@Sararruda).
 
 ## RN005 — Quiz só com conteúdo das fontes e sem valores de XP inventados

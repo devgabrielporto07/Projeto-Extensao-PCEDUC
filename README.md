@@ -32,7 +32,7 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 
 | Colaborador(a) | Perfil |
 | --- | --- |
-| Professora Danielly | [@daniellygualberto](https://github.com/daniellygualberto) |
+| Professor Daniel | [@danielccosta9](https://github.com/danielccosta9) |
 | Gabriel Porto | [@devgabrielporto07](https://github.com/devgabrielporto07) |
 | Daniel Mota | [@dplayerf](https://github.com/dplayerf) |
 | Luiz Kaynan | [@kaynan-CC](https://github.com/kaynan-CC) |

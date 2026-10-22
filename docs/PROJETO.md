@@ -18,7 +18,7 @@ e `Pitch/PC educ.pdf`.
   que montam um PC completo no perfil — às vezes uma peça rara como recompensa-surpresa.
 - **Mascote:** **Benchware**, que acompanha a jornada com incentivos, dicas e comemorações.
 - **Público:** foco em estudantes do **ensino médio**; crianças e adultos também aprendem no seu ritmo.
-- **Equipe:** Professora Danielly, Gabriel Porto, Daniel Mota, Luiz Kaynan, Pedro Vinicius, Alfredo Alves,
+- **Equipe:** Professor Daniel, Gabriel Porto, Daniel Mota, Luiz Kaynan, Pedro Vinicius, Alfredo Alves,
   Sara Arruda (ver `README.md`).
 - **Protótipo:** [Figma — Telas PCEDUC](https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&t=ofcFB11myQ6Vvf07-1).
 
