@@ -11,7 +11,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>PCEDUC — Aprenda hardware jogando</title>
   <meta name="description" content="PCEDUC: aplicativo educativo para aprender hardware jogando, com trilhas, pontos e conquistas. Projeto de extensão da UNINASSAU Campina Grande — Ciência da Computação.">
-  <meta name="theme-color" content="#141414">
+  <!-- Cor da barra do navegador: segue o sistema; o tema escolhido no botão sobrescreve (main.js) -->
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 
   <!-- Open Graph: og:image precisa de URL absoluta; aponta para o endereço padrão do GitHub Pages (DEC002) -->
   <meta property="og:type" content="website">
@@ -26,6 +28,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Pixelify+Sans:wght@400&display=swap">
+
+  <!--
+    Tema salvo aplicado antes dos CSS para a página não piscar no tema errado.
+    Inline de propósito (exceção à regra de PADROES §1); sem valor salvo, o CSS segue o sistema.
+  -->
+  <script>
+    (function () {
+      try {
+        var tema = localStorage.getItem('pc-tema');
+        if (tema !== 'claro' && tema !== 'escuro') {
+          return;
+        }
+        document.documentElement.setAttribute('data-tema', tema);
+        var cor = tema === 'claro' ? '#FFFFFF' : '#141414';
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+          meta.setAttribute('content', cor);
+        });
+      } catch (erro) {
+        /* localStorage bloqueado (modo privado, política do navegador): segue o sistema */
+      }
+    })();
+  </script>
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
@@ -52,6 +76,8 @@
     <symbol id="i-xp" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
     <symbol id="i-medalha" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M8 3l2.5 6.5M16 3l-2.5 6.5M8 3h8"/><path d="M12 12.5l.8 1.7 1.8.2-1.3 1.2.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.2 1.8-.2z"/></symbol>
     <symbol id="i-peca" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></symbol>
+    <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-lua" viewBox="0 0 24 24"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z"/></symbol>
     <!-- Baú: o corpo herda fill (amarelo) do <svg>; a fechadura usa currentColor (preto) -->
     <symbol id="i-bau" viewBox="0 0 48 48"><path d="M6 20v-6a8 8 0 0 1 8-8h20a8 8 0 0 1 8 8v6z"/><rect x="6" y="20" width="36" height="22" rx="2"/><path d="M6 25h36"/><rect x="20" y="19" width="8" height="11" rx="1.5" fill="currentColor"/></symbol>
   </svg>
@@ -59,6 +85,11 @@
   <!-- ===== Menu lateral (desktop) / cabeçalho com logo (mobile) ===== -->
   <header class="pc-lateral">
     <a class="pc-logo" href="#topo">PCEDUC</a>
+    <!-- Alternar tema: oculto sem JS (aí o site só segue o sistema); o main.js mostra e atualiza ícone e rótulo -->
+    <button class="pc-tema" type="button" data-pc-tema hidden>
+      <svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-sol" data-pc-tema-icone/></svg>
+      <span class="pc-sr" data-pc-tema-rotulo>Ativar tema claro</span>
+    </button>
     <nav class="pc-lateral__nav" aria-label="Seções">
       <ul class="pc-lista-limpa pc-lateral__lista">
         <li><a class="pc-lateral__link" href="#topo"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-inicio"/></svg><span class="pc-lateral__rotulo">Início</span></a></li>

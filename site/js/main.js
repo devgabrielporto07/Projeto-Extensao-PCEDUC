@@ -1,6 +1,6 @@
 /*
   PCEDUC — main.js
-  Comportamentos da página: navegação ativa (menu, abas e faixa), trilha com balões,
+  Comportamentos da página: tema claro/escuro, navegação ativa (menu, abas e faixa), trilha com balões,
   barras das missões, revelar ao rolar, galeria, download e ano do rodapé.
   Dados editáveis ficam no topo (DEC007, DEC008). Sem bibliotecas e sem innerHTML.
 */
@@ -48,6 +48,89 @@
   function chegouAoFim() {
     const doc = document.documentElement;
     return window.innerHeight + window.scrollY >= doc.scrollHeight - 2;
+  }
+
+  // ===== Tema claro/escuro =====
+  // Sem escolha salva, o CSS segue o sistema; a escolha do botão vai para data-tema e para o localStorage.
+  // O script inline do <head> reaplica a escolha antes dos CSS (sem piscar).
+  const CHAVE_TEMA = 'pc-tema';
+
+  function salvarTema(tema) {
+    try {
+      window.localStorage.setItem(CHAVE_TEMA, tema);
+    } catch (erro) {
+      // localStorage bloqueado: o tema vale só até recarregar a página
+    }
+  }
+
+  function configurarTema() {
+    const botao = document.querySelector('[data-pc-tema]');
+    if (!botao) {
+      return;
+    }
+
+    const raiz = document.documentElement;
+    const icone = botao.querySelector('[data-pc-tema-icone]');
+    const rotulo = botao.querySelector('[data-pc-tema-rotulo]');
+    const sistemaClaro = window.matchMedia('(prefers-color-scheme: light)');
+    let temporizador = 0;
+
+    function temaAtual() {
+      const escolhido = raiz.getAttribute('data-tema');
+      if (escolhido === 'claro' || escolhido === 'escuro') {
+        return escolhido;
+      }
+      return sistemaClaro.matches ? 'claro' : 'escuro';
+    }
+
+    // O rótulo diz a ação (não o estado) e o ícone mostra o tema que será ativado
+    function atualizarBotao() {
+      const alvo = temaAtual() === 'claro' ? 'escuro' : 'claro';
+      const texto = 'Ativar tema ' + alvo;
+      if (rotulo) {
+        rotulo.textContent = texto;
+      }
+      botao.title = texto;
+      if (icone) {
+        icone.setAttribute('href', alvo === 'claro' ? '#i-sol' : '#i-lua');
+      }
+    }
+
+    // Com escolha feita, as duas metas (com media) passam a usar a cor de fundo do tema escolhido
+    function atualizarCorDoNavegador() {
+      const cor = window.getComputedStyle(raiz).getPropertyValue('--pc-fundo').trim();
+      if (!cor) {
+        return;
+      }
+      document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+        meta.setAttribute('content', cor);
+      });
+    }
+
+    botao.addEventListener('click', function () {
+      const alvo = temaAtual() === 'claro' ? 'escuro' : 'claro';
+      // A classe liga a transição de cores só durante a troca (CSS desliga com movimento reduzido)
+      raiz.classList.add('pc-tema-trocando');
+      window.clearTimeout(temporizador);
+      temporizador = window.setTimeout(function () {
+        raiz.classList.remove('pc-tema-trocando');
+      }, 400);
+
+      raiz.setAttribute('data-tema', alvo);
+      salvarTema(alvo);
+      atualizarBotao();
+      atualizarCorDoNavegador();
+    });
+
+    // Sem escolha salva, o tema muda junto com o sistema: o rótulo acompanha
+    if (typeof sistemaClaro.addEventListener === 'function') {
+      sistemaClaro.addEventListener('change', atualizarBotao);
+    } else if (typeof sistemaClaro.addListener === 'function') {
+      sistemaClaro.addListener(atualizarBotao);
+    }
+
+    atualizarBotao();
+    botao.hidden = false;
   }
 
   // ===== Navegação ativa: menu lateral, abas inferiores e faixa da seção =====
@@ -465,6 +548,7 @@
     document.documentElement.classList.add('js');
 
     [
+      configurarTema,
       configurarNavegacao,
       configurarTrilha,
       configurarMissoes,

@@ -39,6 +39,7 @@
   --pc-desvio: 0px;
   --pc-no-cor: var(--pc-azul);
   --pc-no-sombra: var(--pc-azul-escuro);
+  --pc-no-anel: var(--pc-anel-azul);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -60,11 +61,13 @@
 .pc-trilha__item--verde {
   --pc-no-cor: var(--pc-verde);
   --pc-no-sombra: var(--pc-verde-escuro);
+  --pc-no-anel: var(--pc-anel-verde);
 }
 
 .pc-trilha__item--amarelo {
   --pc-no-cor: var(--pc-amarelo);
   --pc-no-sombra: var(--pc-cinza);
+  --pc-no-anel: var(--pc-anel-amarelo);
 }
 
 .pc-no {
@@ -115,7 +118,7 @@
 
 /* Nó aberto ganha um anel na própria cor (estado visível além do balão) */
 .pc-no[aria-expanded="true"] .pc-no__circulo {
-  outline: 4px solid var(--pc-no-cor);
+  outline: 4px solid var(--pc-no-anel);
   outline-offset: 4px;
 }
 
@@ -134,7 +137,7 @@
 
 .pc-bau__legenda {
   margin-top: var(--pc-espaco-1);
-  color: var(--pc-amarelo);
+  color: var(--pc-destaque-amarelo-texto);
   font-size: 0.8125rem;
   font-weight: 700;
   letter-spacing: 0.06em;

@@ -1,7 +1,8 @@
 /*
   PCEDUC — base.css
-  Tokens da identidade visual (tema escuro), reset leve, tipografia, foco, skip link e
-  movimento reduzido. Cores só da paleta oficial: use sempre os tokens, nunca o hex solto.
+  Tokens da identidade visual (tema escuro padrão + tema claro), reset leve, tipografia, foco,
+  skip link e movimento reduzido. Cores só da paleta oficial: use sempre os tokens, nunca o hex solto.
+  Tema: segue o sistema (prefers-color-scheme); data-tema="claro"|"escuro" no <html> (botão) tem prioridade.
 */
 
 /* ===== Tokens ===== */
@@ -25,6 +26,22 @@
   --pc-texto-suave: var(--pc-azul-claro);
   /* Azul com 12% de opacidade: destaque do item ativo. Com 12%, o rótulo azul ainda passa AA (4,7:1) */
   --pc-azul-translucido: rgb(51 145 224 / 0.12);
+
+  /* Cores de destaque usadas como TEXTO: no claro viram tons que passam AA sobre branco */
+  --pc-destaque-texto: var(--pc-azul);
+  --pc-destaque-verde-texto: var(--pc-verde);
+  --pc-destaque-amarelo-texto: var(--pc-amarelo);
+  --pc-link-hover: var(--pc-azul-claro);
+  /* Fundo do item ativo/hover do menu lateral e das abas */
+  --pc-ativo-fundo: var(--pc-azul-translucido);
+  /* Superfície que se destaca da página (moldura de celular) */
+  --pc-superficie-alt: var(--pc-preto);
+  /* Sombra sólida dos cartões: no escuro só a borda; no claro, sombra 3D cinza */
+  --pc-sombra-superficie: none;
+  /* Anel do nó aberto da trilha (no claro, o tom escuro de cada cor, para passar 3:1) */
+  --pc-anel-azul: var(--pc-azul);
+  --pc-anel-verde: var(--pc-verde);
+  --pc-anel-amarelo: var(--pc-amarelo);
 
   /* Tipografia */
   --pc-fonte-titulo: "Pixelify Sans", "Courier New", monospace;
@@ -55,6 +72,57 @@
   --pc-altura-abas: 4rem;
 
   color-scheme: dark;
+}
+
+/*
+  ===== Tema claro =====
+  Os tokens aparecem duas vezes porque o CSS não tem "ou" entre media query e atributo:
+  1) sistema claro sem escolha "escuro" salva; 2) escolha "claro" feita no botão. Mantenha os dois iguais.
+  Neon, amarelo e #3391E0 não passam como texto pequeno sobre branco: os --pc-destaque-*-texto
+  trocam por #1D66B8 (5,76:1) ou #141414.
+*/
+@media (prefers-color-scheme: light) {
+  :root:not([data-tema="escuro"]) {
+    --pc-fundo: var(--pc-branco);
+    --pc-superficie: var(--pc-branco);
+    --pc-borda: var(--pc-cinza);
+    --pc-texto: var(--pc-preto);
+    --pc-texto-suave: var(--pc-cinza);
+    --pc-destaque-texto: var(--pc-azul-escuro);
+    --pc-destaque-verde-texto: var(--pc-azul-escuro);
+    --pc-destaque-amarelo-texto: var(--pc-preto);
+    --pc-link-hover: var(--pc-preto);
+    --pc-ativo-fundo: var(--pc-azul-claro);
+    --pc-superficie-alt: var(--pc-azul-claro);
+    --pc-sombra-superficie: 0 4px 0 var(--pc-borda);
+    --pc-anel-azul: var(--pc-azul-escuro);
+    --pc-anel-verde: var(--pc-verde-escuro);
+    --pc-anel-amarelo: var(--pc-cinza);
+    --pc-foco: 3px solid var(--pc-azul-escuro);
+
+    color-scheme: light;
+  }
+}
+
+:root[data-tema="claro"] {
+  --pc-fundo: var(--pc-branco);
+  --pc-superficie: var(--pc-branco);
+  --pc-borda: var(--pc-cinza);
+  --pc-texto: var(--pc-preto);
+  --pc-texto-suave: var(--pc-cinza);
+  --pc-destaque-texto: var(--pc-azul-escuro);
+  --pc-destaque-verde-texto: var(--pc-azul-escuro);
+  --pc-destaque-amarelo-texto: var(--pc-preto);
+  --pc-link-hover: var(--pc-preto);
+  --pc-ativo-fundo: var(--pc-azul-claro);
+  --pc-superficie-alt: var(--pc-azul-claro);
+  --pc-sombra-superficie: 0 4px 0 var(--pc-borda);
+  --pc-anel-azul: var(--pc-azul-escuro);
+  --pc-anel-verde: var(--pc-verde-escuro);
+  --pc-anel-amarelo: var(--pc-cinza);
+  --pc-foco: 3px solid var(--pc-azul-escuro);
+
+  color-scheme: light;
 }
 
 /* ===== Reset leve ===== */
@@ -153,16 +221,16 @@ h3 {
 }
 
 a {
-  color: var(--pc-azul);
+  color: var(--pc-destaque-texto);
   text-underline-offset: 0.2em;
   transition: color var(--pc-transicao);
 }
 
 a:hover {
-  color: var(--pc-azul-claro);
+  color: var(--pc-link-hover);
 }
 
-/* ===== Foco visível (amarelo, contraste alto sobre o fundo escuro) ===== */
+/* ===== Foco visível (amarelo no escuro, azul escuro no claro) ===== */
 :focus-visible {
   outline: var(--pc-foco);
   outline-offset: 3px;
@@ -197,6 +265,16 @@ a:hover {
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ===== Troca de tema: cores com transição só durante a troca (classe posta pelo main.js) ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .pc-tema-trocando *,
+  .pc-tema-trocando *::before,
+  .pc-tema-trocando *::after {
+    transition: background-color 300ms ease-out, color 300ms ease-out, border-color 300ms ease-out,
+      box-shadow 300ms ease-out, fill 300ms ease-out, stroke 300ms ease-out !important;
+  }
 }
 
 /* ===== Rolagem suave só para quem não pediu menos movimento ===== */

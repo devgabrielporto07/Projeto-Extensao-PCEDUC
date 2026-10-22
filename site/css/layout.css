@@ -20,12 +20,46 @@
   font-size: 1.75rem;
   font-weight: var(--pc-peso-titulo);
   letter-spacing: 0.04em;
-  color: var(--pc-verde);
+  color: var(--pc-destaque-verde-texto);
   text-decoration: none;
 }
 
 .pc-logo:hover {
-  color: var(--pc-verde);
+  color: var(--pc-destaque-verde-texto);
+}
+
+/* ===== Botão de alternar tema (mobile: à direita do logo) ===== */
+.pc-tema {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: auto;
+  padding: 0;
+  color: var(--pc-texto);
+  background-color: var(--pc-superficie);
+  border: var(--pc-contorno);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 0 var(--pc-borda);
+  cursor: pointer;
+  transition: transform var(--pc-transicao), box-shadow var(--pc-transicao), border-color var(--pc-transicao), color var(--pc-transicao);
+}
+
+/* O display acima venceria o atributo hidden: sem JS o botão precisa sumir */
+.pc-tema[hidden] {
+  display: none;
+}
+
+.pc-tema:hover {
+  color: var(--pc-destaque-texto);
+  border-color: var(--pc-destaque-texto);
+}
+
+.pc-tema:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 transparent;
 }
 
 /* O menu lateral só aparece no desktop; no mobile a navegação é a barra de abas */
@@ -95,14 +129,14 @@ body {
 }
 
 .pc-abas__link:hover {
-  color: var(--pc-branco);
+  color: var(--pc-texto);
 }
 
 /* Item ativo: cor azul + traço no topo (não depende só da cor) */
 .pc-abas__link[aria-current="true"] {
-  color: var(--pc-azul);
-  background-color: var(--pc-azul-translucido);
-  box-shadow: inset 0 3px 0 var(--pc-azul);
+  color: var(--pc-destaque-texto);
+  background-color: var(--pc-ativo-fundo);
+  box-shadow: inset 0 3px 0 var(--pc-destaque-texto);
 }
 
 .pc-abas__link:focus-visible {
@@ -146,6 +180,12 @@ body {
     font-size: 1rem;
   }
 
+  /* No menu lateral o botão fica abaixo do logo, centralizado na coluna de ícones */
+  .pc-tema {
+    align-self: center;
+    margin-left: 0;
+  }
+
   .pc-lateral__nav {
     display: block;
   }
@@ -175,14 +215,14 @@ body {
   }
 
   .pc-lateral__link:hover {
-    color: var(--pc-branco);
-    background-color: var(--pc-azul-translucido);
+    color: var(--pc-texto);
+    background-color: var(--pc-ativo-fundo);
   }
 
   .pc-lateral__link[aria-current="true"] {
-    color: var(--pc-azul);
-    background-color: var(--pc-azul-translucido);
-    border-color: var(--pc-azul);
+    color: var(--pc-destaque-texto);
+    background-color: var(--pc-ativo-fundo);
+    border-color: var(--pc-destaque-texto);
   }
 
   /* 1024–1279px: menu só com ícones; o rótulo continua acessível aos leitores de tela */
@@ -292,6 +332,12 @@ body {
     justify-content: flex-start;
     padding-inline: var(--pc-espaco-3);
     font-size: 1.875rem;
+  }
+
+  /* Alinhado ao início do logo e dos itens do menu */
+  .pc-tema {
+    align-self: flex-start;
+    margin-left: var(--pc-espaco-3);
   }
 
   .pc-lateral__link {
@@ -407,6 +453,6 @@ body {
 }
 
 .pc-painel__links a:hover {
-  color: var(--pc-azul);
+  color: var(--pc-destaque-texto);
 }
 
