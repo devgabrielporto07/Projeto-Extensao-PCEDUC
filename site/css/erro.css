@@ -22,6 +22,7 @@
 .pc-erro__logo {
   display: inline-flex;
   align-items: center;
+  gap: var(--pc-espaco-2);
   min-height: 2.75rem;
   color: var(--pc-destaque-verde-texto);
   font-family: var(--pc-fonte-titulo);
@@ -33,6 +34,13 @@
 
 .pc-erro__logo:hover {
   color: var(--pc-destaque-verde-texto);
+}
+
+/* Ícone do mascote ao lado do nome, igual ao logo do site */
+.pc-erro__logo-img {
+  flex-shrink: 0;
+  width: auto;
+  height: 2.5rem;
 }
 
 .pc-erro__conteudo {

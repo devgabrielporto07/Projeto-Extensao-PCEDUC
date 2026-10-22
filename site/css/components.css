@@ -268,6 +268,60 @@
 }
 
 /* ===== 8. Equipe ===== */
+/* Moldura da foto da equipe toda: quadro 16:9 dentro do card, com sombra sólida azul de "porta-retrato" */
+.pc-moldura {
+  margin: 0 0 var(--pc-espaco-4);
+  padding: var(--pc-espaco-3);
+  border-color: var(--pc-azul-escuro);
+  border-width: 3px;
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
+}
+
+.pc-moldura__quadro {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--pc-ativo-fundo);
+  border: var(--pc-contorno);
+  border-radius: var(--pc-raio-pequeno);
+}
+
+.pc-moldura__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Reservado enquanto a foto não chega (mesma ideia do "Tela em breve" da galeria) */
+.pc-moldura__reservado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pc-espaco-2);
+  height: 100%;
+  padding: var(--pc-espaco-3);
+  text-align: center;
+}
+
+.pc-moldura__mascote {
+  width: auto;
+  height: 55%;
+}
+
+.pc-moldura__aviso {
+  margin: 0;
+  color: var(--pc-texto-suave);
+  font-weight: 600;
+}
+
+.pc-moldura__legenda {
+  margin-top: var(--pc-espaco-3);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.25rem;
+  text-align: center;
+}
+
 .pc-membro {
   display: flex;
   align-items: center;
@@ -304,6 +358,13 @@
 .pc-equipe > li:nth-child(4n + 4) .pc-membro__avatar {
   color: var(--pc-preto);
   background-color: var(--pc-azul);
+}
+
+/* Foto real do membro: mesmo círculo do avatar com iniciais, recortada no rosto */
+.pc-membro__avatar--foto {
+  display: block;
+  object-fit: cover;
+  background-color: var(--pc-cinza);
 }
 
 .pc-membro__dados {

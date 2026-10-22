@@ -15,6 +15,7 @@
 .pc-logo {
   display: inline-flex;
   align-items: center;
+  gap: var(--pc-espaco-2);
   min-height: 2.75rem;
   font-family: var(--pc-fonte-titulo);
   font-size: 1.75rem;
@@ -26,6 +27,13 @@
 
 .pc-logo:hover {
   color: var(--pc-destaque-verde-texto);
+}
+
+/* Ícone do mascote ao lado do nome (decorativo: o texto "PCEDUC" já nomeia o link) */
+.pc-logo__img {
+  flex-shrink: 0;
+  width: auto;
+  height: 2.5rem;
 }
 
 /* ===== Botão de alternar tema (mobile: à direita do logo) ===== */
@@ -175,8 +183,11 @@ body {
     border-right: var(--pc-contorno);
   }
 
+  /* Coluna estreita: ícone em cima, nome embaixo */
   .pc-logo {
+    flex-direction: column;
     justify-content: center;
+    gap: var(--pc-espaco-1);
     font-size: 1rem;
   }
 
@@ -330,7 +341,9 @@ body {
   }
 
   .pc-logo {
+    flex-direction: row;
     justify-content: flex-start;
+    gap: var(--pc-espaco-2);
     padding-inline: var(--pc-espaco-3);
     font-size: 1.875rem;
   }
