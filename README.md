@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <div align="center">
   <img src="assets/benchware-wave-fixed.gif" alt="Benchware acenando" width="280">
   <h1>PCEDUC</h1>
@@ -51,4 +49,3 @@ A licença não concede permissão para usar marcas ou nomes do projeto como se 
 ## 💬 Contato
 
 Tem dúvidas, sugestões ou encontrou algum problema? Abra uma [issue neste repositório](https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC/issues).
->>>>>>> 35353623f40d6778abf7b5f998df996585f360c5
