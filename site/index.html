@@ -90,7 +90,7 @@
 
   <!-- ===== Menu lateral (desktop) / cabeçalho com logo (mobile) ===== -->
   <header class="pc-lateral">
-    <a class="pc-logo" href="#topo">PCEDUC</a>
+    <a class="pc-logo" href="#topo"><img class="pc-logo__img" src="assets/img/logo-mascote.png" alt="" width="424" height="408"><span class="pc-logo__texto">PCEDUC</span></a>
     <!-- Alternar tema: oculto sem JS (aí o site só segue o sistema); o main.js mostra e atualiza ícone e rótulo -->
     <button class="pc-tema" type="button" data-pc-tema hidden>
       <svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-sol" data-pc-tema-icone/></svg>
@@ -469,9 +469,23 @@
           <h2 class="pc-secao__titulo" id="titulo-equipe">Equipe</h2>
           <span class="pc-mascote"><img class="pc-mascote__img" src="assets/img/mascote/diploma.png" alt="" width="320" height="320" loading="lazy" decoding="async"></span>
         </div>
+        <!--
+          Moldura da foto da equipe toda. Quando a foto chegar, salve em assets/img/equipe/equipe.jpg (paisagem, 16:9)
+          e troque o bloco .pc-moldura__reservado por:
+          <img class="pc-moldura__img" src="assets/img/equipe/equipe.jpg" alt="Foto da equipe do PCEDUC" width="1280" height="720" loading="lazy" decoding="async">
+        -->
+        <figure class="pc-card pc-moldura pc-revelar">
+          <div class="pc-moldura__quadro">
+            <div class="pc-moldura__reservado">
+              <img class="pc-moldura__mascote" src="assets/img/mascote/construindo.png" alt="" width="320" height="320" loading="lazy" decoding="async">
+              <p class="pc-moldura__aviso">Foto da equipe em breve</p>
+            </div>
+          </div>
+          <figcaption class="pc-moldura__legenda">Equipe PCEDUC</figcaption>
+        </figure>
         <ul class="pc-lista-limpa pc-grade pc-grade--2 pc-equipe">
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">D</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/professor-daniel.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Professor Daniel</h3>
               <p class="pc-membro__papel">Professor</p>
@@ -479,42 +493,42 @@
             </div>
           </li>
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">GP</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/gabriel-porto.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Gabriel Porto</h3>
               <a class="pc-membro__link" href="https://github.com/devgabrielporto07" target="_blank" rel="noopener">@devgabrielporto07<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
             </div>
           </li>
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">DM</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/daniel-mota.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Daniel Mota</h3>
               <a class="pc-membro__link" href="https://github.com/dplayerf" target="_blank" rel="noopener">@dplayerf<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
             </div>
           </li>
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">LK</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/luiz-kaynan.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Luiz Kaynan</h3>
               <a class="pc-membro__link" href="https://github.com/kaynan-CC" target="_blank" rel="noopener">@kaynan-CC<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
             </div>
           </li>
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">PV</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/pedro-vinicius.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Pedro Vinicius</h3>
               <a class="pc-membro__link" href="https://github.com/PedroVini09" target="_blank" rel="noopener">@PedroVini09<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
             </div>
           </li>
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">AA</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/alfredo-alves.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Alfredo Alves</h3>
               <a class="pc-membro__link" href="https://github.com/Alfredinkapps" target="_blank" rel="noopener">@Alfredinkapps<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
             </div>
           </li>
           <li class="pc-card pc-membro pc-revelar">
-            <span class="pc-membro__avatar" aria-hidden="true">SA</span>
+            <img class="pc-membro__avatar pc-membro__avatar--foto" src="assets/img/equipe/sara-arruda.jpg" alt="" width="240" height="240" loading="lazy" decoding="async">
             <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Sara Arruda</h3>
               <a class="pc-membro__link" href="https://github.com/Sararruda" target="_blank" rel="noopener">@Sararruda<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
