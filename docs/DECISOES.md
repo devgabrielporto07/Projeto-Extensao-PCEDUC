@@ -14,7 +14,7 @@
   (**devgabrielporto07**) precisa ativar `Settings → Pages → Source: GitHub Actions`.
 - **Alternativas descartadas:** Pages "Deploy from a branch" (só aceita raiz ou `/docs`, e `docs/` já é a memória do projeto).
 
-## DEC003 — Bootstrap 5.3 via CDN (muda a decisão original "sem framework")
+## DEC003 — Bootstrap 5.3 via CDN (muda a decisão original "sem framework") — Substituída por DEC013
 - **Data:** 2026-10-21
 - **Decisão:** usar **Bootstrap 5.3.3** do jsDelivr com versão fixa e `integrity` (SRI) + `crossorigin="anonymous"`:
   - CSS: `https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css`
@@ -26,7 +26,7 @@
 - **Motivo:** pedido do usuário; acelera responsividade e componentes acessíveis prontos.
 - **Alternativas descartadas:** CSS/JS puros (decisão original); copiar o Bootstrap para o repositório.
 
-## DEC004 — Variáveis do Bootstrap sobrescritas pelos tokens do PCEDUC
+## DEC004 — Variáveis do Bootstrap sobrescritas pelos tokens do PCEDUC — Substituída por DEC013 e DEC015
 - **Data:** 2026-10-21
 - **Decisão:** `base.css` define os tokens `--pc-*` e sobrescreve `--bs-*` (primária, fonte, corpo, bordas)
   para que os componentes do Bootstrap herdem a identidade visual (ver `IDENTIDADE_VISUAL.md`).
@@ -36,6 +36,7 @@
 - **Data:** 2026-10-21
 - **Decisão:** Topo → Por que ensinar hardware → O que é → Como funciona (trilhas → XP → conquistas → peças)
   → O que se aprende (placa-mãe, CPU, GPU, RAM, armazenamento, fonte) → Para quem é → Galeria → Equipe → Download → Rodapé.
+  (Na v2 a galeria tem a âncora `#telas` e o topo `#topo`.)
 - **Motivo:** segue a narrativa do pitch (`Pitch/PC educ.pdf`), acrescentando peças colecionáveis (requisitos), galeria, equipe e download.
 
 ## DEC006 — Nome oficial "PCEDUC"
@@ -78,3 +79,136 @@
 - **Decisão:** `.claude/` e `CLAUDE.md` ficam no `.gitignore` deste repositório.
 - **Motivo:** decisão do usuário; o repositório é do grupo da faculdade e não deve carregar configuração local dos agentes.
   A memória do projeto continua versionada em `docs/`.
+
+---
+
+## Versão 2 do site (2026-10-21)
+
+A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões abaixo valem para a v2.
+
+## DEC013 — Bootstrap removido: só HTML5, CSS3 e JavaScript puro
+- **Data:** 2026-10-21
+- **Decisão:** o site deixa de usar o Bootstrap (CSS e JS do CDN). Layout, grade, menu e carrossel são feitos com
+  CSS próprio (Grid/Flexbox) e JavaScript puro. Substitui **DEC003** e **DEC004** (não há mais variáveis `--bs-*`).
+- **Motivo:** pedido do usuário para a v2; o visual de trilha gamificada não se beneficia dos componentes do
+  Bootstrap e elimina dependência externa (e as hashes SRI a manter).
+- **Alternativas descartadas:** manter Bootstrap só para a grade; trocar por outro framework (Tailwind etc.).
+
+## DEC014 — Referência visual: tela da trilha do Duolingo (web)
+- **Data:** 2026-10-21
+- **Decisão:** a v2 segue o **layout e o estilo** da tela da trilha do app web do Duolingo
+  (`docs/referencias/duolingo-trilha-desktop.jpg`), mantendo a essência do PCEDUC: paleta e fontes de
+  `IDENTIDADE_VISUAL.md`, mascote Benchware e cartões com contorno e sombra sólida.
+- **Limite:** é referência de composição, não cópia. **Não** usar marca, logotipo, personagens, ícones ou textos
+  do Duolingo; os textos continuam vindo só das fontes oficiais (RN002).
+- **Motivo:** o PCEDUC se apresenta como "no estilo do Duolingo" (pitch/README); o site passa a lembrar a
+  experiência do app.
+
+## DEC015 — Tema escuro com a paleta do PCEDUC
+- **Data:** 2026-10-21
+- **Decisão:** fundo `#141414`, superfícies `#141414` com borda `#4A5868` (2px), texto branco e `#DCEBFD`,
+  destaques azul/verde/amarelo da paleta. Tokens novos `--pc-fundo`, `--pc-superficie`, `--pc-borda`,
+  `--pc-texto`, `--pc-texto-suave` (ver `IDENTIDADE_VISUAL.md` §9, com tabela de contraste). Substitui a parte de
+  cores do **DEC004**.
+- **Motivo:** aproxima da referência (DEC014) e valoriza o verde neon e o amarelo, que no fundo escuro têm ótimo contraste.
+- **Alternativas descartadas:** tema claro da v1; alternar claro/escuro (complexidade sem pedido).
+
+## DEC016 — Layout: 3 colunas no desktop, abas inferiores no mobile
+- **Data:** 2026-10-21
+- **Decisão:**
+  - **Desktop (≥ 1024px):** 3 colunas — **menu lateral fixo à esquerda** (ícone + rótulo para cada seção);
+    **centro** com o conteúdo rolável; **painel direito fixo "Missões do PCEDUC"** com os 4 passos de
+    "Como funciona" apresentados como missões, cada uma com **barra amarela** (`--pc-amarelo`) que enche
+    conforme a rolagem da página.
+  - **Mobile/tablet (< 1024px):** coluna única com **barra de abas inferior** fixa — Início, Aprender, Telas,
+    Equipe, Baixar (como no wireframe do app, `Wireframe-Baixa-Fidelidade/Wireframe-PCEDUC.jpeg`);
+    o painel de missões (`<aside id="missoes">`) aparece **no fluxo da página**, logo após `#como-funciona`.
+- **Acessibilidade:** o texto das missões é sempre visível; a barra é complemento visual. Com
+  `prefers-reduced-motion`, a barra atualiza sem transição. Abas com alvo ≥ 44×44px e rótulo visível.
+- **Motivo:** reproduz a composição da referência (DEC014) e a navegação do próprio app no celular.
+- **Alternativas descartadas:** navbar no topo com menu hambúrguer (v1).
+
+## DEC017 — "O que se aprende" como trilha em zigue-zague
+- **Data:** 2026-10-21
+- **Decisão:** as 6 peças (placa-mãe, processador, placa de vídeo, memória RAM, armazenamento, fonte de energia)
+  viram **botões redondos "3D"** dispostos em zigue-zague, com o Benchware ao lado da trilha e um **baú de peça
+  rara** no fim (remete à peça rara-surpresa do README). Clicar (ou Enter/Espaço) em uma peça abre um **balão**
+  com a descrição do pitch (F005); Esc ou clique fora fecha.
+- **Acessibilidade:** cada peça é `<button>` com `aria-expanded`/`aria-controls` e nome acessível; o balão
+  não é a única forma de ler o conteúdo se o JS falhar (sem JS, as descrições ficam visíveis).
+- **Motivo:** reproduz a trilha da referência e mostra na prática a ideia de "trilha" do app.
+
+## DEC018 — Faixa de topo da seção atual
+- **Data:** 2026-10-21
+- **Decisão:** no topo da coluna central, uma faixa azul fixa (estilo "Seção 2, Unidade 7" da referência) mostra
+  o nome da seção visível; o item correspondente fica destacado no menu lateral e nas abas inferiores
+  (`aria-current="true"`). Detecção com `IntersectionObserver`. Só no desktop e `aria-hidden` (ver DEC023).
+- **Contraste:** texto pequeno branco só sobre `--pc-azul-escuro` (`#1D66B8`, 5,76:1); sobre `--pc-azul`
+  (`#3391E0`) usar texto `#141414` (5,50:1) ou texto grande branco.
+- **Motivo:** orienta o leitor como a faixa de unidade da referência.
+
+## DEC019 — Carrossel da galeria e menu em JavaScript puro
+- **Data:** 2026-10-21
+- **Decisão:** o carrossel (botões anterior/próximo rotulados, indicadores com `aria-label`, setas do teclado,
+  sem autoplay com movimento reduzido) e o destaque do menu/abas são implementados em `main.js`, sem biblioteca.
+  Continuam valendo DEC007/RN003 (reservado "Tela em breve").
+- **Motivo:** consequência do DEC013.
+
+## DEC020 — CSS dividido em quatro arquivos (+ `main.js`)
+- **Data:** 2026-10-21 (atualizada após a implementação da v2)
+- **Decisão:** `css/base.css` (tokens, reset, tipografia, foco, skip link, movimento reduzido) → `css/layout.css`
+  (cabeçalho/menu lateral, colunas, faixa da seção, abas inferiores e **painel de missões**) →
+  `css/components.css` (cartões, botões "3D", selos, galeria/carrossel, equipe, download, rodapé, revelar ao rolar)
+  → `css/trilha.css` (trilha em zigue-zague, nós 3D, baú, balões, divisor, mascote da trilha). Comportamentos em
+  `js/main.js` (`defer`). **Cada arquivo com menos de 600 linhas**; passou disso, dividir por componente.
+- **Histórico:** o plano era 3 arquivos CSS; a trilha saiu de `components.css` para respeitar o limite de linhas.
+- **Motivo:** uma responsabilidade por arquivo e facilidade de manutenção sem build.
+
+## DEC021 — Pixelify Sans só no peso 400
+- **Data:** 2026-10-21
+- **Decisão:** os títulos usam Pixelify Sans apenas no peso **400**. O Google Fonts carrega só `Pixelify+Sans:wght@400`
+  (Chakra Petch continua 400/600/700). O peso vem do token `--pc-peso-titulo: 400` em `base.css`.
+- **Motivo:** nos pesos 500–700 o "C" da Pixelify se fecha e parece "O" — "PCEDUC" era lido como "POEDUO".
+- **Alternativas descartadas:** Pixelify 700 nos títulos (plano original); trocar a fonte de títulos.
+
+## DEC022 — Sem cartão de mini status (XP / Nível / Peças)
+- **Data:** 2026-10-21
+- **Decisão:** o painel direito não tem o cartão de status (XP, nível, peças) que aparece na referência; só "Missões do PCEDUC".
+- **Motivo:** não há dados reais para mostrar; números seriam inventados (RN002).
+
+## DEC023 — Faixa "Seção N" só no desktop e `aria-hidden`
+- **Data:** 2026-10-21
+- **Decisão:** a faixa da seção atual (DEC018) só aparece a partir de 1024px; abaixo disso fica oculta. Ela é
+  `aria-hidden="true"`: é decorativa e repete os títulos das seções. A numeração "Seção N" segue a ordem do menu lateral.
+- **Motivo:** no celular, a barra de abas já indica a posição; para leitores de tela, anunciar a faixa a cada rolagem seria ruído.
+- **Consequência:** o destaque do item ativo no menu/abas é feito só com `aria-current="true"` (não há classe `is-ativo`).
+
+## DEC024 — Menu lateral compacto e destaque translúcido
+- **Data:** 2026-10-21
+- **Decisão:** entre **1024px e 1279px** o menu lateral mostra só os ícones (rótulo continua acessível a leitores de
+  tela); **a partir de 1280px** mostra ícone + rótulo. O item ativo (e o hover) usa fundo `--pc-azul-translucido`
+  (`--pc-azul` com 12% de opacidade) e rótulo azul, que mantém ≈ 4,7:1 sobre esse fundo (AA). A mesma cor destaca a aba ativa no mobile.
+- **Motivo:** em 1024–1279px as 3 colunas não cabem com rótulos sem espremer o conteúdo central.
+
+## DEC025 — Abas mobile agrupam seções (`data-pc-grupo`)
+- **Data:** 2026-10-21
+- **Decisão:** a barra de abas (`<nav aria-label="Atalhos">`) tem 5 abas e cada uma fica ativa para um grupo de seções,
+  definido no atributo `data-pc-grupo`:
+  - **Início** (`#topo`): `topo`, `por-que`, `o-que-e`, `como-funciona`, `missoes`;
+  - **Aprender** (`#o-que-se-aprende`): `o-que-se-aprende`, `para-quem`;
+  - **Telas** (`#telas`) · **Equipe** (`#equipe`) · **Baixar** (`#download`).
+- **Motivo:** 9 seções não cabem em 5 abas; sem agrupamento, nenhuma aba ficaria ativa em parte da página.
+
+## DEC026 — Sombra 3D dos botões amarelos e azul-claro em `--pc-cinza` (provisória)
+- **Data:** 2026-10-21
+- **Decisão:** nós/selos/botões amarelos (`--pc-amarelo`) e azul-claro (`--pc-azul-claro`) usam sombra sólida
+  `--pc-cinza` (`#4A5868`), porque a paleta não tem amarelo escuro nem azul-claro escuro. Resolve a pendência de
+  `IDENTIDADE_VISUAL.md` §9.3.
+- **Status:** **provisória** — o usuário pode trocar por outra cor; se aprovar um hex novo, ele entra na paleta (§1) antes do uso.
+- **Motivo:** não inventar hex fora da paleta oficial.
+
+## DEC027 — Sem JS, o mascote da trilha fica oculto
+- **Data:** 2026-10-21
+- **Decisão:** o Benchware ao lado da trilha (DEC017) só aparece quando o JS marca a trilha como interativa
+  (`pc-trilha--interativa`). Sem JS, ele recebe `display: none`.
+- **Motivo:** sem JS os balões das peças ficam abertos (conteúdo sempre legível) e cobririam o mascote, que é decorativo.

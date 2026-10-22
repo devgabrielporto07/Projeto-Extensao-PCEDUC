@@ -1,50 +1,65 @@
 # Padrões — Site demonstrativo do PCEDUC
 
+Vale para a **v2** do site (HTML5, CSS3 e JavaScript puro, sem Bootstrap — DEC013). A v1 está no commit `0fc3109`.
+
 ## 1. Organização de `site/`
 
 | Arquivo | Responsabilidade |
 |---|---|
 | `index.html` | Página única, HTML semântico, seções na ordem de DEC005 |
-| `css/base.css` | Tokens `--pc-*`, overrides das variáveis do Bootstrap (`--bs-*`), reset leve, tipografia, foco, `prefers-reduced-motion` |
-| `css/components.css` | Componentes `pc-*` (navbar, hero, cartões, trilha, galeria, equipe, download, rodapé) |
-| `js/main.js` | Comportamentos: links de download, lista de telas da galeria, revelar ao rolar, ajustes de menu |
+| `css/base.css` | Tokens `--pc-*` (inclusive os do tema escuro: `--pc-fundo`, `--pc-superficie`, `--pc-borda`, `--pc-texto`, `--pc-texto-suave`, `--pc-azul-translucido`, `--pc-peso-titulo`…), reset leve, tipografia, foco, `prefers-reduced-motion` |
+| `css/layout.css` | Estrutura da página: cabeçalho/menu lateral fixo (só ícones em 1024–1279px, rótulos a partir de 1280px), 3 colunas (≥ 1024px), faixa da seção atual (só desktop), painel "Missões do PCEDUC", barra de abas inferior (< 1024px) — DEC016, DEC018, DEC023, DEC024 |
+| `css/components.css` | Componentes `pc-*`: cartões, botões "3D", selos de ícone, galeria/carrossel, equipe, download, rodapé, revelar ao rolar |
+| `css/trilha.css` | Trilha em zigue-zague de "O que se aprende": nós 3D, baú da peça rara, balões, divisor, mascote da trilha (DEC017, DEC027) |
+| `js/main.js` | Comportamentos: links de download, lista de telas e carrossel, destaque da seção visível (menu/abas/faixa), barras das missões, balões da trilha, revelar ao rolar |
 | `assets/img/` | Mascote e imagens fixas |
 | `assets/telas/` | Telas exportadas do Figma (`tela-01.png`, `tela-02.png`…) |
 
-- Uma responsabilidade por arquivo. Se `components.css` passar de ~600 linhas, dividir em `css/components/<nome>.css`.
+- Uma responsabilidade por arquivo.
+- **Limite: cada arquivo CSS com menos de 600 linhas** (DEC020). Passou disso, dividir por componente
+  (como já foi feito com `css/trilha.css`) e registrar aqui e em `PROJETO.md`.
 - Nada de CSS inline nem `<script>` inline (exceto JSON-LD, se houver).
 - Caminhos **relativos** (`css/base.css`, `assets/img/...`) — o Pages publica em `/<repositorio>/`, então `/css/...` quebra.
 - Nomes de arquivos em `kebab-case`; imagens com nome descritivo.
+- Sem bibliotecas externas de CSS/JS (DEC013). Única dependência externa: Google Fonts.
 
 ## 2. Ordem de carregamento
 
 No `<head>`:
 1. `meta charset`, `viewport`, `title`, `description`, Open Graph
-2. `preconnect` + Google Fonts (`display=swap`)
-3. Bootstrap CSS (CDN com `integrity`, DEC003)
-4. `css/base.css`
+2. `preconnect` + Google Fonts (`display=swap`; Chakra Petch 400/600/700 e Pixelify Sans **só 400** — DEC021)
+3. `css/base.css`
+4. `css/layout.css`
 5. `css/components.css`
-
-No `<head>` com `defer` (ou fim do `<body>`):
-6. `bootstrap.bundle.min.js` (CDN com `integrity`)
-7. `js/main.js`
+6. `css/trilha.css`
+7. `<script src="js/main.js" defer></script>`
 
 ## 3. Nomenclatura de classes
 
-- Classes próprias com prefixo **`pc-`** e **BEM leve**: `pc-bloco`, `pc-bloco__elemento`, `pc-bloco--variacao`.
-  Ex.: `pc-card`, `pc-card__titulo`, `pc-card--destaque`, `pc-download__botao`.
-- Classes do Bootstrap (`container`, `row`, `col-md-4`, `navbar`, `carousel`) podem ser usadas junto.
-- Não sobrescrever classes do Bootstrap diretamente (ex.: `.card { }`); criar a classe `pc-` ou usar as variáveis `--bs-*`.
-- Estados: `is-visivel`, `is-desativado`; ganchos de JS: atributos `data-pc-*` (ex.: `data-pc-download="android"`).
-- IDs só para âncoras de seção (`#por-que`, `#o-que-e`, `#como-funciona`, `#o-que-se-aprende`,
-  `#para-quem`, `#galeria`, `#equipe`, `#download`).
+- Classes com prefixo **`pc-`** e **BEM leve**: `pc-bloco`, `pc-bloco__elemento`, `pc-bloco--variacao`.
+  Ex.: `pc-card`, `pc-card__titulo`, `pc-lateral__link`, `pc-abas__link`, `pc-trilha__mascote`, `pc-missao__titulo`,
+  `pc-btn--verde`.
+- Classes de estado (adicionadas pelo JS):
+  - `js` no `<html>` — o JS rodou (os balões da trilha passam a ficar fechados);
+  - `pc-revelar-ativo` no `<html>` — revelar ao rolar ligado; `is-visivel` no cartão `.pc-revelar` que entrou na tela;
+  - `pc-trilha--interativa` na trilha — balões interativos e mascote visível (DEC027);
+  - `is-aberto` no balão aberto.
+  - Item ativo do menu/aba e indicador do carrossel: **só `aria-current="true"`** (não existe `is-ativo`).
+    Download desativado: `aria-disabled="true"` (não existe `is-desativado`).
+- Ganchos de JS: atributos `data-pc-*` (ex.: `data-pc-download`, `data-pc-download-selo`, `data-pc-barra`,
+  `data-pc-faixa-numero`, `data-pc-faixa-nome`, `data-pc-grupo` nas abas — DEC025).
+- IDs só para âncoras de seção (`#topo`, `#por-que`, `#o-que-e`, `#como-funciona`, `#missoes`, `#o-que-se-aprende`,
+  `#para-quem`, `#telas`, `#equipe`, `#download`; skip link → `#conteudo`), para o sprite de ícones (`#i-*`) e
+  para ligar ARIA (`aria-controls` → `#pc-balao-1`…`#pc-balao-6`; `aria-labelledby` → `#titulo-*`).
 
 ## 4. JavaScript
 
-- JS puro, sem jQuery; `"use strict"`; tudo em funções pequenas chamadas no `DOMContentLoaded` (ou com `defer`).
+- JS puro, sem jQuery nem bibliotecas; `"use strict"`; carregado com `defer`; tudo em funções pequenas.
 - Dados editáveis no topo do `main.js`: objeto `LINKS_DOWNLOAD` e array `TELAS` (DEC007, DEC008).
-- Detectar `prefers-reduced-motion` com `matchMedia` antes de animar.
+- Detectar `prefers-reduced-motion` com `matchMedia` antes de animar (carrossel sem autoplay, barras sem transição).
+- `IntersectionObserver` para a seção visível e para revelar cartões; sem suporte, tudo continua visível e navegável.
 - Sem `innerHTML` com texto vindo de fora; preferir `textContent` / `createElement`.
+- O conteúdo não depende do JS: sem JS, as descrições das peças e as missões ficam visíveis.
 
 ## 5. Política de comentários
 
@@ -55,24 +70,29 @@ Comentário explica **por quê**, não **o quê**.
 | Início de cada arquivo | Cabeçalho de 2–3 linhas: para que serve |
 | Seções de CSS/HTML longos | `/* ===== Galeria ===== */` · `<!-- ===== Galeria ===== -->` |
 | Regra de negócio | `// RN001: botão desativado enquanto o link estiver vazio` |
-| Decisão não óbvia | `/* DEC004: --bs-primary recebe o azul escuro por contraste */` |
+| Decisão não óbvia | `/* DEC016: abaixo de 1024px o painel de missões vira seção normal */` |
 | Pendência | `// TODO(VIEW): ...` · `TODO(DOCUMENT)` |
 
 Não comentar o óbvio, não deixar código morto comentado (o Git guarda), atualizar ou remover comentário desatualizado.
 
 ## 6. Acessibilidade (obrigatório)
 
-- `<html lang="pt-BR">`; landmarks: `<header>`, `<nav aria-label="Principal">`, `<main id="conteudo">`, `<footer>`.
+- `<html lang="pt-BR">`; landmarks: `<header>` com `<nav aria-label="Seções">` (menu lateral, 9 seções),
+  `<main id="conteudo">`, `<aside id="missoes" aria-labelledby="titulo-missoes">` ("Missões do PCEDUC", dentro do `<main>`),
+  `<footer>` e `<nav aria-label="Atalhos">` (barra de abas inferior, 5 abas — DEC025).
 - **Skip link** como primeiro elemento focável: "Pular para o conteúdo" → `#conteudo`.
 - Um único `<h1>`; hierarquia de títulos sem pular níveis; cada `<section>` com `aria-labelledby` no seu título.
-- Toda imagem com `alt` útil (decorativa: `alt=""`); `width`/`height` informados.
+- Toda imagem com `alt` útil (decorativa: `alt=""`); `width`/`height` informados. Ícones SVG com `aria-hidden="true"` e rótulo visível.
 - **Foco visível** em tudo que é interativo (`:focus-visible` com `--pc-foco`); nunca `outline: none` sem substituto.
-- Contraste conforme `IDENTIDADE_VISUAL.md` §4.
-- Botão de menu com `aria-controls`/`aria-expanded` (o collapse do Bootstrap já cuida); carrossel com controles
-  rotulados, indicadores com `aria-label` e sem autoplay quando `prefers-reduced-motion`.
+- Contraste conforme `IDENTIDADE_VISUAL.md` §9 (tema escuro); `#4A5868` nunca como texto.
+- Item do menu/aba da seção visível com `aria-current="true"`.
+- Peças da trilha: `<button>` com `aria-expanded`/`aria-controls`; balão fecha com Esc e devolve o foco à peça.
+- Carrossel: botões anterior/próximo rotulados, indicadores com `aria-label`, setas do teclado, sem autoplay com
+  `prefers-reduced-motion`; slide atual anunciado (`aria-live="polite"` quando trocado pelo usuário).
 - Botões de download desativados: `aria-disabled="true"`, `tabindex="-1"`, sem `href`, com texto "Em breve" visível.
 - Links externos (Figma, GitHub): `rel="noopener"` e indicar que abrem em nova aba quando usar `target="_blank"`.
-- Navegável só pelo teclado; alvos de toque com pelo menos 44×44px.
+- Navegável só pelo teclado; alvos de toque com pelo menos 44×44px; a barra de abas inferior não pode cobrir
+  conteúdo (reservar `padding-bottom` no `<main>` e `scroll-padding`).
 
 ## 7. Git
 

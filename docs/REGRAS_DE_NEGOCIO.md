@@ -16,7 +16,7 @@
 ## RN003 — Galeria mostra reservado se a imagem não existe
 - **Descrição:** cada item do array `TELAS` aponta para `assets/telas/tela-XX.png`. Se o arquivo não carregar
   (evento `error` da imagem) ou o array estiver vazio, aparece o cartão "Tela em breve" no lugar.
-- **Entidades:** array `TELAS`, carrossel `#galeria`.
+- **Entidades:** array `TELAS`, carrossel da seção `#telas`.
 - **Exemplo:** `tela-01.png` existe e `tela-02.png` não → slide 1 mostra a tela, slide 2 mostra "Tela em breve".
 
 ## RN004 — Equipe conforme o README

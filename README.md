@@ -42,7 +42,7 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 
 ## 🌐 Site demonstrativo
 
-A página de apresentação do PCEDUC fica na pasta [`site/`](site/) (HTML, CSS e JavaScript com Bootstrap, sem back-end).
+A página de apresentação do PCEDUC fica na pasta [`site/`](site/) (HTML, CSS e JavaScript puro, sem back-end).
 
 - **Ver localmente:** abra `site/index.html` no navegador ou rode `npx serve site`.
 - **Publicar:** faça o merge na branch `master` e, uma vez, ative `Settings → Pages → Source: GitHub Actions`. O workflow `.github/workflows/pages.yml` publica o site automaticamente.

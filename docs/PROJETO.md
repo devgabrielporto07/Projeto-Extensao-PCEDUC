@@ -34,7 +34,8 @@ e `Pitch/PC educ.pdf`.
 | **Público** | Estudantes (foco no ensino médio), professores, avaliadores do projeto de extensão |
 | **Plataforma** | Web — página de apresentação estática (uma página) |
 | **Arquitetura** | Estática, sem MVC/back-end (HTML + CSS + JS) |
-| **Linguagem e frameworks** | HTML5, CSS3, JavaScript (sem build) + **Bootstrap 5.3.3** via CDN jsDelivr |
+| **Versão** | **v2** — trilha gamificada inspirada na tela da trilha do Duolingo web, tema escuro (DEC013–DEC027). CSS em 4 arquivos carregados nesta ordem: `base` → `layout` → `components` → `trilha`, + `main.js` com `defer` (DEC020). A v1 (Bootstrap, tema claro) está no commit `0fc3109` |
+| **Linguagem e frameworks** | HTML5, CSS3 e JavaScript puro, sem framework e sem build (Bootstrap removido na v2 — DEC013); única dependência externa: Google Fonts |
 | **Gerência de estado** | Não se aplica |
 | **Hospedagem** | GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`) |
 | **Nível** | simples |
@@ -49,10 +50,12 @@ Projeto-Extensao-PCEDUC/
 ├── .github/workflows/pages.yml   publica site/ no GitHub Pages            → document
 ├── docs/                         memória do projeto                        → document
 ├── site/                         raiz publicada no Pages
-│   ├── index.html                página única                              → view (a criar)
-│   ├── css/base.css              tokens --pc-*, overrides do Bootstrap, tipografia → view (a criar)
-│   ├── css/components.css        componentes pc-*                          → view (a criar)
-│   ├── js/main.js                comportamentos, links de download, lista de telas → view (a criar)
+│   ├── index.html                página única                              → view
+│   ├── css/base.css              tokens --pc-* (tema escuro), reset, tipografia, foco → view
+│   ├── css/layout.css            menu lateral, 3 colunas, faixa, abas, painel missões → view
+│   ├── css/components.css        componentes pc-* (cartões, botões 3D, galeria, equipe, download, rodapé) → view
+│   ├── css/trilha.css            trilha em zigue-zague: nós 3D, baú, balões, mascote  → view
+│   ├── js/main.js                comportamentos (JS puro): carrossel, menu, missões, trilha, download → view
 │   └── assets/
 │       ├── img/benchware-wave.gif   mascote acenando (cópia de assets/)
 │       ├── img/benchware.png        quadro parado (prefers-reduced-motion)
