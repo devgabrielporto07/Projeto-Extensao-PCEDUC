@@ -2,6 +2,10 @@
 .claude/
 CLAUDE.md
 
+# Memória do projeto e histórico de versões: ficam só na máquina local
+docs/
+CHANGELOG.md
+
 # Arquivos de sistema
 Thumbs.db
 desktop.ini
