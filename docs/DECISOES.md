@@ -44,11 +44,13 @@
 - **Decisão:** o site usa sempre **PCEDUC**. O pitch escreve "PC educ"; textos dele são adaptados para o nome oficial.
 - **Motivo:** consistência com README, requisitos e repositório.
 
-## DEC007 — Galeria com espaços reservados
+## DEC007 — Galeria com espaços reservados — Ajustada por DEC038
 - **Data:** 2026-10-21
 - **Decisão:** a galeria lista as telas no array do `main.js`; enquanto o PNG não existir em `site/assets/telas/`,
   exibe um cartão "Tela em breve".
 - **Motivo:** as telas ainda não foram exportadas do Figma; o site não pode quebrar nem mostrar imagem inventada.
+- **Ajuste (DEC038):** o array do `main.js` foi removido; as telas ficam no `index.html` (fonte única). O reservado
+  "Tela em breve" continua, agora só para imagem que não carregar.
 
 ## DEC008 — Download desativado até haver links
 - **Data:** 2026-10-21
@@ -56,6 +58,8 @@
   sem `href`, fora da ordem de tabulação) com selo "Em breve" enquanto o link estiver vazio. Os links ficam
   centralizados em um único objeto no `main.js`.
 - **Motivo:** o app ainda não tem instaladores publicados; um único lugar para trocar os links.
+- **Ajuste (DEC038):** `LINKS_DOWNLOAD` passa a ser o único dado editável no topo do `main.js` (o array `TELAS`,
+  que ficava ao lado dele, foi removido).
 
 ## DEC009 — Mascote animado com quadro parado
 - **Data:** 2026-10-21
@@ -154,6 +158,7 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
   sem autoplay com movimento reduzido) e o destaque do menu/abas são implementados em `main.js`, sem biblioteca.
   Continuam valendo DEC007/RN003 (reservado "Tela em breve").
 - **Motivo:** consequência do DEC013.
+- **Ajuste (DEC038):** o carrossel passou a usar `scroll-snap` nativo sobre as telas do HTML, com volta circular.
 
 ## DEC020 — CSS dividido em quatro arquivos (+ `main.js`)
 - **Data:** 2026-10-21 (atualizada após a implementação da v2)
@@ -333,9 +338,9 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
   - **Caminhos absolutos** com o prefixo `/Projeto-Extensao-PCEDUC/` (exceção a `PADROES.md` §1): o Pages serve a 404
     em **qualquer** caminho (ex.: `/Projeto-Extensao-PCEDUC/a/b/c`), e caminhos relativos apontariam para a pasta
     errada. **Se o repositório mudar de nome ou ganhar domínio próprio, trocar o prefixo em todos os links da 404.**
-  - **Textos AGUARDANDO aval do usuário (RN002):** escritos pela equipe de agentes, não vêm das fontes oficiais —
-    "O endereço que você tentou abrir não existe ou mudou de lugar." e o `alt` da imagem
-    "Benchware, o mascote do PCEDUC, confuso ao lado do número 404".
+  - **Textos aprovados pelo usuário em 2026-10-21 (RN002):** escritos pela equipe de agentes (não vêm das fontes
+    oficiais) e aprovados pelo usuário — "O endereço que você tentou abrir não existe ou mudou de lugar." e o `alt`
+    da imagem "Benchware, o mascote do PCEDUC, confuso ao lado do número 404".
   - Ainda não testada no GitHub Pages publicado.
 - **Motivo:** a 404 padrão do GitHub não tem a identidade do PCEDUC nem caminho de volta.
 
@@ -346,3 +351,30 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
   nova seção `#experimente`.
 - **Motivo:** com 10 linhas a seção nova cairia numa linha implícita e o painel fixo terminaria antes dela.
 - **Atenção:** ao acrescentar ou remover seção, ajustar esse número.
+
+## DEC038 — Galeria com as telas reais do app (HTML como fonte única)
+- **Data:** 2026-10-21
+- **Decisão:**
+  - **Imagens:** 4 telas reais do protótipo enviadas pelo usuário (em JPG), convertidas em PNG **540×1080** com a
+    **moldura do iPhone embutida**; os cantos brancos foram removidos (fundo transparente) e o tamanho foi padronizado.
+    Ficam em `site/assets/telas/`: `tela-01.png` (Abertura), `tela-02.png` (Trilhas), `tela-03.png` (Pergunta) e
+    `tela-04.png` (Perfil). Como trocar/adicionar: `site/assets/telas/README.md`.
+  - **HTML é a fonte única:** cada tela é um `<figure class="pc-galeria__slide">` (com `alt`, `width`/`height` e
+    `<figcaption>`) dentro de `[data-pc-galeria-trilho]` na seção `#telas`. O array `TELAS` foi removido do `main.js`;
+    `montarGaleria` lê os slides do DOM e só acrescenta controles, indicadores e o aviso (ajusta DEC007 e DEC008).
+  - **Sem moldura CSS nas imagens reais** (a PNG já traz a moldura); só a sombra sólida, sem desfoque, em
+    `--pc-azul-escuro` (`filter: drop-shadow`). A moldura CSS `.pc-celular` existe apenas no reservado "Tela em breve",
+    que o JS põe no lugar de imagem que não carregar (RN003), na mesma proporção 1:2.
+  - **Carrossel:** rolagem horizontal nativa com `scroll-snap` (arrastar/deslizar do navegador); "coverflow" leve — a
+    tela atual (`is-atual`) em tamanho cheio e as vizinhas com `scale(.86)` e `opacity: .45`; botões
+    "Tela anterior"/"Próxima tela" com volta circular (da última para a primeira e vice-versa); indicadores com
+    `aria-label` e `aria-current="true"` na tela atual; setas ← → do teclado com foco no carrossel; `aria-live="polite"`
+    anunciando "Tela N de 4: Nome" quando o usuário troca; **sem autoplay**; rolagem instantânea com movimento reduzido.
+  - **Sem JS:** as telas aparecem do mesmo jeito — lado a lado (4 colunas) quando a coluna é larga e numa faixa
+    rolável com `scroll-snap` no celular.
+  - CSS próprio em `css/galeria.css` (saiu de `components.css`), carregado logo depois de `components.css`.
+- **Motivo:** o usuário enviou as telas reais; com as imagens no HTML a galeria funciona sem JS e há um único lugar
+  para editar. O `scroll-snap` dá o arrastar nativo no celular sem biblioteca (DEC013, DEC019).
+- **Alternativas descartadas:** manter o array `TELAS` no JS (conteúdo some sem JS e fica duplicado); moldura CSS
+  sobre as PNG (moldura dupla); autoplay (atrapalha a leitura e a acessibilidade).
+- **Pendência:** conferir a rolagem suave dos botões/teclado em navegador real (Chrome, Firefox, Safari/iOS).

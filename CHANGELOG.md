@@ -16,6 +16,7 @@ e o projeto adota o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Baú "Peça rara" interativo na trilha: abre um balão e troca o mascote para o troféu.
 - Mini quiz "Experimente" com feedback imediato de acerto e erro (sem JS, resposta em "Ver resposta").
 - Página 404 para o GitHub Pages.
+- Galeria com as 4 telas reais do app em carrossel.
 
 ### Alterado
 - Site refeito (v2) no estilo de trilha gamificada, tema escuro, sem Bootstrap (a v1 fica no commit `0fc3109`).

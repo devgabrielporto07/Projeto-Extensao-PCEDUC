@@ -14,9 +14,10 @@
 - **Exemplo:** "O cérebro que executa as instruções." (pitch) — permitido; "Mais de 1.000 alunos já usam" — proibido.
 
 ## RN003 — Galeria mostra reservado se a imagem não existe
-- **Descrição:** cada item do array `TELAS` aponta para `assets/telas/tela-XX.png`. Se o arquivo não carregar
-  (evento `error` da imagem) ou o array estiver vazio, aparece o cartão "Tela em breve" no lugar.
-- **Entidades:** array `TELAS`, carrossel da seção `#telas`.
+- **Descrição:** as telas ficam no `index.html`, cada uma num `<figure class="pc-galeria__slide">` com a imagem
+  `assets/telas/tela-XX.png` (DEC038). Se o arquivo não carregar (evento `error` da imagem, ou falha antes de o JS
+  rodar), o JS troca a imagem pelo cartão "Tela em breve" (moldura CSS de celular, mesma proporção 1:2).
+- **Entidades:** slides `figure.pc-galeria__slide` da seção `#telas`, `montarGaleria` no `main.js`.
 - **Exemplo:** `tela-01.png` existe e `tela-02.png` não → slide 1 mostra a tela, slide 2 mostra "Tela em breve".
 
 ## RN004 — Equipe conforme o README

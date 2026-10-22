@@ -103,7 +103,7 @@ PNG transparentes 320×320 em `site/assets/img/mascote/` (fundo removido dos JPG
 | `errado` | `#experimente`, depois de errar |
 | `formado` | `#para-quem` |
 | `diploma` | `#equipe` |
-| `erro-404` | `404.html` (com `alt` descritivo — texto aguardando aval, DEC036) |
+| `erro-404` | `404.html` (com `alt` descritivo — texto aprovado pelo usuário em 2026-10-21, DEC036) |
 
 - **Tamanho** (variável local `--pc-mascote-tamanho`, definida no escopo do componente em `mascote.css`, não é token
   global): seções `clamp(6.5rem, 30vw, 8rem)` → 8,75rem (≥ 600px) → 9,5rem (≥ 1280px); trilha

@@ -34,7 +34,7 @@ e `Pitch/PC educ.pdf`.
 | **Público** | Estudantes (foco no ensino médio), professores, avaliadores do projeto de extensão |
 | **Plataforma** | Web — página de apresentação estática (uma página) |
 | **Arquitetura** | Estática, sem MVC/back-end (HTML + CSS + JS) |
-| **Versão** | **v2** — trilha gamificada inspirada na tela da trilha do Duolingo web, tema escuro (DEC013–DEC027) + tema claro com botão de alternar, padrão segue o sistema (DEC028–DEC030) + poses animadas do mascote, baú interativo, mini quiz "Experimente" e página 404 (DEC031–DEC037). No `index.html`, CSS em 6 arquivos carregados nesta ordem: `base` → `layout` → `components` → `trilha` → `mascote` → `quiz`, + `main.js` com `defer` (DEC020); a `404.html` carrega `base` → `components` → `mascote` → `erro`, sem JS externo (DEC036). A v1 (Bootstrap, tema claro) está no commit `0fc3109` |
+| **Versão** | **v2** — trilha gamificada inspirada na tela da trilha do Duolingo web, tema escuro (DEC013–DEC027) + tema claro com botão de alternar, padrão segue o sistema (DEC028–DEC030) + poses animadas do mascote, baú interativo, mini quiz "Experimente" e página 404 (DEC031–DEC037) + galeria com as 4 telas reais do app, que ficam no `index.html` (fonte única; o `main.js` só lê os slides do DOM e monta o carrossel — DEC038). No `index.html`, CSS em 7 arquivos carregados nesta ordem: `base` → `layout` → `components` → `galeria` → `trilha` → `mascote` → `quiz`, + `main.js` com `defer` (DEC020); a `404.html` carrega `base` → `components` → `mascote` → `erro`, sem JS externo (DEC036). A v1 (Bootstrap, tema claro) está no commit `0fc3109` |
 | **Linguagem e frameworks** | HTML5, CSS3 e JavaScript puro, sem framework e sem build (Bootstrap removido na v2 — DEC013); única dependência externa: Google Fonts |
 | **Gerência de estado** | Não se aplica |
 | **Hospedagem** | GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`) |
@@ -54,7 +54,8 @@ Projeto-Extensao-PCEDUC/
 │   ├── 404.html                  página de erro do Pages (caminhos absolutos — DEC036) → view
 │   ├── css/base.css              tokens --pc-* (tema escuro/claro), reset, tipografia, foco → view
 │   ├── css/layout.css            menu lateral, 3 colunas, faixa, abas, painel missões → view
-│   ├── css/components.css        componentes pc-* (cartões, botões 3D, galeria, equipe, download, rodapé) → view
+│   ├── css/components.css        componentes pc-* (cartões, botões 3D, equipe, download, rodapé) → view
+│   ├── css/galeria.css           galeria "Telas do app": scroll-snap, carrossel, reservado (DEC038) → view
 │   ├── css/trilha.css            trilha em zigue-zague: nós 3D, baú (botão), balões   → view
 │   ├── css/mascote.css           mascote nas seções e na trilha + animações (DEC033)  → view
 │   ├── css/quiz.css              mini quiz "Experimente" (DEC035)                     → view
@@ -64,7 +65,7 @@ Projeto-Extensao-PCEDUC/
 │       ├── img/benchware-wave.gif   mascote acenando no topo (cópia de assets/)
 │       ├── img/benchware.png        quadro parado (prefers-reduced-motion)
 │       ├── img/mascote/             11 poses PNG transparentes 320×320 (DEC031)
-│       └── telas/                   PNGs exportados do Figma (tela-01.png…)
+│       └── telas/                   4 telas reais do app, PNG 540×1080 com moldura de iPhone (tela-01…04.png, DEC038) + README.md
 ├── assets/                       mídia do README (original do mascote)
 ├── Documentação/ · Pitch/ · Diagrama/ · Wireframe-Baixa-Fidelidade/   material acadêmico
 ├── README.md · CHANGELOG.md · LICENSE · .gitignore
