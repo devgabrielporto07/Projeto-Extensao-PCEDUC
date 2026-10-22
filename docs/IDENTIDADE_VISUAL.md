@@ -21,7 +21,7 @@ A coluna "Uso" abaixo é do tema claro (v1); na v2 vale o tema escuro da §9, qu
 | `--pc-branco` | `#FFFFFF` | Branco | Fundo base, texto sobre azul escuro |
 
 Overrides do Bootstrap (`--bs-*`, DEC004): **removidos na v2** (DEC013 — o site não usa mais Bootstrap).
-Não criar variáveis `--bs-*`; use só os tokens `--pc-*`. A tabela original fica no histórico do Git (commit `0fc3109`).
+Não criar variáveis `--bs-*`; use só os tokens `--pc-*`. A tabela original fica no histórico do Git (commit `be16dfc`).
 
 ## 2. Tipografia
 

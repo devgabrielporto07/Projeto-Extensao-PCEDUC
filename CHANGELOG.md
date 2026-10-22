@@ -19,7 +19,7 @@ e o projeto adota o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Galeria com as 4 telas reais do app em carrossel.
 
 ### Alterado
-- Site refeito (v2) no estilo de trilha gamificada, tema escuro, sem Bootstrap (a v1 fica no commit `0fc3109`).
+- Site refeito (v2) no estilo de trilha gamificada, tema escuro, sem Bootstrap (a v1 fica no commit `be16dfc`).
 - Professor orientador na equipe: Professor Daniel (@danielccosta9).
 
 ### Removido

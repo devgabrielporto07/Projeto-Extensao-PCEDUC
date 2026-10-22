@@ -5,7 +5,7 @@ Status: `planejada` · `em andamento` · `pronta`. Fontes: **README** (`README.m
 Os textos abaixo são a base; o agente view pode encurtar, mas não inventar conteúdo (RN002).
 
 **v2** (DEC013–DEC027): estilo de trilha gamificada inspirado na tela da trilha do Duolingo web (DEC014), tema
-escuro, sem Bootstrap. A v1 (Bootstrap, tema claro) fica no commit `0fc3109`. O conteúdo das seções não mudou.
+escuro, sem Bootstrap. A v1 (Bootstrap, tema claro) fica no commit `be16dfc`. O conteúdo das seções não mudou.
 
 ## Seções da página (ordem — DEC005)
 

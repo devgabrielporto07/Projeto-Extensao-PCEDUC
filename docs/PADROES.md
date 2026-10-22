@@ -1,6 +1,6 @@
 # Padrões — Site demonstrativo do PCEDUC
 
-Vale para a **v2** do site (HTML5, CSS3 e JavaScript puro, sem Bootstrap — DEC013). A v1 está no commit `0fc3109`.
+Vale para a **v2** do site (HTML5, CSS3 e JavaScript puro, sem Bootstrap — DEC013). A v1 está no commit `be16dfc`.
 
 ## 1. Organização de `site/`
 

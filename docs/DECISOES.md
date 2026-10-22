@@ -88,7 +88,7 @@
 
 ## Versão 2 do site (2026-10-21)
 
-A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões abaixo valem para a v2.
+A v1 (Bootstrap, tema claro) fica preservada no commit `be16dfc`. As decisões abaixo valem para a v2.
 
 ## DEC013 — Bootstrap removido: só HTML5, CSS3 e JavaScript puro
 - **Data:** 2026-10-21
