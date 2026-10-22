@@ -36,5 +36,6 @@ escuro, sem Bootstrap. A v1 (Bootstrap, tema claro) fica no commit `0fc3109`. O 
 | F018 | Faixa da seção atual + destaque no menu | pronta | Faixa azul fixa no topo da coluna central (estilo "Seção 2, Unidade 7") com o nome da seção visível; o item correspondente do menu lateral/abas recebe `aria-current="true"` (fundo `--pc-azul-translucido`; `IntersectionObserver`, DEC018). Faixa só no desktop e `aria-hidden` (DEC023) |
 | F019 | Barras das missões | pronta | Cada missão do painel tem barra amarela (`--pc-amarelo`) que enche conforme a rolagem da página; texto da missão sempre visível; sem transição com movimento reduzido (DEC016) |
 | F020 | Balão das peças da trilha | pronta | Peça = `<button>` com `aria-expanded`/`aria-controls`; clique, Enter ou Espaço abre o balão com a descrição; Esc ou clique fora fecha e devolve o foco; um balão aberto por vez; sem JS, descrições visíveis (DEC017) |
+| F021 | Alternar tema claro/escuro | pronta | Segue `prefers-color-scheme` por padrão; botão sol/lua (desktop: menu lateral abaixo do logo; mobile: cabeçalho à direita do logo) alterna e salva em `localStorage` `'pc-tema'`; `data-tema` no `<html>`; script inline no `<head>` evita flash; sem JS o botão some e vale o sistema (DEC028–DEC030, `IDENTIDADE_VISUAL.md` §10) |
 
 Specs e tickets: `docs/specs/` e `docs/tickets/` (ainda vazios).

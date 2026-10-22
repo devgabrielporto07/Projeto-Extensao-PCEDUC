@@ -112,6 +112,7 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
   cores do **DEC004**.
 - **Motivo:** aproxima da referência (DEC014) e valoriza o verde neon e o amarelo, que no fundo escuro têm ótimo contraste.
 - **Alternativas descartadas:** tema claro da v1; alternar claro/escuro (complexidade sem pedido).
+- **Nota:** complementada por **DEC028** — o tema escuro continua, agora ao lado de um tema claro com botão de alternar.
 
 ## DEC016 — Layout: 3 colunas no desktop, abas inferiores no mobile
 - **Data:** 2026-10-21
@@ -212,3 +213,39 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
 - **Decisão:** o Benchware ao lado da trilha (DEC017) só aparece quando o JS marca a trilha como interativa
   (`pc-trilha--interativa`). Sem JS, ele recebe `display: none`.
 - **Motivo:** sem JS os balões das peças ficam abertos (conteúdo sempre legível) e cobririam o mascote, que é decorativo.
+
+## DEC028 — Tema claro e escuro com botão de alternar
+- **Data:** 2026-10-21
+- **Decisão:** o site passa a ter **tema claro e tema escuro** (complementa DEC015).
+  - **Padrão:** segue o sistema (`prefers-color-scheme`).
+  - **Botão sol/lua** (`<button class="pc-tema" data-pc-tema>`): no desktop fica no menu lateral, abaixo do logo; no
+    mobile, no cabeçalho, à direita do logo. O rótulo (leitor de tela + `title`) diz a **ação**
+    ("Ativar tema claro" / "Ativar tema escuro") e o ícone mostra o tema que será ativado.
+  - **Escolha salva** em `localStorage`, chave `'pc-tema'`, valores `'claro'` ou `'escuro'`; acesso sempre em
+    `try/catch` (com o armazenamento bloqueado, a escolha vale só até recarregar).
+  - A escolha vira `data-tema="claro"|"escuro"` no `<html>` e tem prioridade sobre o sistema; as metas
+    `theme-color` acompanham o fundo do tema escolhido.
+  - **Sem JS** o botão não aparece (`hidden`, removido pelo `main.js`) e o site segue o sistema.
+  - Tokens do tema claro e tokens semânticos novos: `IDENTIDADE_VISUAL.md` §10.
+- **Motivo:** pedido do usuário; dá escolha a quem prefere fundo claro sem abrir mão do tema escuro da v2.
+- **Alternativas descartadas:** só seguir o sistema, sem botão (não deixa escolher); cookie (site estático, sem servidor para ler).
+
+## DEC029 — Exceção à regra "sem `<script>` inline": script de tema no `<head>`
+- **Data:** 2026-10-21
+- **Decisão:** um script inline **mínimo** no `<head>`, **antes dos CSS**, lê `localStorage['pc-tema']` (em
+  `try/catch`) e aplica `data-tema` e a cor das metas `theme-color` antes da primeira pintura. É a única exceção à
+  regra de `PADROES.md` §1 (além de JSON-LD, se houver). O resto do comportamento do tema fica em `configurarTema()`
+  no `main.js`.
+- **Motivo:** o `main.js` usa `defer`; aplicando o tema só nele, quem escolheu o tema oposto ao do sistema veria a
+  página piscar no tema errado a cada carregamento.
+- **Alternativas descartadas:** aplicar o tema só no `main.js` (flash); arquivo externo síncrono no `<head>`
+  (requisição bloqueante extra para poucas linhas).
+
+## DEC030 — Foco, menu lateral e cartões no tema claro
+- **Data:** 2026-10-21
+- **Decisão:** no tema claro:
+  - **foco** passa a `3px solid #1D66B8` (`--pc-azul-escuro`, 5,76:1 sobre branco) — o contorno amarelo do escuro
+    daria só 1,55:1 sobre branco;
+  - **menu lateral** com fundo branco;
+  - **cartões** com sombra sólida `0 4px 0 var(--pc-borda)` (token `--pc-sombra-superficie`).
+- **Motivo:** manter o foco visível em WCAG 2.1 AA (≥ 3:1) e a leitura de "cartão 3D" da v2 sobre fundo branco.

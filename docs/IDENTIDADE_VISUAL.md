@@ -187,3 +187,57 @@ Calculado pela fórmula de luminância relativa da WCAG (`(L1 + 0,05) / (L2 + 0,
 | `#141414` sobre `#3391E0` | 5,50:1 | OK (AA) |
 | `#FFFFFF` sobre `#1D66B8` | 5,76:1 | OK (AA) |
 | `#1D66B8` sobre `#141414` (complementar) | 3,20:1 | Só texto grande / forma de botão |
+
+## 10. Tema claro (DEC028–DEC030)
+
+O tema escuro (§9) continua sendo a base. O claro vale quando o sistema pede (`prefers-color-scheme: light`) sem
+escolha salva, ou quando o `<html>` tem `data-tema="claro"`. Definido em `site/css/base.css`.
+
+### 10.1 Tokens que mudam no claro
+
+| Token | Escuro | Claro |
+|---|---|---|
+| `--pc-fundo` | `#141414` | `#FFFFFF` |
+| `--pc-superficie` | `#141414` | `#FFFFFF` |
+| `--pc-borda` | `#4A5868` | `#4A5868` (mantido; no claro também serve de texto suave) |
+| `--pc-texto` | `#FFFFFF` | `#141414` |
+| `--pc-texto-suave` | `#DCEBFD` | `#4A5868` |
+| `--pc-foco` | `3px solid` amarelo (`#FFC83D`) | `3px solid` azul-escuro (`#1D66B8`) — DEC030 |
+
+### 10.2 Tokens semânticos novos
+
+| Token | Escuro | Claro |
+|---|---|---|
+| `--pc-destaque-texto` | `--pc-azul` | `--pc-azul-escuro` |
+| `--pc-destaque-verde-texto` | `--pc-verde` | `--pc-azul-escuro` |
+| `--pc-destaque-amarelo-texto` | `--pc-amarelo` | `--pc-preto` |
+| `--pc-link-hover` | `--pc-azul-claro` | `--pc-preto` |
+| `--pc-ativo-fundo` | `--pc-azul-translucido` | `--pc-azul-claro` |
+| `--pc-superficie-alt` | `--pc-preto` | `--pc-azul-claro` |
+| `--pc-sombra-superficie` | `none` | `0 4px 0 var(--pc-borda)` |
+| `--pc-anel-azul` / `--pc-anel-verde` / `--pc-anel-amarelo` | cor do nó (`--pc-azul` / `--pc-verde` / `--pc-amarelo`) | `--pc-azul-escuro` / `--pc-verde-escuro` / `--pc-cinza` |
+
+**Regra:** nunca usar `--pc-verde`, `--pc-amarelo` ou `--pc-azul` direto como cor de **texto** — usar os tokens
+`--pc-destaque-*`, que trocam de cor no tema claro. As cores da paleta continuam livres como fundo de botão/nó,
+preenchimento e decoração.
+
+### 10.3 Contraste no tema claro (WCAG 2.1)
+
+| Cor sobre fundo | Razão | Resultado |
+|---|---|---|
+| `#141414` sobre `#FFFFFF` | 18,42:1 | OK (AAA) |
+| `#4A5868` sobre `#FFFFFF` | 7,27:1 | OK (AAA) |
+| `#1D66B8` sobre `#FFFFFF` | 5,76:1 | OK (AA) |
+| `#1D66B8` sobre `#DCEBFD` | 4,76:1 | OK (AA) |
+| `#141414` sobre `#DCEBFD` | 15,22:1 | OK (AAA) |
+| `#4A5868` sobre `#DCEBFD` | 6,01:1 | OK (AA) |
+| `#FFFFFF` sobre `#1D66B8` | 5,76:1 | OK (AA) |
+| `#DCEBFD` sobre `#1D66B8` | 4,76:1 | OK (AA) |
+| `#141414` sobre `#33FF00` / `#FFC83D` / `#3391E0` | 13,55:1 / 11,91:1 / 5,50:1 | OK (ícone/texto dentro de botões e nós) |
+| `#1E9E00` sobre `#FFFFFF` | 3,53:1 | Só elemento gráfico / texto grande |
+| `#3391E0` sobre `#FFFFFF` | 3,35:1 | Só elemento gráfico / texto grande |
+| `#33FF00` sobre `#FFFFFF` | 1,36:1 | **Nunca texto** |
+| `#FFC83D` sobre `#FFFFFF` | 1,55:1 | **Nunca texto** |
+
+Nós e botões verde-neon/amarelo ficam abaixo de 3:1 sobre branco como forma; continuam identificáveis pelo ícone
+preto (`#141414`, ≥ 11:1 dentro deles), pelo rótulo e pela sombra 3D/anel escuro (`--pc-anel-*`).

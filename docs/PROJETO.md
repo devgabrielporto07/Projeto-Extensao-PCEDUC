@@ -34,7 +34,7 @@ e `Pitch/PC educ.pdf`.
 | **Público** | Estudantes (foco no ensino médio), professores, avaliadores do projeto de extensão |
 | **Plataforma** | Web — página de apresentação estática (uma página) |
 | **Arquitetura** | Estática, sem MVC/back-end (HTML + CSS + JS) |
-| **Versão** | **v2** — trilha gamificada inspirada na tela da trilha do Duolingo web, tema escuro (DEC013–DEC027). CSS em 4 arquivos carregados nesta ordem: `base` → `layout` → `components` → `trilha`, + `main.js` com `defer` (DEC020). A v1 (Bootstrap, tema claro) está no commit `0fc3109` |
+| **Versão** | **v2** — trilha gamificada inspirada na tela da trilha do Duolingo web, tema escuro (DEC013–DEC027) + tema claro com botão de alternar, padrão segue o sistema (DEC028–DEC030). CSS em 4 arquivos carregados nesta ordem: `base` → `layout` → `components` → `trilha`, + `main.js` com `defer` (DEC020). A v1 (Bootstrap, tema claro) está no commit `0fc3109` |
 | **Linguagem e frameworks** | HTML5, CSS3 e JavaScript puro, sem framework e sem build (Bootstrap removido na v2 — DEC013); única dependência externa: Google Fonts |
 | **Gerência de estado** | Não se aplica |
 | **Hospedagem** | GitHub Pages via GitHub Actions (`.github/workflows/pages.yml`) |
