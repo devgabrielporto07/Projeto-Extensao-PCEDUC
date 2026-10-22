@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <!--
-  PCEDUC — site demonstrativo (página única).
-  Apresenta o app: o que é, como funciona, o que se aprende, telas, equipe e download.
+  PCEDUC — site demonstrativo (página única, v2: HTML5 + CSS3 + JS puro).
+  Layout inspirado em trilhas de apps de idiomas: menu lateral, trilha central e painel de missões.
   Textos vêm só do README, do pitch e do documento de requisitos (RN002).
 -->
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- viewport-fit=cover: libera env(safe-area-inset-bottom) para a barra de abas no iOS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>PCEDUC — Aprenda hardware jogando</title>
   <meta name="description" content="PCEDUC: aplicativo educativo para aprender hardware jogando, com trilhas, pontos e conquistas. Projeto de extensão da UNINASSAU Campina Grande — Ciência da Computação.">
-  <meta name="theme-color" content="#1D66B8">
+  <meta name="theme-color" content="#141414">
 
   <!-- Open Graph: og:image precisa de URL absoluta; aponta para o endereço padrão do GitHub Pages (DEC002) -->
   <meta property="og:type" content="website">
@@ -24,329 +25,395 @@
   <!-- Fontes: Pixelify Sans (títulos) e Chakra Petch (textos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Pixelify+Sans:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Pixelify+Sans:wght@400&display=swap">
 
-  <!-- DEC003: Bootstrap 5.3.3 com versão fixa e SRI -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/trilha.css">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="pc-skip" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- ===== Navbar ===== -->
-  <header class="pc-header sticky-top">
-    <nav class="navbar navbar-expand-xl pc-navbar" data-bs-theme="dark" aria-label="Principal">
-      <div class="container">
-        <a class="navbar-brand pc-navbar__marca" href="#topo">PCEDUC</a>
-        <button class="navbar-toggler pc-navbar__botao" type="button" data-bs-toggle="collapse" data-bs-target="#pc-menu" aria-controls="pc-menu" aria-expanded="false" aria-label="Abrir menu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="pc-menu">
-          <ul class="navbar-nav ms-auto align-items-xl-center pc-navbar__lista">
-            <li class="nav-item"><a class="nav-link" href="#o-que-e">O que é</a></li>
-            <li class="nav-item"><a class="nav-link" href="#como-funciona">Como funciona</a></li>
-            <li class="nav-item"><a class="nav-link" href="#o-que-se-aprende">O que se aprende</a></li>
-            <li class="nav-item"><a class="nav-link" href="#para-quem">Para quem é</a></li>
-            <li class="nav-item"><a class="nav-link" href="#galeria">Telas</a></li>
-            <li class="nav-item"><a class="nav-link" href="#equipe">Equipe</a></li>
-            <li class="nav-item pc-navbar__cta"><a class="nav-link pc-btn pc-btn--destaque" href="#download">Baixar o app</a></li>
-          </ul>
-        </div>
-      </div>
+  <!-- ===== Ícones (sprite SVG reaproveitado por <use>) ===== -->
+  <svg class="pc-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-inicio" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
+    <symbol id="i-porque" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5"/><path d="M12 17.5v.01"/></symbol>
+    <symbol id="i-oque" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-como" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+    <symbol id="i-quem" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></symbol>
+    <symbol id="i-telas" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+    <symbol id="i-equipe" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17.5 14c2.5.3 4 2.3 4 5"/></symbol>
+    <symbol id="i-baixar" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-trilha" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></symbol>
+    <symbol id="i-xp" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-medalha" viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M8 3l2.5 6.5M16 3l-2.5 6.5M8 3h8"/><path d="M12 12.5l.8 1.7 1.8.2-1.3 1.2.3 1.8-1.6-.9-1.6.9.3-1.8-1.3-1.2 1.8-.2z"/></symbol>
+    <symbol id="i-peca" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></symbol>
+    <!-- Baú: o corpo herda fill (amarelo) do <svg>; a fechadura usa currentColor (preto) -->
+    <symbol id="i-bau" viewBox="0 0 48 48"><path d="M6 20v-6a8 8 0 0 1 8-8h20a8 8 0 0 1 8 8v6z"/><rect x="6" y="20" width="36" height="22" rx="2"/><path d="M6 25h36"/><rect x="20" y="19" width="8" height="11" rx="1.5" fill="currentColor"/></symbol>
+  </svg>
+
+  <!-- ===== Menu lateral (desktop) / cabeçalho com logo (mobile) ===== -->
+  <header class="pc-lateral">
+    <a class="pc-logo" href="#topo">PCEDUC</a>
+    <nav class="pc-lateral__nav" aria-label="Seções">
+      <ul class="pc-lista-limpa pc-lateral__lista">
+        <li><a class="pc-lateral__link" href="#topo"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-inicio"/></svg><span class="pc-lateral__rotulo">Início</span></a></li>
+        <li><a class="pc-lateral__link" href="#por-que"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-porque"/></svg><span class="pc-lateral__rotulo">Por quê</span></a></li>
+        <li><a class="pc-lateral__link" href="#o-que-e"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-oque"/></svg><span class="pc-lateral__rotulo">O que é</span></a></li>
+        <li><a class="pc-lateral__link" href="#como-funciona"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-como"/></svg><span class="pc-lateral__rotulo">Como funciona</span></a></li>
+        <li><a class="pc-lateral__link" href="#o-que-se-aprende"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-chip"/></svg><span class="pc-lateral__rotulo">O que se aprende</span></a></li>
+        <li><a class="pc-lateral__link" href="#para-quem"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-quem"/></svg><span class="pc-lateral__rotulo">Para quem</span></a></li>
+        <li><a class="pc-lateral__link" href="#telas"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-telas"/></svg><span class="pc-lateral__rotulo">Telas</span></a></li>
+        <li><a class="pc-lateral__link" href="#equipe"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-equipe"/></svg><span class="pc-lateral__rotulo">Equipe</span></a></li>
+        <li><a class="pc-lateral__link" href="#download"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-baixar"/></svg><span class="pc-lateral__rotulo">Baixar</span></a></li>
+      </ul>
     </nav>
   </header>
 
-  <main id="conteudo">
-    <!-- ===== Topo / hero (F001) ===== -->
-    <section class="pc-hero" id="topo" aria-labelledby="titulo-topo">
-      <div class="container">
-        <div class="row align-items-center g-4 g-lg-5">
-          <div class="col-lg-5 order-lg-2 text-center">
-            <!-- DEC009: com movimento reduzido, mostra o quadro parado -->
-            <picture>
-              <source srcset="assets/img/benchware.png" media="(prefers-reduced-motion: reduce)">
-              <img class="pc-hero__mascote" src="assets/img/benchware-wave.gif" alt="Benchware, o mascote do PCEDUC, acenando" width="424" height="236">
-            </picture>
-          </div>
-          <div class="col-lg-7 order-lg-1">
-            <h1 class="pc-hero__titulo" id="titulo-topo">Aprenda hardware jogando</h1>
-            <p class="pc-hero__subtitulo">Trilhas, pontos e conquistas.</p>
-            <p class="pc-hero__texto">O PCEDUC é um aplicativo educativo para crianças, adolescentes e adultos.</p>
-            <div class="pc-hero__acoes">
-              <a class="pc-btn pc-btn--destaque" href="#download">Baixar o app</a>
-              <a class="pc-btn pc-btn--secundario" href="#como-funciona">Como funciona</a>
-            </div>
-            <p class="pc-hero__instituicao">Projeto de extensão da UNINASSAU Campina Grande — Ciência da Computação</p>
-          </div>
+  <div class="pc-palco">
+    <main class="pc-conteudo" id="conteudo">
+      <!--
+        Faixa da seção atual (só desktop). É decorativa e repete os títulos das seções,
+        por isso fica fora da árvore de acessibilidade e não é anunciada a cada rolagem.
+      -->
+      <div class="pc-faixa" aria-hidden="true">
+        <div class="pc-faixa__caixa">
+          <span class="pc-faixa__numero" data-pc-faixa-numero>Seção 1</span>
+          <span class="pc-faixa__nome" data-pc-faixa-nome>Início</span>
         </div>
       </div>
-    </section>
 
-    <!-- ===== Por que ensinar hardware? (F002) ===== -->
-    <section class="pc-secao pc-secao--escura" id="por-que" aria-labelledby="titulo-por-que">
-      <div class="container">
-        <div class="pc-por-que">
+      <!-- ===== 1. Topo / hero (F001) ===== -->
+      <section class="pc-secao pc-hero" id="topo" aria-labelledby="titulo-topo">
+        <!-- DEC009: com movimento reduzido, mostra o quadro parado -->
+        <picture>
+          <source srcset="assets/img/benchware.png" media="(prefers-reduced-motion: reduce)">
+          <img class="pc-hero__mascote" src="assets/img/benchware-wave.gif" alt="Benchware, o mascote do PCEDUC, acenando" width="424" height="236">
+        </picture>
+        <h1 class="pc-hero__titulo" id="titulo-topo">Aprenda hardware jogando</h1>
+        <p class="pc-hero__subtitulo">Trilhas, pontos e conquistas.</p>
+        <p class="pc-hero__texto">O PCEDUC é um aplicativo educativo para crianças, adolescentes e adultos.</p>
+        <div class="pc-hero__acoes">
+          <a class="pc-btn pc-btn--verde pc-btn--grande" href="#download">Baixar o app</a>
+          <a class="pc-btn pc-btn--contorno pc-btn--grande" href="#como-funciona">Como funciona</a>
+        </div>
+        <p class="pc-hero__instituicao">Projeto de extensão da UNINASSAU Campina Grande — Ciência da Computação</p>
+      </section>
+
+      <!-- ===== 2. Por que ensinar hardware? (F002) ===== -->
+      <section class="pc-secao" id="por-que" aria-labelledby="titulo-por-que">
+        <div class="pc-card pc-por-que pc-revelar">
           <h2 class="pc-secao__titulo" id="titulo-por-que">Por que ensinar hardware?</h2>
           <p class="pc-por-que__destaque">Usamos computadores todos os dias, mas poucos sabem como eles funcionam por dentro.</p>
           <p class="pc-por-que__texto">O PCEDUC transforma essa <span class="pc-sublinhado">curiosidade em aprendizado</span>, passo a passo e sem complicação.</p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== O que é o PCEDUC (F003) ===== -->
-    <section class="pc-secao" id="o-que-e" aria-labelledby="titulo-o-que-e">
-      <div class="container">
+      <!-- ===== 3. O que é o PCEDUC (F003) ===== -->
+      <section class="pc-secao" id="o-que-e" aria-labelledby="titulo-o-que-e">
         <h2 class="pc-secao__titulo" id="titulo-o-que-e">O que é o PCEDUC?</h2>
-        <div class="row g-4">
-          <div class="col-md-6">
-            <article class="pc-card pc-revelar h-100">
-              <h3 class="pc-card__titulo">Um app que ensina jogando</h3>
-              <p class="pc-card__texto">Aplicativo no estilo do Duolingo: o conteúdo é dividido em trilhas de aprendizado, e cada lição concluída rende pontos e conquistas.</p>
-            </article>
-          </div>
-          <div class="col-md-6">
-            <article class="pc-card pc-revelar h-100">
-              <h3 class="pc-card__titulo">Foco em hardware</h3>
-              <p class="pc-card__texto">Explica o que cada componente do computador faz e como ele funciona, de forma simples e visual.</p>
-            </article>
-          </div>
+        <div class="pc-grade pc-grade--2">
+          <article class="pc-card pc-revelar">
+            <h3 class="pc-card__titulo">Um app que ensina jogando</h3>
+            <p class="pc-card__texto">Aplicativo no estilo do Duolingo: o conteúdo é dividido em trilhas de aprendizado, e cada lição concluída rende pontos e conquistas.</p>
+          </article>
+          <article class="pc-card pc-revelar">
+            <h3 class="pc-card__titulo">Foco em hardware</h3>
+            <p class="pc-card__texto">Explica o que cada componente do computador faz e como ele funciona, de forma simples e visual.</p>
+          </article>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== Como funciona (F004) ===== -->
-    <section class="pc-secao pc-secao--clara" id="como-funciona" aria-labelledby="titulo-como-funciona">
-      <div class="container">
+      <!-- ===== 4. Como funciona (F004) ===== -->
+      <section class="pc-secao" id="como-funciona" aria-labelledby="titulo-como-funciona">
         <h2 class="pc-secao__titulo" id="titulo-como-funciona">Como funciona</h2>
         <!-- Lista ordenada: a sequência dos passos tem significado (trilha → XP → conquistas → peças) -->
-        <ol class="pc-trilha">
-          <li class="pc-trilha__passo">
-            <span class="pc-trilha__numero" aria-hidden="true">1</span>
-            <article class="pc-card pc-revelar">
-              <h3 class="pc-card__titulo">Trilhas de aprendizado</h3>
+        <ol class="pc-lista-limpa pc-passos">
+          <li class="pc-card pc-passo pc-revelar">
+            <span class="pc-selo-icone pc-selo-icone--azul" aria-hidden="true"><svg class="pc-icone"><use href="#i-trilha"/></svg></span>
+            <div>
+              <h3 class="pc-card__titulo"><span class="pc-passo__numero">1.</span> Trilhas de aprendizado</h3>
               <p class="pc-card__texto">Lições organizadas em sequência: cada trilha leva você um passo adiante.</p>
-            </article>
+            </div>
           </li>
-          <li class="pc-trilha__passo">
-            <span class="pc-trilha__numero pc-trilha__numero--xp" aria-hidden="true">2</span>
-            <article class="pc-card pc-revelar">
-              <h3 class="pc-card__titulo">Pontuação (XP)</h3>
+          <li class="pc-card pc-passo pc-revelar">
+            <span class="pc-selo-icone pc-selo-icone--verde" aria-hidden="true"><svg class="pc-icone"><use href="#i-xp"/></svg></span>
+            <div>
+              <h3 class="pc-card__titulo"><span class="pc-passo__numero">2.</span> Pontuação (XP)</h3>
               <p class="pc-card__texto">Cada acerto gera XP, que se acumula e define o seu nível. Cada lição concluída mostra o seu progresso.</p>
-            </article>
+            </div>
           </li>
-          <li class="pc-trilha__passo">
-            <span class="pc-trilha__numero pc-trilha__numero--conquista" aria-hidden="true">3</span>
-            <article class="pc-card pc-revelar">
-              <h3 class="pc-card__titulo">Conquistas</h3>
+          <li class="pc-card pc-passo pc-revelar">
+            <span class="pc-selo-icone pc-selo-icone--amarelo" aria-hidden="true"><svg class="pc-icone"><use href="#i-medalha"/></svg></span>
+            <div>
+              <h3 class="pc-card__titulo"><span class="pc-passo__numero">3.</span> Conquistas</h3>
               <p class="pc-card__texto">Medalhas e marcos recompensam a dedicação e motivam a continuar.</p>
-            </article>
+            </div>
           </li>
-          <li class="pc-trilha__passo">
-            <span class="pc-trilha__numero" aria-hidden="true">4</span>
-            <article class="pc-card pc-revelar">
-              <h3 class="pc-card__titulo">Peças colecionáveis</h3>
+          <li class="pc-card pc-passo pc-revelar">
+            <span class="pc-selo-icone pc-selo-icone--claro" aria-hidden="true"><svg class="pc-icone"><use href="#i-peca"/></svg></span>
+            <div>
+              <h3 class="pc-card__titulo"><span class="pc-passo__numero">4.</span> Peças colecionáveis</h3>
               <p class="pc-card__texto">Ao concluir trilhas ou atingir metas de XP, você ganha peças virtuais que montam um PC completo no seu perfil. Às vezes, uma peça rara aparece como recompensa-surpresa.</p>
-            </article>
+            </div>
           </li>
         </ol>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== O que se aprende (F005) ===== -->
-    <section class="pc-secao" id="o-que-se-aprende" aria-labelledby="titulo-o-que-se-aprende">
-      <div class="container">
-        <h2 class="pc-secao__titulo" id="titulo-o-que-se-aprende">O que se aprende</h2>
-        <ul class="row g-4 pc-pecas">
-          <li class="col-sm-6 col-lg-4">
-            <article class="pc-card pc-peca pc-revelar h-100">
-              <span class="pc-peca__icone" aria-hidden="true">
-                <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="6" y="6" width="36" height="36" rx="3"/><rect x="12" y="12" width="12" height="12"/><path d="M30 12h6M30 18h6M12 30h24M12 36h16"/></svg>
-              </span>
-              <h3 class="pc-card__titulo">Placa-mãe</h3>
-              <p class="pc-card__texto">Conecta e integra todos os componentes.</p>
-            </article>
-          </li>
-          <li class="col-sm-6 col-lg-4">
-            <article class="pc-card pc-peca pc-revelar h-100">
-              <span class="pc-peca__icone" aria-hidden="true">
-                <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="13" y="13" width="22" height="22" rx="2"/><rect x="19" y="19" width="10" height="10"/><path d="M18 6v7M24 6v7M30 6v7M18 35v7M24 35v7M30 35v7M6 18h7M6 24h7M6 30h7M35 18h7M35 24h7M35 30h7"/></svg>
-              </span>
-              <h3 class="pc-card__titulo">Processador</h3>
-              <p class="pc-card__texto">O cérebro que executa as instruções.</p>
-            </article>
-          </li>
-          <li class="col-sm-6 col-lg-4">
-            <article class="pc-card pc-peca pc-revelar h-100">
-              <span class="pc-peca__icone" aria-hidden="true">
-                <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="4" y="12" width="40" height="22" rx="2"/><circle cx="16" cy="23" r="6"/><circle cx="32" cy="23" r="6"/><path d="M10 34v5M16 34v5M22 34v5M28 34v5"/></svg>
-              </span>
-              <h3 class="pc-card__titulo">Placa de vídeo</h3>
-              <p class="pc-card__texto">Gera as imagens exibidas na tela.</p>
-            </article>
-          </li>
-          <li class="col-sm-6 col-lg-4">
-            <article class="pc-card pc-peca pc-revelar h-100">
-              <span class="pc-peca__icone" aria-hidden="true">
-                <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="4" y="14" width="40" height="18" rx="2"/><path d="M10 20h6v6h-6zM21 20h6v6h-6zM32 20h6v6h-6zM9 32v5M15 32v5M21 32v5M27 32v5M33 32v5M39 32v5"/></svg>
-              </span>
-              <h3 class="pc-card__titulo">Memória RAM</h3>
-              <p class="pc-card__texto">Guarda os dados em uso no momento.</p>
-            </article>
-          </li>
-          <li class="col-sm-6 col-lg-4">
-            <article class="pc-card pc-peca pc-revelar h-100">
-              <span class="pc-peca__icone" aria-hidden="true">
-                <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="8" y="6" width="32" height="36" rx="3"/><circle cx="24" cy="21" r="8"/><circle cx="24" cy="21" r="1.5"/><path d="M14 36h8"/></svg>
-              </span>
-              <h3 class="pc-card__titulo">Armazenamento</h3>
-              <p class="pc-card__texto">Mantém arquivos e programas salvos.</p>
-            </article>
-          </li>
-          <li class="col-sm-6 col-lg-4">
-            <article class="pc-card pc-peca pc-revelar h-100">
-              <span class="pc-peca__icone" aria-hidden="true">
-                <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="6" y="10" width="36" height="28" rx="3"/><path d="M26 15l-7 10h8l-5 9"/></svg>
-              </span>
-              <h3 class="pc-card__titulo">Fonte de energia</h3>
-              <p class="pc-card__texto">Fornece energia a cada peça.</p>
-            </article>
-          </li>
+      <!--
+        ===== Painel de missões =====
+        No desktop vira a coluna direita fixa; no mobile aparece aqui, logo após "Como funciona".
+        As barras enchem conforme a rolagem da página (cada missão = 1/4 do percurso).
+      -->
+      <aside class="pc-painel" id="missoes" aria-labelledby="titulo-missoes">
+        <div class="pc-card pc-missoes">
+          <h2 class="pc-missoes__titulo" id="titulo-missoes">Missões do PCEDUC</h2>
+          <p class="pc-sr">As barras são ilustrativas e enchem conforme você rola a página.</p>
+          <ol class="pc-lista-limpa pc-missoes__lista">
+            <li class="pc-missao">
+              <span class="pc-selo-icone pc-selo-icone--azul" aria-hidden="true"><svg class="pc-icone"><use href="#i-trilha"/></svg></span>
+              <div class="pc-missao__corpo">
+                <span class="pc-missao__titulo">Trilhas de aprendizado</span>
+                <span class="pc-barra" aria-hidden="true"><span class="pc-barra__preenchimento" data-pc-barra></span></span>
+              </div>
+              <svg class="pc-missao__bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
+            </li>
+            <li class="pc-missao">
+              <span class="pc-selo-icone pc-selo-icone--verde" aria-hidden="true"><svg class="pc-icone"><use href="#i-xp"/></svg></span>
+              <div class="pc-missao__corpo">
+                <span class="pc-missao__titulo">Pontuação (XP)</span>
+                <span class="pc-barra" aria-hidden="true"><span class="pc-barra__preenchimento" data-pc-barra></span></span>
+              </div>
+              <svg class="pc-missao__bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
+            </li>
+            <li class="pc-missao">
+              <span class="pc-selo-icone pc-selo-icone--amarelo" aria-hidden="true"><svg class="pc-icone"><use href="#i-medalha"/></svg></span>
+              <div class="pc-missao__corpo">
+                <span class="pc-missao__titulo">Conquistas</span>
+                <span class="pc-barra" aria-hidden="true"><span class="pc-barra__preenchimento" data-pc-barra></span></span>
+              </div>
+              <svg class="pc-missao__bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
+            </li>
+            <li class="pc-missao">
+              <span class="pc-selo-icone pc-selo-icone--claro" aria-hidden="true"><svg class="pc-icone"><use href="#i-peca"/></svg></span>
+              <div class="pc-missao__corpo">
+                <span class="pc-missao__titulo">Peças colecionáveis</span>
+                <span class="pc-barra" aria-hidden="true"><span class="pc-barra__preenchimento" data-pc-barra></span></span>
+              </div>
+              <svg class="pc-missao__bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
+            </li>
+          </ol>
+        </div>
+        <!-- Links rápidos do painel (só desktop; no mobile o rodapé já traz os mesmos links) -->
+        <ul class="pc-lista-limpa pc-painel__links">
+          <li><a href="https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC" target="_blank" rel="noopener">Repositório<span class="pc-sr"> no GitHub (abre em nova aba)</span></a></li>
+          <li><a href="https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC/blob/master/LICENSE" target="_blank" rel="noopener">Licença<span class="pc-sr"> Apache 2.0 (abre em nova aba)</span></a></li>
+          <li><a href="https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&amp;t=ofcFB11myQ6Vvf07-1" target="_blank" rel="noopener">Protótipo<span class="pc-sr"> no Figma (abre em nova aba)</span></a></li>
         </ul>
-        <p class="pc-pecas__fecho">E muito mais, trilha após trilha.</p>
-      </div>
-    </section>
+      </aside>
 
-    <!-- ===== Para quem é (F006) ===== -->
-    <section class="pc-secao pc-secao--clara" id="para-quem" aria-labelledby="titulo-para-quem">
-      <div class="container">
+      <!-- ===== 5. O que se aprende — trilha em zigue-zague (F005) ===== -->
+      <section class="pc-secao" id="o-que-se-aprende" aria-labelledby="titulo-o-que-se-aprende">
+        <h2 class="pc-secao__titulo" id="titulo-o-que-se-aprende">O que se aprende</h2>
+        <!--
+          Sem JS, cada balão (descrição) aparece aberto abaixo do seu nó, como uma lista.
+          Com JS (classe "js" no <html>), o nó vira um botão que abre e fecha o balão.
+        -->
+        <div class="pc-trilha">
+          <img class="pc-trilha__mascote" src="assets/img/benchware.png" alt="" width="424" height="236" loading="lazy" decoding="async">
+          <ol class="pc-lista-limpa pc-trilha__lista">
+            <li class="pc-trilha__item pc-trilha__item--azul">
+              <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-1">
+                <span class="pc-no__circulo" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="6" y="6" width="36" height="36" rx="3"/><rect x="12" y="12" width="12" height="12"/><path d="M30 12h6M30 18h6M12 30h24M12 36h16"/></svg>
+                </span>
+                <span class="pc-no__rotulo">Placa-mãe</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-1">
+                <h3 class="pc-balao__titulo">Placa-mãe</h3>
+                <p class="pc-balao__texto">Conecta e integra todos os componentes.</p>
+              </div>
+            </li>
+            <li class="pc-trilha__item pc-trilha__item--verde">
+              <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-2">
+                <span class="pc-no__circulo" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="13" y="13" width="22" height="22" rx="2"/><rect x="19" y="19" width="10" height="10"/><path d="M18 6v7M24 6v7M30 6v7M18 35v7M24 35v7M30 35v7M6 18h7M6 24h7M6 30h7M35 18h7M35 24h7M35 30h7"/></svg>
+                </span>
+                <span class="pc-no__rotulo">Processador</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-2">
+                <h3 class="pc-balao__titulo">Processador</h3>
+                <p class="pc-balao__texto">O cérebro que executa as instruções.</p>
+              </div>
+            </li>
+            <li class="pc-trilha__item pc-trilha__item--amarelo">
+              <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-3">
+                <span class="pc-no__circulo" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="4" y="12" width="40" height="22" rx="2"/><circle cx="16" cy="23" r="6"/><circle cx="32" cy="23" r="6"/><path d="M10 34v5M16 34v5M22 34v5M28 34v5"/></svg>
+                </span>
+                <span class="pc-no__rotulo">Placa de vídeo</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-3">
+                <h3 class="pc-balao__titulo">Placa de vídeo</h3>
+                <p class="pc-balao__texto">Gera as imagens exibidas na tela.</p>
+              </div>
+            </li>
+            <!-- RF09: peça rara como recompensa-surpresa (baú) -->
+            <li class="pc-trilha__item pc-trilha__bau">
+              <svg class="pc-bau" aria-hidden="true" focusable="false"><use href="#i-bau"/></svg>
+              <span class="pc-bau__legenda">Peça rara</span>
+            </li>
+            <li class="pc-trilha__item pc-trilha__item--azul">
+              <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-4">
+                <span class="pc-no__circulo" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="4" y="14" width="40" height="18" rx="2"/><path d="M10 20h6v6h-6zM21 20h6v6h-6zM32 20h6v6h-6zM9 32v5M15 32v5M21 32v5M27 32v5M33 32v5M39 32v5"/></svg>
+                </span>
+                <span class="pc-no__rotulo">Memória RAM</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-4">
+                <h3 class="pc-balao__titulo">Memória RAM</h3>
+                <p class="pc-balao__texto">Guarda os dados em uso no momento.</p>
+              </div>
+            </li>
+            <li class="pc-trilha__item pc-trilha__item--verde">
+              <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-5">
+                <span class="pc-no__circulo" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="8" y="6" width="32" height="36" rx="3"/><circle cx="24" cy="21" r="8"/><circle cx="24" cy="21" r="1.5"/><path d="M14 36h8"/></svg>
+                </span>
+                <span class="pc-no__rotulo">Armazenamento</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-5">
+                <h3 class="pc-balao__titulo">Armazenamento</h3>
+                <p class="pc-balao__texto">Mantém arquivos e programas salvos.</p>
+              </div>
+            </li>
+            <li class="pc-trilha__item pc-trilha__item--amarelo">
+              <button class="pc-no" type="button" aria-expanded="false" aria-controls="pc-balao-6">
+                <span class="pc-no__circulo" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" width="48" height="48" focusable="false"><rect x="6" y="10" width="36" height="28" rx="3"/><path d="M26 15l-7 10h8l-5 9"/></svg>
+                </span>
+                <span class="pc-no__rotulo">Fonte de energia</span>
+              </button>
+              <div class="pc-balao" id="pc-balao-6">
+                <h3 class="pc-balao__titulo">Fonte de energia</h3>
+                <p class="pc-balao__texto">Fornece energia a cada peça.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <p class="pc-divisor">E muito mais, trilha após trilha.</p>
+      </section>
+
+      <!-- ===== 6. Para quem é (F006) ===== -->
+      <section class="pc-secao" id="para-quem" aria-labelledby="titulo-para-quem">
         <p class="pc-selo">Para quem é</p>
         <h2 class="pc-secao__titulo" id="titulo-para-quem">Voltado ao ensino médio</h2>
         <p class="pc-secao__intro">O foco são os adolescentes em geral. Crianças e adultos também aprendem de forma entretida, no seu ritmo.</p>
-        <ul class="row g-4 pc-publico">
-          <li class="col-md-4">
-            <article class="pc-card pc-revelar h-100">
-              <h3 class="pc-card__titulo">Crianças</h3>
-              <p class="pc-card__texto">Etapas curtas e visual divertido, que transformam o aprendizado em brincadeira.</p>
-            </article>
+        <ul class="pc-lista-limpa pc-grade pc-grade--3">
+          <li class="pc-card pc-revelar">
+            <h3 class="pc-card__titulo">Crianças</h3>
+            <p class="pc-card__texto">Etapas curtas e visual divertido, que transformam o aprendizado em brincadeira.</p>
           </li>
-          <li class="col-md-4">
-            <article class="pc-card pc-card--destaque pc-revelar h-100">
-              <h3 class="pc-card__titulo">Adolescentes</h3>
-              <p class="pc-card__texto">Estudantes do ensino médio: desafios e pontuação despertam a curiosidade por tecnologia.</p>
-            </article>
+          <li class="pc-card pc-card--destaque pc-revelar">
+            <h3 class="pc-card__titulo">Adolescentes</h3>
+            <p class="pc-card__texto">Estudantes do ensino médio: desafios e pontuação despertam a curiosidade por tecnologia.</p>
           </li>
-          <li class="col-md-4">
-            <article class="pc-card pc-revelar h-100">
-              <h3 class="pc-card__titulo">Adultos</h3>
-              <p class="pc-card__texto">Uma forma prática de entender o computador usado no dia a dia.</p>
-            </article>
+          <li class="pc-card pc-revelar">
+            <h3 class="pc-card__titulo">Adultos</h3>
+            <p class="pc-card__texto">Uma forma prática de entender o computador usado no dia a dia.</p>
           </li>
         </ul>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== Galeria de telas (F007) ===== -->
-    <section class="pc-secao" id="galeria" aria-labelledby="titulo-galeria">
-      <div class="container">
-        <h2 class="pc-secao__titulo" id="titulo-galeria">Telas do app</h2>
+      <!-- ===== 7. Galeria de telas (F007) ===== -->
+      <section class="pc-secao" id="telas" aria-labelledby="titulo-telas">
+        <h2 class="pc-secao__titulo" id="titulo-telas">Telas do app</h2>
         <!--
-          RN003/DEC007: os reservados abaixo ficam no HTML para aparecerem mesmo sem JS.
+          RN003/DEC007: os reservados ficam no HTML para aparecerem mesmo sem JS.
           Quando TELAS (main.js) tiver itens, o JS troca este bloco pelo carrossel.
         -->
         <div class="pc-galeria" data-pc-galeria>
-          <ul class="row g-3 g-md-4 pc-galeria__reservados">
-            <li class="col-6 col-lg-3">
-              <div class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></div>
-            </li>
-            <li class="col-6 col-lg-3">
-              <div class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></div>
-            </li>
-            <li class="col-6 col-lg-3">
-              <div class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></div>
-            </li>
-            <li class="col-6 col-lg-3">
-              <div class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></div>
-            </li>
+          <ul class="pc-lista-limpa pc-galeria__reservados">
+            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
+            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
+            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
+            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
           </ul>
         </div>
         <p class="pc-galeria__prototipo">
-          <a class="pc-btn pc-btn--secundario" href="https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&amp;t=ofcFB11myQ6Vvf07-1" target="_blank" rel="noopener">Conheça o protótipo<span class="visually-hidden"> (abre em nova aba)</span></a>
+          <a class="pc-btn pc-btn--contorno" href="https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&amp;t=ofcFB11myQ6Vvf07-1" target="_blank" rel="noopener">Conheça o protótipo<span class="pc-sr"> (abre em nova aba)</span></a>
         </p>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== Equipe (F008 / RN004: mesma ordem do README) ===== -->
-    <section class="pc-secao pc-secao--clara" id="equipe" aria-labelledby="titulo-equipe">
-      <div class="container">
+      <!-- ===== 8. Equipe (F008 / RN004: mesma ordem do README) ===== -->
+      <section class="pc-secao" id="equipe" aria-labelledby="titulo-equipe">
         <h2 class="pc-secao__titulo" id="titulo-equipe">Equipe</h2>
-        <ul class="row g-4 pc-equipe">
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-membro--professora pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">D</span>
+        <ul class="pc-lista-limpa pc-grade pc-grade--2 pc-equipe">
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">D</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Professora Danielly</h3>
               <p class="pc-membro__papel">Professora</p>
-              <a class="pc-membro__link" href="https://github.com/daniellygualberto" target="_blank" rel="noopener">@daniellygualberto<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/daniellygualberto" target="_blank" rel="noopener">@daniellygualberto<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">GP</span>
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">GP</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Gabriel Porto</h3>
-              <a class="pc-membro__link" href="https://github.com/devgabrielporto07" target="_blank" rel="noopener">@devgabrielporto07<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/devgabrielporto07" target="_blank" rel="noopener">@devgabrielporto07<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">DM</span>
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">DM</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Daniel Mota</h3>
-              <a class="pc-membro__link" href="https://github.com/dplayerf" target="_blank" rel="noopener">@dplayerf<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/dplayerf" target="_blank" rel="noopener">@dplayerf<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">LK</span>
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">LK</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Luiz Kaynan</h3>
-              <a class="pc-membro__link" href="https://github.com/kaynan-CC" target="_blank" rel="noopener">@kaynan-CC<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/kaynan-CC" target="_blank" rel="noopener">@kaynan-CC<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">PV</span>
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">PV</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Pedro Vinicius</h3>
-              <a class="pc-membro__link" href="https://github.com/PedroVini09" target="_blank" rel="noopener">@PedroVini09<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/PedroVini09" target="_blank" rel="noopener">@PedroVini09<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">AA</span>
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">AA</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Alfredo Alves</h3>
-              <a class="pc-membro__link" href="https://github.com/Alfredinkapps" target="_blank" rel="noopener">@Alfredinkapps<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/Alfredinkapps" target="_blank" rel="noopener">@Alfredinkapps<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
-          <li class="col-sm-6 col-lg-3">
-            <article class="pc-card pc-membro pc-revelar h-100">
-              <span class="pc-membro__avatar" aria-hidden="true">SA</span>
+          <li class="pc-card pc-membro pc-revelar">
+            <span class="pc-membro__avatar" aria-hidden="true">SA</span>
+            <div class="pc-membro__dados">
               <h3 class="pc-card__titulo">Sara Arruda</h3>
-              <a class="pc-membro__link" href="https://github.com/Sararruda" target="_blank" rel="noopener">@Sararruda<span class="visually-hidden"> no GitHub (abre em nova aba)</span></a>
-            </article>
+              <a class="pc-membro__link" href="https://github.com/Sararruda" target="_blank" rel="noopener">@Sararruda<span class="pc-sr"> no GitHub (abre em nova aba)</span></a>
+            </div>
           </li>
         </ul>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== Download (F009 / RN001) ===== -->
-    <section class="pc-secao pc-secao--escura" id="download" aria-labelledby="titulo-download">
-      <div class="container">
-        <div class="pc-download">
+      <!-- ===== 9. Download (F009 / RN001) ===== -->
+      <section class="pc-secao" id="download" aria-labelledby="titulo-download">
+        <div class="pc-card pc-download pc-revelar">
           <h2 class="pc-secao__titulo" id="titulo-download">Baixar o app</h2>
           <p class="pc-download__texto">A aplicação está em desenvolvimento.</p>
           <!--
             RN001: o estado inicial é "desativado" para que, sem JS, nenhum botão pareça funcionar.
-            O main.js ativa o botão quando houver link em LINKS_DOWNLOAD.
+            O main.js ativa o botão quando houver link https:// em LINKS_DOWNLOAD.
           -->
           <div class="pc-download__botoes">
             <a class="pc-btn pc-download__botao" data-pc-download="windows" aria-disabled="true" tabindex="-1">
@@ -361,21 +428,30 @@
             </a>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <!-- ===== Rodapé (F010) ===== -->
-  <footer class="pc-rodape">
-    <div class="container">
+    <!-- ===== Rodapé (F010) ===== -->
+    <footer class="pc-rodape">
       <p class="pc-rodape__frase">Aprender hardware pode ser divertido.</p>
       <p class="pc-rodape__marca">PCEDUC — Projeto de extensão da UNINASSAU Campina Grande — Ciência da Computação</p>
-      <ul class="pc-rodape__links">
-        <li><a href="https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC" target="_blank" rel="noopener">Repositório no GitHub<span class="visually-hidden"> (abre em nova aba)</span></a></li>
-        <li><a href="https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC/blob/master/LICENSE" target="_blank" rel="noopener">Licença Apache 2.0<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+      <ul class="pc-lista-limpa pc-rodape__links">
+        <li><a href="https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC" target="_blank" rel="noopener">Repositório no GitHub<span class="pc-sr"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/devgabrielporto07/Projeto-Extensao-PCEDUC/blob/master/LICENSE" target="_blank" rel="noopener">Licença Apache 2.0<span class="pc-sr"> (abre em nova aba)</span></a></li>
       </ul>
       <p class="pc-rodape__ano">© <span data-pc-ano>2026</span> PCEDUC</p>
-    </div>
-  </footer>
+    </footer>
+  </div>
+
+  <!-- ===== Barra de abas inferior (só mobile) ===== -->
+  <nav class="pc-abas" aria-label="Atalhos">
+    <ul class="pc-lista-limpa pc-abas__lista">
+      <li><a class="pc-abas__link" href="#topo" data-pc-grupo="topo por-que o-que-e como-funciona missoes"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-inicio"/></svg><span>Início</span></a></li>
+      <li><a class="pc-abas__link" href="#o-que-se-aprende" data-pc-grupo="o-que-se-aprende para-quem"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-chip"/></svg><span>Aprender</span></a></li>
+      <li><a class="pc-abas__link" href="#telas" data-pc-grupo="telas"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-telas"/></svg><span>Telas</span></a></li>
+      <li><a class="pc-abas__link" href="#equipe" data-pc-grupo="equipe"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-equipe"/></svg><span>Equipe</span></a></li>
+      <li><a class="pc-abas__link" href="#download" data-pc-grupo="download"><svg class="pc-icone" aria-hidden="true" focusable="false"><use href="#i-baixar"/></svg><span>Baixar</span></a></li>
+    </ul>
+  </nav>
 </body>
 </html>

@@ -1,0 +1,412 @@
+/*
+  PCEDUC — layout.css
+  Estrutura da página e painel de missões: mobile-first em coluna única com barra de abas;
+  a partir de 1024px, três colunas (menu lateral, conteúdo central e painel de missões).
+*/
+
+/* ===== Cabeçalho (mobile): só o logo ===== */
+.pc-lateral {
+  display: flex;
+  align-items: center;
+  padding: var(--pc-espaco-2) var(--pc-espaco-3);
+  border-bottom: var(--pc-contorno);
+}
+
+.pc-logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.75rem;
+  font-weight: var(--pc-peso-titulo);
+  letter-spacing: 0.04em;
+  color: var(--pc-verde);
+  text-decoration: none;
+}
+
+.pc-logo:hover {
+  color: var(--pc-verde);
+}
+
+/* O menu lateral só aparece no desktop; no mobile a navegação é a barra de abas */
+.pc-lateral__nav {
+  display: none;
+}
+
+/* ===== Palco: coluna central (e painel no desktop) ===== */
+.pc-palco {
+  width: 100%;
+  max-width: calc(var(--pc-largura-centro) + 2 * var(--pc-espaco-3));
+  margin-inline: auto;
+  padding-inline: var(--pc-espaco-3);
+}
+
+/* Faixa da seção atual: só no desktop (no mobile ocuparia espaço útil demais) */
+.pc-faixa {
+  display: none;
+}
+
+/* Links rápidos do painel: no mobile o rodapé já traz os mesmos links */
+.pc-painel__links {
+  display: none;
+}
+
+.pc-painel {
+  padding-block: var(--pc-espaco-3) var(--pc-espaco-5);
+}
+
+/* ===== Barra de abas inferior (mobile) ===== */
+/* Reserva espaço para a barra fixa não cobrir o fim da página */
+body {
+  padding-bottom: calc(var(--pc-altura-abas) + env(safe-area-inset-bottom, 0px));
+}
+
+.pc-abas {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-color: var(--pc-fundo);
+  border-top: var(--pc-contorno);
+}
+
+.pc-abas__lista {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.pc-abas__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-height: var(--pc-altura-abas);
+  padding: var(--pc-espaco-1) 0.125rem;
+  color: var(--pc-texto-suave);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--pc-transicao), background-color var(--pc-transicao);
+}
+
+.pc-abas__link:hover {
+  color: var(--pc-branco);
+}
+
+/* Item ativo: cor azul + traço no topo (não depende só da cor) */
+.pc-abas__link[aria-current="true"] {
+  color: var(--pc-azul);
+  background-color: var(--pc-azul-translucido);
+  box-shadow: inset 0 3px 0 var(--pc-azul);
+}
+
+.pc-abas__link:focus-visible {
+  outline-offset: -3px;
+}
+
+/* ===== Desktop: três colunas ===== */
+@media (min-width: 1024px) {
+  /* A faixa fixa cobre o topo: âncoras param abaixo dela */
+  html {
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    padding-bottom: 0;
+  }
+
+  .pc-abas {
+    display: none;
+  }
+
+  /* Menu lateral fixo na altura da tela */
+  .pc-lateral {
+    position: sticky;
+    top: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--pc-espaco-4);
+    height: 100vh;
+    height: 100dvh;
+    padding: var(--pc-espaco-4) var(--pc-espaco-2);
+    overflow-y: auto;
+    border-bottom: 0;
+    border-right: var(--pc-contorno);
+  }
+
+  .pc-logo {
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  .pc-lateral__nav {
+    display: block;
+  }
+
+  .pc-lateral__lista {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pc-espaco-1);
+  }
+
+  .pc-lateral__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.875rem;
+    min-height: 3rem;
+    padding: var(--pc-espaco-2) 0.75rem;
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    color: var(--pc-texto-suave);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color var(--pc-transicao), border-color var(--pc-transicao), color var(--pc-transicao);
+  }
+
+  .pc-lateral__link:hover {
+    color: var(--pc-branco);
+    background-color: var(--pc-azul-translucido);
+  }
+
+  .pc-lateral__link[aria-current="true"] {
+    color: var(--pc-azul);
+    background-color: var(--pc-azul-translucido);
+    border-color: var(--pc-azul);
+  }
+
+  /* 1024–1279px: menu só com ícones; o rótulo continua acessível aos leitores de tela */
+  .pc-lateral__rotulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Palco em duas colunas: conteúdo + painel de missões */
+  .pc-palco {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--pc-largura-painel);
+    column-gap: var(--pc-espaco-5);
+    align-items: start;
+    max-width: calc(var(--pc-largura-centro) + var(--pc-largura-painel) + var(--pc-espaco-5) + 2 * var(--pc-espaco-4));
+    padding-inline: var(--pc-espaco-4);
+  }
+
+  /*
+    O <main> repete a grade do palco para que o painel (que no HTML fica logo após
+    "Como funciona", ordem certa no mobile) ocupe a coluna direita em todas as linhas.
+  */
+  .pc-conteudo {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--pc-largura-painel);
+    grid-template-rows: repeat(10, auto);
+    column-gap: var(--pc-espaco-5);
+    align-items: start;
+  }
+
+  .pc-conteudo > * {
+    grid-column: 1;
+  }
+
+  .pc-painel {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    position: sticky;
+    top: var(--pc-espaco-3);
+    padding-block: var(--pc-espaco-4) 0;
+  }
+
+  .pc-painel__links {
+    display: flex;
+  }
+
+  .pc-rodape {
+    grid-column: 1;
+  }
+
+  /*
+    Faixa da seção atual, presa ao topo da coluna central. O invólucro tem o fundo da página
+    e cobre o vão acima da caixa azul (incluindo os cantos arredondados) durante a rolagem.
+  */
+  .pc-faixa {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: block;
+    margin-top: var(--pc-espaco-2);
+    padding-top: var(--pc-espaco-3);
+    background-color: var(--pc-fundo);
+  }
+
+  .pc-faixa__caixa {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: var(--pc-espaco-3) var(--pc-espaco-4);
+    background-color: var(--pc-azul-escuro);
+    border-radius: var(--pc-raio);
+  }
+
+  .pc-faixa__numero {
+    color: var(--pc-azul-claro);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pc-faixa__nome {
+    color: var(--pc-branco);
+    font-family: var(--pc-fonte-titulo);
+    font-size: 1.375rem;
+    font-weight: var(--pc-peso-titulo);
+    line-height: 1.2;
+  }
+}
+
+/* ===== Desktop largo: menu com rótulos ===== */
+@media (min-width: 1280px) {
+  body {
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+
+  .pc-lateral {
+    padding-inline: var(--pc-espaco-3);
+  }
+
+  .pc-logo {
+    justify-content: flex-start;
+    padding-inline: var(--pc-espaco-3);
+    font-size: 1.875rem;
+  }
+
+  .pc-lateral__link {
+    justify-content: flex-start;
+    padding-inline: var(--pc-espaco-3);
+  }
+
+  .pc-lateral__rotulo {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+  }
+}
+
+/* ===== Painel direito: missões do PCEDUC (no mobile, bloco normal após "Como funciona") ===== */
+.pc-missoes {
+  padding: 1.25rem;
+}
+
+.pc-missoes__titulo {
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+}
+
+.pc-missoes__lista {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.pc-missao {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.pc-missao .pc-selo-icone {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.pc-missao .pc-selo-icone .pc-icone {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.pc-missao__corpo {
+  display: grid;
+  flex: 1;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.pc-missao__titulo {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.pc-barra {
+  display: block;
+  height: 0.875rem;
+  overflow: hidden;
+  background-color: var(--pc-borda);
+  border-radius: var(--pc-raio-total);
+}
+
+/* O JS define --pc-progresso (0 a 1); scaleX evita recalcular o layout a cada rolagem */
+.pc-barra__preenchimento {
+  display: block;
+  height: 100%;
+  background-color: var(--pc-amarelo);
+  border-radius: var(--pc-raio-total);
+  transform: scaleX(var(--pc-progresso, 0));
+  transform-origin: left center;
+  transition: transform 300ms ease-out;
+}
+
+.pc-missao__bau,
+.pc-bau {
+  flex-shrink: 0;
+  fill: var(--pc-amarelo);
+  color: var(--pc-preto);
+  stroke: var(--pc-preto);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.pc-missao__bau {
+  width: 2rem;
+  height: 2rem;
+}
+
+.pc-painel__links {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 var(--pc-espaco-3);
+  margin-top: var(--pc-espaco-3);
+}
+
+.pc-painel__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-inline: var(--pc-espaco-1);
+  color: var(--pc-texto-suave);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.pc-painel__links a:hover {
+  color: var(--pc-azul);
+}
+
