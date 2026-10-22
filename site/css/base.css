@@ -1,0 +1,187 @@
+/*
+  PCEDUC — base.css
+  Tokens da identidade visual (--pc-*), overrides das variáveis do Bootstrap (--bs-*),
+  reset leve, tipografia, foco visível e preferência de movimento reduzido.
+*/
+
+/* ===== Tokens (IDENTIDADE_VISUAL.md) ===== */
+:root {
+  /* Paleta */
+  --pc-azul: #3391E0;
+  --pc-azul-escuro: #1D66B8;
+  --pc-azul-claro: #DCEBFD;
+  --pc-verde: #33FF00;
+  --pc-verde-escuro: #1E9E00;
+  --pc-amarelo: #FFC83D;
+  --pc-preto: #141414;
+  --pc-cinza: #4A5868;
+  --pc-branco: #FFFFFF;
+
+  /* Tipografia */
+  --pc-fonte-titulo: "Pixelify Sans", "Courier New", monospace;
+  --pc-fonte-texto: "Chakra Petch", "Segoe UI", system-ui, sans-serif;
+
+  /* Espaçamentos */
+  --pc-espaco-1: 0.25rem;
+  --pc-espaco-2: 0.5rem;
+  --pc-espaco-3: 1rem;
+  --pc-espaco-4: 1.5rem;
+  --pc-espaco-5: 2.5rem;
+  --pc-espaco-6: 4rem;
+
+  /* Raios, contornos, sombras e movimento */
+  --pc-raio: 0.75rem;
+  --pc-raio-pequeno: 0.375rem;
+  --pc-contorno: 2px solid var(--pc-preto); /* 2px no celular; 3px a partir do md */
+  --pc-sombra: 4px 4px 0 var(--pc-preto);
+  --pc-sombra-hover: 6px 6px 0 var(--pc-preto);
+  --pc-transicao: 180ms ease-out;
+  --pc-transicao-revelar: 400ms ease-out;
+  --pc-altura-navbar: 4.5rem;
+
+  /* DEC004: o Bootstrap herda a identidade. Primária = azul escuro (5,76:1 com branco) */
+  --bs-primary: var(--pc-azul-escuro);
+  --bs-primary-rgb: 29, 102, 184;
+  --bs-success: var(--pc-verde-escuro);
+  --bs-success-rgb: 30, 158, 0;
+  --bs-warning: var(--pc-amarelo);
+  --bs-warning-rgb: 255, 200, 61;
+  --bs-body-color: var(--pc-preto);
+  --bs-body-bg: var(--pc-branco);
+  --bs-secondary-color: var(--pc-cinza);
+  --bs-link-color: var(--pc-azul-escuro);
+  --bs-link-color-rgb: 29, 102, 184;
+  --bs-link-hover-color: var(--pc-preto);
+  --bs-link-hover-color-rgb: 20, 20, 20;
+  --bs-border-color: var(--pc-preto);
+  --bs-body-font-family: var(--pc-fonte-texto);
+  --bs-border-radius: var(--pc-raio);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --pc-contorno: 3px solid var(--pc-preto);
+  }
+}
+
+/* ===== Reset leve ===== */
+html {
+  scroll-behavior: smooth;
+  /* F012: âncoras não ficam escondidas atrás da navbar fixa */
+  scroll-padding-top: var(--pc-altura-navbar);
+}
+
+body {
+  font-family: var(--pc-fonte-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--pc-preto);
+  background-color: var(--pc-branco);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* Listas usadas como grade (equipe, peças, trilha) não devem mostrar marcadores */
+ul.row,
+ol.pc-trilha,
+.pc-rodape__links {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* ===== Tipografia ===== */
+/* Pixelify Sans só nos títulos: é pouco legível em blocos de texto */
+h1,
+h2,
+h3 {
+  font-family: var(--pc-fonte-titulo);
+  font-weight: 700;
+  line-height: 1.15;
+  color: inherit;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 6vw + 0.5rem, 4rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3vw + 0.75rem, 2.75rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 1vw + 1rem, 1.5rem);
+}
+
+p {
+  margin-bottom: var(--pc-espaco-3);
+}
+
+a {
+  color: var(--pc-azul-escuro);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--pc-preto);
+}
+
+/* ===== Foco visível ===== */
+/*
+  Anel amarelo (identidade) com halo escuro por fora: o amarelo sozinho
+  some sobre fundo branco; o halo garante contraste em qualquer seção.
+*/
+:focus-visible {
+  outline: 3px solid var(--pc-amarelo);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--pc-preto);
+}
+
+/* ===== Skip link ===== */
+.pc-skip {
+  position: absolute;
+  top: var(--pc-espaco-2);
+  left: var(--pc-espaco-2);
+  z-index: 2000;
+  padding: var(--pc-espaco-2) var(--pc-espaco-3);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--pc-preto);
+  background-color: var(--pc-amarelo);
+  border: var(--pc-contorno);
+  border-radius: var(--pc-raio-pequeno);
+  /* fora da tela até receber foco (não usar display:none, senão o teclado não alcança) */
+  transform: translateY(-200%);
+}
+
+.pc-skip:focus,
+.pc-skip:focus-visible {
+  transform: none;
+  color: var(--pc-preto);
+}
+
+/* ===== Movimento reduzido ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
