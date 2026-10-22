@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+  PCEDUC — página 404 (GitHub Pages serve este arquivo para qualquer endereço que não existe).
+  ATENÇÃO: aqui os caminhos são ABSOLUTOS do projeto (/Projeto-Extensao-PCEDUC/...), ao contrário do
+  index.html (PADROES §1). A 404 pode aparecer em qualquer subpasta (ex.: /Projeto-Extensao-PCEDUC/a/b/c),
+  e um caminho relativo como "css/base.css" apontaria para a pasta errada. Se o repositório mudar de nome
+  ou ganhar domínio próprio, troque o prefixo /Projeto-Extensao-PCEDUC/ em todos os links abaixo.
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página não encontrada — PCEDUC</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+
+  <link rel="icon" type="image/png" href="/Projeto-Extensao-PCEDUC/assets/img/benchware.png">
+
+  <!-- Fontes: Pixelify Sans (títulos) e Chakra Petch (textos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Pixelify+Sans:wght@400&display=swap">
+
+  <!-- Mesmo script de tema do index.html (DEC029): aplica a escolha salva antes dos CSS -->
+  <script>
+    (function () {
+      try {
+        var tema = localStorage.getItem('pc-tema');
+        if (tema !== 'claro' && tema !== 'escuro') {
+          return;
+        }
+        document.documentElement.setAttribute('data-tema', tema);
+        var cor = tema === 'claro' ? '#FFFFFF' : '#141414';
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+          meta.setAttribute('content', cor);
+        });
+      } catch (erro) {
+        /* localStorage bloqueado (modo privado, política do navegador): segue o sistema */
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="/Projeto-Extensao-PCEDUC/css/base.css">
+  <link rel="stylesheet" href="/Projeto-Extensao-PCEDUC/css/components.css">
+  <link rel="stylesheet" href="/Projeto-Extensao-PCEDUC/css/mascote.css">
+  <link rel="stylesheet" href="/Projeto-Extensao-PCEDUC/css/erro.css">
+</head>
+<body class="pc-erro">
+  <a class="pc-skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="pc-erro__topo">
+    <a class="pc-erro__logo" href="/Projeto-Extensao-PCEDUC/">PCEDUC</a>
+  </header>
+
+  <main class="pc-erro__conteudo" id="conteudo">
+    <!-- Acima da dobra: sem loading="lazy" -->
+    <span class="pc-mascote pc-erro__mascote"><img class="pc-mascote__img" src="/Projeto-Extensao-PCEDUC/assets/img/mascote/erro-404.png" alt="Benchware, o mascote do PCEDUC, confuso ao lado do número 404" width="320" height="320" decoding="async"></span>
+    <h1 class="pc-erro__titulo">Página não encontrada</h1>
+    <p class="pc-erro__texto">O endereço que você tentou abrir não existe ou mudou de lugar.</p>
+    <a class="pc-btn pc-btn--verde pc-btn--grande" href="/Projeto-Extensao-PCEDUC/">Voltar para o início</a>
+  </main>
+</body>
+</html>
