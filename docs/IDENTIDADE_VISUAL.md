@@ -86,12 +86,55 @@ Branco sobre `--pc-azul` ou `--pc-verde-escuro` só em texto grande. Verde neon 
 - `alt="Benchware, mascote do PCEDUC, acenando"`; quando decorativo e repetido, `alt=""`.
 - Sempre informar `width` e `height` para evitar salto de layout.
 
+### 5.1 Poses (DEC031, DEC032)
+
+PNG transparentes 320×320 em `site/assets/img/mascote/` (fundo removido dos JPG do usuário; conferidas sobre
+`#141414` e `#FFFFFF`). Nas seções, decorativas (`alt=""`, `width="320" height="320"`).
+
+| Pose (`arquivo.png`) | Onde / quando |
+|---|---|
+| `acenando` | `#download` (cartão centralizado). No topo continua o GIF acenando |
+| `sobrecarregado` | `#por-que` (cartão centralizado) |
+| `jogando` | `#o-que-e` |
+| `correndo` | `#como-funciona` |
+| `construindo` | Ao lado da trilha (`#o-que-se-aprende`) |
+| `trofeu` | Trilha com o balão do baú aberto (DEC034); quiz depois de acertar (DEC035) |
+| `duvida` | `#experimente`, enquanto a pergunta está sem resposta |
+| `errado` | `#experimente`, depois de errar |
+| `formado` | `#para-quem` |
+| `diploma` | `#equipe` |
+| `erro-404` | `404.html` (com `alt` descritivo — texto aguardando aval, DEC036) |
+
+- **Tamanho** (variável local `--pc-mascote-tamanho`, definida no escopo do componente em `mascote.css`, não é token
+  global): seções `clamp(6.5rem, 30vw, 8rem)` → 8,75rem (≥ 600px) → 9,5rem (≥ 1280px); trilha
+  `clamp(6.5rem, 28vw, 10.5rem)`; 404 `clamp(10rem, 45vw, 15rem)`.
+- **Posição:** à direita do título (`.pc-secao__cabeca`) ou acima do título nos cartões centralizados (`.pc-mascote--centro`).
+- Pose nova: PNG transparente 320×320, nome em `kebab-case` igual ao nome da pose, registrar nesta tabela.
+
 ## 6. Animações
 
 - Leves e curtas (150–400ms): revelar cartões ao rolar (fade + subir 16px), hover com deslocamento da sombra.
-- Nada piscando, nada em loop além do mascote.
+- Nada piscando, nada em loop além do mascote (GIF do topo e flutuação das poses).
+- **Mascote das seções (DEC033)**, em duas camadas (invólucro `.pc-mascote` + `.pc-mascote__img`):
+  - entrada em **pulo** ao entrar na tela: 520ms, `cubic-bezier(0.34, 1.56, 0.64, 1)` (mola), de `translateY(1.5rem) scale(0.6)`
+    a repouso;
+  - **flutuação** contínua: sobe e desce 6px em 3,6s `ease-in-out`, fora de fase entre seções (`--pc-mascote-atraso`);
+  - **troca de pose**: crossfade (a pose antiga some em 220ms) + pulinho da nova (350ms, sobe 10px e cresce até 1,06);
+  - **hover** (só `@media (hover: hover)`): giro leve de 4° (lado alternado por `--pc-mascote-giro`), 250ms.
+  - `--pc-mascote-tamanho`, `--pc-mascote-atraso` e `--pc-mascote-giro` são variáveis **locais do componente** (escopo
+    `.pc-secao`/`.pc-mascote`/`.pc-trilha`/`.pc-erro__mascote`), não tokens da paleta.
 - `@media (prefers-reduced-motion: reduce)`: desligar transições/animações, rolagem suave e o carrossel automático;
-  cartões já aparecem visíveis.
+  cartões já aparecem visíveis; mascotes visíveis e parados, troca de pose instantânea.
+
+### 6.1 Estados do mini quiz (DEC035) — sem cor nova
+
+- **Correta:** fundo `--pc-verde`, texto `--pc-preto` (13,55:1), borda e sombra `--pc-verde-escuro`, ícone ✓, rótulo "Correta".
+- **Errada:** a paleta não tem vermelho e **nenhum hex novo foi criado**: fundo `--pc-cinza` (`#4A5868`) com texto
+  `--pc-branco` (7,27:1), contorno de 4px na cor do texto (`--pc-texto`), sem sombra e afundada, ícone ✕, rótulo
+  "Sua resposta". Aqui o `#4A5868` é **fundo**, não texto (§9.3 continua valendo).
+- Opções não escolhidas recuam com `opacity: 0.7` (texto ainda acima de 4,5:1).
+- Feedback de acerto em `--pc-destaque-verde-texto`, fonte de título, 1,5rem.
+- A cor nunca é o único sinal: sempre ícone + rótulo em texto.
 
 ## 7. Ícones
 

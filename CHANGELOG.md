@@ -11,6 +11,11 @@ e o projeto adota o [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Memória do projeto em `docs/` (projeto, decisões, identidade visual, padrões, funcionalidades, regras).
 - Workflow do GitHub Pages em `.github/workflows/pages.yml`.
 - Tema claro e escuro com botão de alternar (segue o sistema por padrão).
+- Poses animadas do mascote Benchware: 11 poses em PNG transparente, uma por seção, com entrada em pulo,
+  flutuação e troca de pose (paradas com movimento reduzido).
+- Baú "Peça rara" interativo na trilha: abre um balão e troca o mascote para o troféu.
+- Mini quiz "Experimente" com feedback imediato de acerto e erro (sem JS, resposta em "Ver resposta").
+- Página 404 para o GitHub Pages.
 
 ### Alterado
 - Site refeito (v2) no estilo de trilha gamificada, tema escuro, sem Bootstrap (a v1 fica no commit `0fc3109`).

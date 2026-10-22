@@ -25,3 +25,11 @@
 - **Entidades:** seção `#equipe`.
 - **Exemplo:** Professora Danielly (@daniellygualberto), Gabriel Porto (@devgabrielporto07), Daniel Mota (@dplayerf),
   Luiz Kaynan (@kaynan-CC), Pedro Vinicius (@PedroVini09), Alfredo Alves (@Alfredinkapps), Sara Arruda (@Sararruda).
+
+## RN005 — Quiz só com conteúdo das fontes e sem valores de XP inventados
+- **Descrição:** perguntas, opções, respostas e explicações do mini quiz "Experimente" (`#experimente`) saem das
+  fontes oficiais (RN002), podendo ser adaptadas para o formato de pergunta. O feedback de acerto **não mostra
+  quantidade de XP** enquanto o valor por acerto não estiver definido nas fontes: usa "+XP" sem número.
+- **Entidades:** seção `#experimente`, constantes `QUIZ_ACERTO` e `QUIZ_EXPLICACAO` no `site/js/main.js`.
+- **Exemplo:** "Qual peça é o cérebro que executa as instruções?" → Processador (pitch: "O cérebro que executa as
+  instruções.") — permitido; feedback "Isso aí! +XP" — permitido; "Isso aí! +10 XP" — proibido.

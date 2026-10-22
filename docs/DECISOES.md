@@ -249,3 +249,100 @@ A v1 (Bootstrap, tema claro) fica preservada no commit `0fc3109`. As decisões a
   - **menu lateral** com fundo branco;
   - **cartões** com sombra sólida `0 4px 0 var(--pc-borda)` (token `--pc-sombra-superficie`).
 - **Motivo:** manter o foco visível em WCAG 2.1 AA (≥ 3:1) e a leitura de "cartão 3D" da v2 sobre fundo branco.
+
+## DEC031 — Poses do mascote: 11 PNG transparentes 320×320
+- **Data:** 2026-10-21
+- **Decisão:** o Benchware ganha **11 poses** em `site/assets/img/mascote/`, todas PNG transparentes de 320×320:
+  `acenando`, `construindo`, `correndo`, `diploma`, `duvida`, `errado`, `erro-404`, `formado`, `jogando`,
+  `sobrecarregado`, `trofeu`. Uso de cada pose: `IDENTIDADE_VISUAL.md` §5.
+- **Origem:** fornecidas pelo usuário como JPG com fundo claro. O fundo foi removido automaticamente: flood fill a
+  partir das bordas + remoção das áreas fechadas de fundo com ≥ 350 px (900 px no `diploma`, para preservar o papel)
+  e suavização de 2px na borda. Todas conferidas sobre `#141414` (tema escuro) e `#FFFFFF` (tema claro).
+- **Motivo:** o mascote acompanha a jornada (pitch); poses diferentes por seção reforçam o assunto de cada uma.
+- **Alternativas descartadas:** usar o JPG com fundo (caixa clara visível no tema escuro); repetir o GIF acenando em
+  todas as seções (monótono).
+
+## DEC032 — Mapa pose → seção
+- **Data:** 2026-10-21
+- **Decisão:**
+
+  | Seção | Pose |
+  |---|---|
+  | `#topo` | GIF acenando (mantido — DEC009) |
+  | `#por-que` | `sobrecarregado` (centralizado no cartão) |
+  | `#o-que-e` | `jogando` |
+  | `#como-funciona` | `correndo` |
+  | `#o-que-se-aprende` (trilha) | `construindo`; troca para `trofeu` enquanto o balão do baú estiver aberto (DEC034) |
+  | `#experimente` | `duvida` (pergunta) → `trofeu` (acerto) ou `errado` (erro) — DEC035 |
+  | `#para-quem` | `formado` |
+  | `#equipe` | `diploma` |
+  | `#download` | `acenando` (centralizado no cartão) |
+  | `404.html` | `erro-404` (DEC036) |
+
+- Nas seções com título, o mascote fica à direita do título (`.pc-secao__cabeca`); nos cartões centralizados
+  (`#por-que`, `#download`), acima do título (`.pc-mascote--centro`). Nas seções, as poses são decorativas (`alt=""`).
+- **Motivo:** cada pose combina com o assunto da seção, sem acrescentar texto.
+
+## DEC033 — Animações do mascote em duas camadas
+- **Data:** 2026-10-21
+- **Decisão:** cada mascote é um invólucro `<span class="pc-mascote">` com a `<img class="pc-mascote__img">` dentro:
+  - **invólucro:** entrada em **pulo** quando a seção entra na tela (`IntersectionObserver` em `configurarMascotes()`
+    põe `is-visivel`; o `<html>` recebe `pc-mascote-ativo`) e **flutuação contínua** (sobe e desce 6px em 3,6s),
+    defasada entre as seções (`--pc-mascote-atraso`);
+  - **imagem:** **troca de pose** com crossfade + pulinho (`trocarPose()`: uma cópia `.pc-mascote__fantasma` da pose
+    antiga some por cima enquanto a nova entra com `is-trocando`) e **giro leve no hover** (só em
+    `@media (hover: hover)`; lado alternado por `--pc-mascote-giro`).
+  - As poses de reação são pré-carregadas (`preCarregarPoses()`) para a troca não piscar.
+  - Com `prefers-reduced-motion: reduce` tudo fica desligado: mascotes visíveis e parados, troca de pose instantânea.
+  - Sem `IntersectionObserver` os mascotes ficam visíveis (nada escondido sem JS).
+- **Motivo:** a entrada usa `transform` e a flutuação/troca usam `translate`/`scale`/`rotate`; em camadas separadas as
+  animações não brigam pela mesma propriedade.
+- **Alternativas descartadas:** uma só camada (a flutuação cancelaria a entrada); biblioteca de animação (DEC013).
+- **Nota (`IDENTIDADE_VISUAL.md` §6):** a flutuação é o único loop além do GIF do topo, e só existe para quem não pediu menos movimento.
+
+## DEC034 — Baú da "Peça rara" vira botão
+- **Data:** 2026-10-21
+- **Decisão:** o baú no fim da trilha passa a ser `<button class="pc-no pc-no--bau">` com `aria-expanded`/
+  `aria-controls="pc-balao-bau"`, abrindo um balão amarelo como os nós (F020). Texto do balão, já existente no site
+  (README/pitch): título "Peça rara" e "Às vezes, uma peça rara aparece como recompensa-surpresa."
+  Enquanto o balão do baú estiver aberto, o mascote da trilha troca para `trofeu` (`atualizarMascote()` em
+  `configurarTrilha()`, gancho `data-pc-mascote-trilha`); ao fechar ou abrir outro nó, volta para `construindo`.
+- **Motivo:** o baú parecia clicável e não fazia nada; agora reforça a recompensa-surpresa (RF09) sem texto novo.
+
+## DEC035 — Mini quiz "Experimente"
+- **Data:** 2026-10-21
+- **Decisão:** nova seção `#experimente` entre `#o-que-se-aprende` e `#para-quem`, com item "Experimente" no menu
+  lateral (10 itens) e no grupo **Aprender** das abas (`data-pc-grupo="o-que-se-aprende experimente para-quem"`).
+  - **Pergunta** (baseada no pitch — Processador: "O cérebro que executa as instruções."):
+    "Qual peça é o cérebro que executa as instruções?" Opções: **Processador** (correta), Memória RAM, Fonte de energia.
+  - **Acerto:** opção em verde (`--pc-verde`, texto escuro) com ✓, rótulo "Correta" e feedback "Isso aí! +XP" —
+    **sem número**, pois o valor de XP por acerto não está definido nas fontes (RN005).
+  - **Erro:** sem vermelho novo (a paleta não tem vermelho): a opção escolhida fica com fundo `--pc-cinza`, texto
+    branco (7,27:1), contorno grosso de 4px na cor do texto, afundada e com ícone ✕, rótulo "Sua resposta"; a correta
+    é destacada em verde com ✓ e "Correta"; feedback: "O processador é o cérebro do computador: ele executa as instruções."
+  - Botão "Tentar de novo" reinicia (pose volta para `duvida`). Feedback em região `aria-live="polite"`.
+  - **Sem JS:** pergunta + `<details>` "Ver resposta" com a resposta e a explicação.
+- **Motivo:** dá ao visitante uma amostra do formato de lição do app (múltipla escolha, REQ) usando só conteúdo das fontes.
+- **Alternativas descartadas:** vermelho para erro (hex fora da paleta, sem aval); mostrar "+10 XP" (número inventado — RN002).
+
+## DEC036 — Página 404 com caminhos absolutos
+- **Data:** 2026-10-21
+- **Decisão:** `site/404.html` com o mascote `erro-404`, título "Página não encontrada" e botão "Voltar para o início".
+  Carrega `base.css`, `components.css`, `mascote.css` e `erro.css` (sem `layout.css` nem `main.js`; tem o mesmo
+  script de tema inline — DEC029) e `meta robots noindex`.
+  - **Caminhos absolutos** com o prefixo `/Projeto-Extensao-PCEDUC/` (exceção a `PADROES.md` §1): o Pages serve a 404
+    em **qualquer** caminho (ex.: `/Projeto-Extensao-PCEDUC/a/b/c`), e caminhos relativos apontariam para a pasta
+    errada. **Se o repositório mudar de nome ou ganhar domínio próprio, trocar o prefixo em todos os links da 404.**
+  - **Textos AGUARDANDO aval do usuário (RN002):** escritos pela equipe de agentes, não vêm das fontes oficiais —
+    "O endereço que você tentou abrir não existe ou mudou de lugar." e o `alt` da imagem
+    "Benchware, o mascote do PCEDUC, confuso ao lado do número 404".
+  - Ainda não testada no GitHub Pages publicado.
+- **Motivo:** a 404 padrão do GitHub não tem a identidade do PCEDUC nem caminho de volta.
+
+## DEC037 — Painel fixo cobre 11 linhas da grade
+- **Data:** 2026-10-21
+- **Decisão:** em `layout.css` (≥ 1024px), `grid-template-rows: repeat(11, auto)` (era 10): uma linha por filho do
+  `<main>` fora o painel (faixa + 10 seções), para o painel "Missões do PCEDUC" (`grid-row: 1 / -1`) cobrir também a
+  nova seção `#experimente`.
+- **Motivo:** com 10 linhas a seção nova cairia numa linha implícita e o painel fixo terminaria antes dela.
+- **Atenção:** ao acrescentar ou remover seção, ajustar esse número.
