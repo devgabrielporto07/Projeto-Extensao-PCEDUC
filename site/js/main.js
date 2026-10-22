@@ -3,7 +3,8 @@
   Comportamentos da página: tema claro/escuro, navegação ativa (menu, abas e faixa), trilha com balões,
   mascote Benchware (entrada e troca de pose), mini quiz, barras das missões, revelar ao rolar, galeria,
   download e ano do rodapé.
-  Dados editáveis ficam no topo (DEC007, DEC008). Sem bibliotecas e sem innerHTML.
+  Dados editáveis ficam no topo (DEC008); as telas da galeria ficam no HTML e o JS só lê do DOM (DEC007).
+  Sem bibliotecas e sem innerHTML.
 */
 (function () {
   'use strict';
@@ -14,11 +15,8 @@
   // RN001: link vazio = botão desativado com selo "Em breve".
   const LINKS_DOWNLOAD = { windows: '', android: '' };
 
-  // TODO(AGENTE): listar as telas exportadas do Figma em site/assets/telas/.
-  // Formato: { arquivo: 'tela-01.png', legenda: 'Descrição da tela (vira o alt)' }
-  const TELAS = [];
+  // As telas da galeria ficam no index.html (seção #telas), não aqui: assim aparecem sem JS.
 
-  const PASTA_TELAS = 'assets/telas/';
   const PASTA_MASCOTE = 'assets/img/mascote/';
   const movimentoReduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -570,54 +568,30 @@
     });
   }
 
-  // ===== Galeria (F014 / RN003): carrossel em JS puro, sem autoplay =====
-  function criarTelaReservada() {
+  // ===== Galeria (F014 / RN003): carrossel sobre a faixa com scroll-snap, sem autoplay =====
+  // As telas vêm do HTML (fonte única, aparecem sem JS); aqui só entram controles, indicadores e o
+  // reservado "Tela em breve" para imagem que não carregou. O arrastar/rolar é o nativo do navegador.
+  function trocarPorReservado(imagem) {
+    const celular = document.createElement('div');
+    celular.className = 'pc-celular';
     const tela = document.createElement('div');
     tela.className = 'pc-celular__tela pc-celular__tela--reservada';
     const texto = document.createElement('span');
     texto.textContent = 'Tela em breve';
     tela.appendChild(texto);
-    return tela;
+    celular.appendChild(tela);
+    imagem.replaceWith(celular);
   }
 
-  function criarSlide(item, indice, total) {
-    const slide = document.createElement('div');
-    slide.className = 'pc-carrossel__slide';
-    slide.setAttribute('role', 'group');
-    slide.setAttribute('aria-roledescription', 'slide');
-    slide.setAttribute('aria-label', (indice + 1) + ' de ' + total);
-    slide.hidden = indice !== 0;
-
-    const figura = document.createElement('figure');
-    const celular = document.createElement('div');
-    celular.className = 'pc-celular';
-
-    const tela = document.createElement('div');
-    tela.className = 'pc-celular__tela';
-
-    const imagem = document.createElement('img');
-    imagem.src = PASTA_TELAS + item.arquivo;
-    imagem.alt = item.legenda || '';
-    imagem.loading = 'lazy';
-    imagem.decoding = 'async';
-    // RN003: imagem que não carrega vira o reservado "Tela em breve"
-    imagem.addEventListener('error', function () {
-      celular.replaceChild(criarTelaReservada(), tela);
-    }, { once: true });
-
-    tela.appendChild(imagem);
-    celular.appendChild(tela);
-    figura.appendChild(celular);
-
-    if (item.legenda) {
-      const legenda = document.createElement('figcaption');
-      legenda.className = 'pc-galeria__legenda';
-      legenda.textContent = item.legenda;
-      figura.appendChild(legenda);
+  function vigiarImagem(imagem) {
+    // A imagem pode ter falhado antes de o JS rodar (o evento já passou)
+    if (imagem.complete && imagem.naturalWidth === 0) {
+      trocarPorReservado(imagem);
+      return;
     }
-
-    slide.appendChild(figura);
-    return slide;
+    imagem.addEventListener('error', function () {
+      trocarPorReservado(imagem);
+    }, { once: true });
   }
 
   function criarBotao(classe, texto) {
@@ -630,91 +604,171 @@
     return botao;
   }
 
+  // Botão "Tela anterior"/"Próxima tela" com a seta só visual
+  function criarBotaoSeta(texto, seta, setaAntes) {
+    const botao = criarBotao('pc-btn pc-btn--azul pc-carrossel__botao');
+    const icone = document.createElement('span');
+    icone.className = 'pc-carrossel__seta';
+    icone.setAttribute('aria-hidden', 'true');
+    icone.textContent = seta;
+    // No celular o CSS esconde o rótulo só visualmente: continua sendo o nome do botão
+    const rotulo = document.createElement('span');
+    rotulo.className = 'pc-carrossel__rotulo';
+    rotulo.textContent = texto;
+    if (setaAntes) {
+      botao.append(icone, rotulo);
+    } else {
+      botao.append(rotulo, icone);
+    }
+    return botao;
+  }
+
+  function legendaDe(slide) {
+    const legenda = slide.querySelector('figcaption');
+    return legenda ? legenda.textContent.trim() : '';
+  }
+
   function montarGaleria() {
-    const container = document.querySelector('[data-pc-galeria]');
-    // Lista vazia: os reservados do HTML continuam como estão
-    if (!container || TELAS.length === 0) {
+    const galeria = document.querySelector('[data-pc-galeria]');
+    const trilho = galeria && galeria.querySelector('[data-pc-galeria-trilho]');
+    if (!trilho) {
+      return;
+    }
+    const slides = Array.from(trilho.children);
+    trilho.querySelectorAll('img').forEach(vigiarImagem);
+    if (slides.length < 2) {
       return;
     }
 
-    const carrossel = document.createElement('div');
-    carrossel.className = 'pc-carrossel';
-    carrossel.setAttribute('role', 'region');
-    carrossel.setAttribute('aria-roledescription', 'carrossel');
-    carrossel.setAttribute('aria-label', 'Telas do app');
-
-    // Sem autoplay, então a troca pode ser anunciada com educação (polite)
-    const trilho = document.createElement('div');
-    trilho.setAttribute('aria-live', 'polite');
-
-    const slides = TELAS.map(function (item, indice) {
-      const slide = criarSlide(item, indice, TELAS.length);
-      trilho.appendChild(slide);
-      return slide;
+    galeria.setAttribute('role', 'region');
+    galeria.setAttribute('aria-roledescription', 'carrossel');
+    galeria.setAttribute('aria-label', 'Telas do app');
+    slides.forEach(function (slide, indice) {
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.setAttribute('aria-label', (indice + 1) + ' de ' + slides.length);
     });
-    carrossel.appendChild(trilho);
 
-    if (TELAS.length > 1) {
-      let atual = 0;
-      const indicadores = [];
+    const controles = document.createElement('div');
+    controles.className = 'pc-carrossel__controles';
+    const anterior = criarBotaoSeta('Tela anterior', '←', true);
+    const proxima = criarBotaoSeta('Próxima tela', '→', false);
+    const grupoIndicadores = document.createElement('div');
+    grupoIndicadores.className = 'pc-carrossel__indicadores';
+    // Todos os slides ficam no DOM (não há troca de conteúdo), então a tela atual é anunciada à parte
+    const aviso = document.createElement('p');
+    aviso.className = 'pc-sr';
+    aviso.setAttribute('aria-live', 'polite');
 
-      const controles = document.createElement('div');
-      controles.className = 'pc-carrossel__controles';
-      const anterior = criarBotao('pc-btn pc-btn--azul', 'Tela anterior');
-      const proxima = criarBotao('pc-btn pc-btn--azul', 'Próxima tela');
-      const grupoIndicadores = document.createElement('div');
-      grupoIndicadores.className = 'pc-carrossel__indicadores';
-
-      const mostrar = function (indice) {
-        atual = (indice + slides.length) % slides.length;
-        slides.forEach(function (slide, i) {
-          slide.hidden = i !== atual;
-        });
-        indicadores.forEach(function (indicador, i) {
-          if (i === atual) {
-            indicador.setAttribute('aria-current', 'true');
-          } else {
-            indicador.removeAttribute('aria-current');
-          }
-        });
-      };
-
-      slides.forEach(function (slide, indice) {
-        const indicador = criarBotao('pc-carrossel__indicador', '');
-        indicador.setAttribute('aria-label', 'Ir para a tela ' + (indice + 1));
-        indicador.addEventListener('click', function () {
-          mostrar(indice);
-        });
-        indicadores.push(indicador);
-        grupoIndicadores.appendChild(indicador);
+    let atual = -1;
+    const indicadores = slides.map(function (slide, indice) {
+      const indicador = criarBotao('pc-carrossel__indicador', '');
+      indicador.setAttribute('aria-label', 'Ir para a tela ' + (indice + 1) + ': ' + legendaDe(slide));
+      indicador.addEventListener('click', function () {
+        irPara(indice);
       });
+      grupoIndicadores.appendChild(indicador);
+      return indicador;
+    });
 
-      anterior.addEventListener('click', function () {
-        mostrar(atual - 1);
+    // Marca a tela atual (escala/opacidade no CSS) e o indicador; o aviso só fala quando muda
+    function marcar(indice, anunciar) {
+      if (indice === atual) {
+        return;
+      }
+      atual = indice;
+      slides.forEach(function (slide, i) {
+        slide.classList.toggle('is-atual', i === atual);
       });
-      proxima.addEventListener('click', function () {
-        mostrar(atual + 1);
-      });
-
-      // Setas do teclado trocam a tela quando o foco está dentro do carrossel
-      carrossel.addEventListener('keydown', function (evento) {
-        if (evento.key === 'ArrowLeft') {
-          evento.preventDefault();
-          mostrar(atual - 1);
-        } else if (evento.key === 'ArrowRight') {
-          evento.preventDefault();
-          mostrar(atual + 1);
+      indicadores.forEach(function (indicador, i) {
+        if (i === atual) {
+          indicador.setAttribute('aria-current', 'true');
+        } else {
+          indicador.removeAttribute('aria-current');
         }
       });
-
-      controles.appendChild(anterior);
-      controles.appendChild(grupoIndicadores);
-      controles.appendChild(proxima);
-      carrossel.appendChild(controles);
-      mostrar(0);
+      if (anunciar) {
+        aviso.textContent = 'Tela ' + (atual + 1) + ' de ' + slides.length + ': ' + legendaDe(slides[atual]);
+      }
     }
 
-    container.replaceChildren(carrossel);
+    // Durante a rolagem suave pedida por botão/tecla, o slide do centro ainda é o antigo: sem esta trava,
+    // dois cliques rápidos em "Próxima tela" iriam para a mesma tela
+    let destino = null;
+    let liberarDestino = 0;
+
+    // Rola só o trilho (scrollIntoView poderia mover a página na vertical)
+    function irPara(indice) {
+      const alvo = (indice + slides.length) % slides.length;
+      const slide = slides[alvo];
+      const maximo = trilho.scrollWidth - trilho.clientWidth;
+      const esquerda = slide.offsetLeft - (trilho.clientWidth - slide.offsetWidth) / 2;
+      destino = Math.min(Math.max(esquerda, 0), maximo);
+      window.clearTimeout(liberarDestino);
+      // Segurança: se o usuário interromper a rolagem, a trava sai sozinha
+      liberarDestino = window.setTimeout(function () {
+        destino = null;
+      }, 1000);
+      trilho.scrollTo({ left: destino, behavior: movimentoReduzido ? 'auto' : 'smooth' });
+      marcar(alvo, true);
+    }
+
+    // Slide mais perto do centro do trilho; recalculado no máximo uma vez por quadro
+    function slideNoCentro() {
+      const centro = trilho.scrollLeft + trilho.clientWidth / 2;
+      let maisPerto = 0;
+      let menorDistancia = Infinity;
+      slides.forEach(function (slide, i) {
+        const distancia = Math.abs(slide.offsetLeft + slide.offsetWidth / 2 - centro);
+        if (distancia < menorDistancia) {
+          menorDistancia = distancia;
+          maisPerto = i;
+        }
+      });
+      return maisPerto;
+    }
+
+    let quadro = 0;
+    trilho.addEventListener('scroll', function () {
+      if (quadro) {
+        return;
+      }
+      quadro = window.requestAnimationFrame(function () {
+        quadro = 0;
+        if (destino !== null) {
+          if (Math.abs(trilho.scrollLeft - destino) > 2) {
+            return;
+          }
+          destino = null;
+        }
+        marcar(slideNoCentro(), true);
+      });
+    }, { passive: true });
+
+    anterior.addEventListener('click', function () {
+      irPara(atual - 1);
+    });
+    proxima.addEventListener('click', function () {
+      irPara(atual + 1);
+    });
+
+    // Setas do teclado trocam a tela quando o foco está dentro do carrossel
+    galeria.addEventListener('keydown', function (evento) {
+      if (evento.key === 'ArrowLeft') {
+        evento.preventDefault();
+        irPara(atual - 1);
+      } else if (evento.key === 'ArrowRight') {
+        evento.preventDefault();
+        irPara(atual + 1);
+      }
+    });
+
+    controles.append(anterior, grupoIndicadores, proxima);
+    galeria.append(controles, aviso);
+    galeria.classList.add('pc-galeria--carrossel');
+    // Começa centralizado na 1ª tela, sem anunciar (ninguém pediu a troca)
+    marcar(0, false);
+    trilho.scrollLeft = 0;
   }
 
   // ===== Rodapé =====

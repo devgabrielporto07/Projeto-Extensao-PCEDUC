@@ -54,6 +54,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/galeria.css">
   <link rel="stylesheet" href="css/trilha.css">
   <link rel="stylesheet" href="css/mascote.css">
   <link rel="stylesheet" href="css/quiz.css">
@@ -432,16 +433,30 @@
       <section class="pc-secao" id="telas" aria-labelledby="titulo-telas">
         <h2 class="pc-secao__titulo" id="titulo-telas">Telas do app</h2>
         <!--
-          RN003/DEC007: os reservados ficam no HTML para aparecerem mesmo sem JS.
-          Quando TELAS (main.js) tiver itens, o JS troca este bloco pelo carrossel.
+          RN003/DEC007: as telas ficam no HTML (fonte única) para aparecerem mesmo sem JS: faixa com rolagem
+          no celular e as 4 lado a lado no desktop. O main.js lê estes <figure> e só acrescenta os controles
+          do carrossel; imagem que não carrega vira o reservado "Tela em breve".
+          As PNG já trazem a moldura do iPhone. Como trocar/adicionar: assets/telas/README.md.
         -->
         <div class="pc-galeria" data-pc-galeria>
-          <ul class="pc-lista-limpa pc-galeria__reservados">
-            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
-            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
-            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
-            <li class="pc-celular"><div class="pc-celular__tela pc-celular__tela--reservada"><span>Tela em breve</span></div></li>
-          </ul>
+          <div class="pc-galeria__trilho" data-pc-galeria-trilho>
+            <figure class="pc-galeria__slide">
+              <img class="pc-galeria__img" src="assets/telas/tela-01.png" alt="Tela de abertura: criar conta ou entrar no PCEDUC" width="540" height="1080" loading="lazy" decoding="async">
+              <figcaption class="pc-galeria__legenda">Abertura</figcaption>
+            </figure>
+            <figure class="pc-galeria__slide">
+              <img class="pc-galeria__img" src="assets/telas/tela-02.png" alt="Tela de trilhas: escolha a trilha e acompanhe o progresso" width="540" height="1080" loading="lazy" decoding="async">
+              <figcaption class="pc-galeria__legenda">Trilhas</figcaption>
+            </figure>
+            <figure class="pc-galeria__slide">
+              <img class="pc-galeria__img" src="assets/telas/tela-03.png" alt="Tela de pergunta: o Benchware faz uma pergunta de múltipla escolha" width="540" height="1080" loading="lazy" decoding="async">
+              <figcaption class="pc-galeria__legenda">Pergunta</figcaption>
+            </figure>
+            <figure class="pc-galeria__slide">
+              <img class="pc-galeria__img" src="assets/telas/tela-04.png" alt="Tela de perfil: nível, XP, sequência e trilhas do aluno" width="540" height="1080" loading="lazy" decoding="async">
+              <figcaption class="pc-galeria__legenda">Perfil</figcaption>
+            </figure>
+          </div>
         </div>
         <p class="pc-galeria__prototipo">
           <a class="pc-btn pc-btn--contorno" href="https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&amp;t=ofcFB11myQ6Vvf07-1" target="_blank" rel="noopener">Conheça o protótipo<span class="pc-sr"> (abre em nova aba)</span></a>

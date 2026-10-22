@@ -1,7 +1,7 @@
 /*
   PCEDUC — components.css
   Componentes pc-*: seções, botões 3D, cartões, selos de ícone, passos,
-  galeria, equipe, download, rodapé e animações de entrada.
+  equipe, download, rodapé e animações de entrada. A galeria de telas fica em galeria.css.
 */
 
 /* ===== Seções ===== */
@@ -265,116 +265,6 @@
 
 .pc-passo__numero {
   color: var(--pc-destaque-texto);
-}
-
-/* ===== 7. Galeria ===== */
-.pc-galeria__reservados {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--pc-espaco-3);
-}
-
-@media (min-width: 600px) {
-  .pc-galeria__reservados {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* Moldura de celular feita só com CSS */
-.pc-celular {
-  padding: 0.375rem;
-  background-color: var(--pc-superficie-alt);
-  border: 2px solid var(--pc-azul);
-  border-radius: 1.25rem;
-  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
-}
-
-.pc-celular__tela {
-  aspect-ratio: 9 / 19.5;
-  overflow: hidden;
-  border-radius: 0.875rem;
-}
-
-.pc-celular__tela img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.pc-celular__tela--reservada {
-  display: grid;
-  place-items: center;
-  padding: var(--pc-espaco-2);
-  color: var(--pc-texto-suave);
-  font-family: var(--pc-fonte-titulo);
-  text-align: center;
-  border: 2px dashed var(--pc-borda);
-}
-
-.pc-galeria__prototipo {
-  margin-top: var(--pc-espaco-5);
-  text-align: center;
-}
-
-/* Carrossel (montado pelo JS quando TELAS tiver itens) */
-.pc-carrossel {
-  display: grid;
-  justify-items: center;
-  gap: var(--pc-espaco-4);
-}
-
-.pc-carrossel__slide {
-  width: min(100%, 15rem);
-}
-
-.pc-carrossel__slide[hidden] {
-  display: none;
-}
-
-.pc-galeria__legenda {
-  margin-top: 0.75rem;
-  color: var(--pc-texto-suave);
-  font-size: 0.9375rem;
-  text-align: center;
-}
-
-.pc-carrossel__controles {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--pc-espaco-3);
-}
-
-.pc-carrossel__indicadores {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.pc-carrossel__indicador {
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0;
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-
-.pc-carrossel__indicador::before {
-  content: "";
-  width: 0.75rem;
-  height: 0.75rem;
-  background-color: var(--pc-borda);
-  border-radius: var(--pc-raio-total);
-  transition: width var(--pc-transicao), background-color var(--pc-transicao);
-}
-
-.pc-carrossel__indicador[aria-current="true"]::before {
-  width: 1.75rem;
-  background-color: var(--pc-azul);
 }
 
 /* ===== 8. Equipe ===== */
