@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/benchware-wave-fixed.gif" alt="Benchware acenando" width="280">
+  <img src="Imagens/benchware-wave-fixed.gif" alt="Benchware acenando" width="280">
   <h1>PCEDUC</h1>
   <p><strong>Aprenda hardware jogando: trilhas, pontos e conquistas.</strong></p>
   <p>Projeto de extensão da <strong>UNINASSAU Campina Grande</strong> — Ciência da Computação</p>
@@ -32,13 +32,21 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 
 | Colaborador(a) | Perfil |
 | --- | --- |
-| Professora Danielly | [@daniellygualberto](https://github.com/daniellygualberto) |
+| Professor Daniel | [@danielccosta9](https://github.com/danielccosta9) |
 | Gabriel Porto | [@devgabrielporto07](https://github.com/devgabrielporto07) |
 | Daniel Mota | [@dplayerf](https://github.com/dplayerf) |
 | Luiz Kaynan | [@kaynan-CC](https://github.com/kaynan-CC) |
 | Pedro Vinicius | [@PedroVini09](https://github.com/PedroVini09) |
 | Alfredo Alves | [@Alfredinkapps](https://github.com/Alfredinkapps) |
 | Sara Arruda | [@Sararruda](https://github.com/Sararruda) |
+
+## 🌐 Site demonstrativo
+
+A página de apresentação do PCEDUC fica na pasta [`site/`](site/) (HTML, CSS e JavaScript puro, sem back-end).
+
+- **Ver localmente:** abra `site/index.html` no navegador ou rode `npx serve site`.
+- **Publicar:** faça o merge na branch `master` e, uma vez, ative `Settings → Pages → Source: GitHub Actions`. O workflow `.github/workflows/pages.yml` publica o site automaticamente.
+- **Telas do app:** exporte os frames do Figma como PNG para [`site/assets/telas/`](site/assets/telas/) (veja o README da pasta).
 
 ## 📄 Licença
 

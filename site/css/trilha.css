@@ -1,0 +1,237 @@
+/*
+  PCEDUC — trilha.css
+  Trilha em zigue-zague da seção "O que se aprende": nós 3D, baú da peça rara (botão), balões e divisor.
+  O mascote da trilha (posição e troca de pose) fica em mascote.css. Separada de components.css
+  para manter cada arquivo abaixo de 600 linhas (PADROES §1).
+*/
+
+/* ===== Trilha ===== */
+.pc-trilha {
+  --pc-passo: clamp(2.75rem, 11vw, 4.5rem);
+  position: relative;
+  padding-block: var(--pc-espaco-3);
+}
+
+.pc-trilha__lista {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.pc-trilha__item {
+  --pc-desvio: 0px;
+  --pc-no-cor: var(--pc-azul);
+  --pc-no-sombra: var(--pc-azul-escuro);
+  --pc-no-anel: var(--pc-anel-azul);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Desvios do zigue-zague (múltiplos de --pc-passo), na ordem dos itens */
+.pc-trilha__item:nth-child(2) { --pc-desvio: calc(0.8 * var(--pc-passo)); }
+.pc-trilha__item:nth-child(3) { --pc-desvio: calc(1.2 * var(--pc-passo)); }
+.pc-trilha__item:nth-child(4) { --pc-desvio: calc(0.8 * var(--pc-passo)); }
+.pc-trilha__item:nth-child(6) { --pc-desvio: calc(-0.8 * var(--pc-passo)); }
+.pc-trilha__item:nth-child(7) { --pc-desvio: calc(-1.2 * var(--pc-passo)); }
+
+.pc-trilha__item > :not(.pc-balao) {
+  translate: var(--pc-desvio) 0;
+}
+
+.pc-trilha__item--verde {
+  --pc-no-cor: var(--pc-verde);
+  --pc-no-sombra: var(--pc-verde-escuro);
+  --pc-no-anel: var(--pc-anel-verde);
+}
+
+.pc-trilha__item--amarelo {
+  --pc-no-cor: var(--pc-amarelo);
+  --pc-no-sombra: var(--pc-cinza);
+  --pc-no-anel: var(--pc-anel-amarelo);
+}
+
+.pc-no {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pc-espaco-2);
+  padding: var(--pc-espaco-1);
+  background: none;
+  border: 0;
+  border-radius: var(--pc-raio);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pc-no__circulo {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  color: var(--pc-preto);
+  background-color: var(--pc-no-cor);
+  border-radius: 50%;
+  box-shadow: 0 6px 0 var(--pc-no-sombra);
+  transition: transform var(--pc-transicao), box-shadow var(--pc-transicao);
+}
+
+.pc-no__circulo svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* "Pulo" leve no hover e afundar no clique */
+.pc-no:hover .pc-no__circulo {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 0 var(--pc-no-sombra);
+}
+
+.pc-no:active .pc-no__circulo {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 transparent;
+}
+
+/* Nó aberto ganha um anel na própria cor (estado visível além do balão) */
+.pc-no[aria-expanded="true"] .pc-no__circulo {
+  outline: 4px solid var(--pc-no-anel);
+  outline-offset: 4px;
+}
+
+.pc-no__rotulo {
+  max-width: 9rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* ===== Baú da peça rara (RF09): botão que abre balão amarelo, como os nós ===== */
+.pc-trilha__bau {
+  --pc-no-cor: var(--pc-amarelo);
+  --pc-no-sombra: var(--pc-cinza);
+  --pc-no-anel: var(--pc-anel-amarelo);
+}
+
+.pc-bau {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--pc-raio-pequeno);
+  transition: transform var(--pc-transicao);
+}
+
+.pc-no--bau {
+  gap: 0;
+}
+
+.pc-no--bau:hover .pc-bau {
+  transform: translateY(-4px);
+}
+
+.pc-no--bau:active .pc-bau {
+  transform: translateY(2px);
+}
+
+/* Aberto: anel como nos nós (estado visível além do balão) */
+.pc-no--bau[aria-expanded="true"] .pc-bau {
+  outline: 4px solid var(--pc-no-anel);
+  outline-offset: 4px;
+}
+
+.pc-bau__legenda {
+  margin-top: var(--pc-espaco-1);
+  color: var(--pc-destaque-amarelo-texto);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Balão: sem JS fica aberto abaixo do nó (lista); com JS vira popover */
+.pc-balao {
+  position: relative;
+  width: min(18rem, 100%);
+  margin-top: 0.875rem;
+  padding: var(--pc-espaco-3) 1.25rem;
+  color: var(--pc-preto);
+  text-align: center;
+  background-color: var(--pc-no-cor);
+  border-radius: var(--pc-raio);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-no-sombra);
+}
+
+/* Seta apontando para o nó, que pode estar deslocado no zigue-zague */
+.pc-balao::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: clamp(1.5rem, calc(50% + var(--pc-desvio)), calc(100% - 1.5rem));
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--pc-no-cor);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.pc-balao__titulo {
+  margin-bottom: var(--pc-espaco-1);
+  color: var(--pc-preto);
+  font-size: 1.125rem;
+}
+
+.pc-balao__texto {
+  font-weight: 600;
+}
+
+.js .pc-trilha--interativa .pc-balao {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 10;
+  display: none;
+  transform: translateX(-50%);
+}
+
+.js .pc-trilha--interativa .pc-balao.is-aberto {
+  display: block;
+  animation: pc-surgir 200ms ease-out;
+}
+
+.pc-divisor {
+  display: flex;
+  align-items: center;
+  gap: var(--pc-espaco-3);
+  margin-top: var(--pc-espaco-5);
+  color: var(--pc-texto-suave);
+  font-weight: 700;
+  text-align: center;
+}
+
+.pc-divisor::before,
+.pc-divisor::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background-color: var(--pc-borda);
+}
+
+
+/* ===== Animação do balão ===== */
+@keyframes pc-surgir {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
