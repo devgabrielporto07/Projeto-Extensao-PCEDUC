@@ -2,7 +2,8 @@
   PCEDUC — mascote.css
   Benchware nas seções: posição (ao lado do título ou centralizado no cartão), mascote da trilha e
   animações (entrada ao rolar, flutuação, troca de pose, giro no hover). Carregado depois de trilha.css.
-  Poses: PNG 320×320 transparentes em assets/img/mascote/. Com movimento reduzido, nada se mexe.
+  Poses: GIF animado 512×512 em assets/img/mascote/, com o PNG parado de mesmo nome para movimento
+  reduzido (via <picture> ou main.js). Com movimento reduzido, nada se mexe.
 */
 
 /* ===== Tamanho: moderado e igual em todas as seções (menor no celular) ===== */
@@ -36,6 +37,12 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* O <picture> (GIF + PNG parado) não cria caixa própria: a imagem segue medindo pelo invólucro */
+.pc-mascote picture,
+.pc-moldura__reservado picture {
+  display: contents;
 }
 
 /* Cópia da pose anterior, por cima da nova, que some durante a troca (crossfade) */

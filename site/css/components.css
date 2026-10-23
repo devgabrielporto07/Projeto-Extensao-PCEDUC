@@ -139,7 +139,7 @@
 }
 
 .pc-hero__mascote {
-  width: min(100%, 22rem);
+  width: min(100%, 15rem);
   margin: 0 auto var(--pc-espaco-3);
 }
 

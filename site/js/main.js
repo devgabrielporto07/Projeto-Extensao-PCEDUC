@@ -230,9 +230,16 @@
     });
   }
 
-  // ===== Mascote: poses (PNG 320×320) =====
+  // ===== Mascote: poses (GIF animado; PNG parado com movimento reduzido, DEC009) =====
   function caminhoDaPose(pose) {
-    return PASTA_MASCOTE + pose + '.png';
+    return PASTA_MASCOTE + pose + (movimentoReduzido ? '.png' : '.gif');
+  }
+
+  // Trilha e quiz trocam a pose pelo JS, então não usam <picture>: aqui o GIF inicial vira PNG
+  if (movimentoReduzido) {
+    document.querySelectorAll('[data-pc-mascote-trilha], [data-pc-quiz-mascote]').forEach(function (imagem) {
+      imagem.setAttribute('src', imagem.getAttribute('src').replace(/\.gif$/, '.png'));
+    });
   }
 
   // Baixa as poses de reação antes do clique, para a troca não piscar
