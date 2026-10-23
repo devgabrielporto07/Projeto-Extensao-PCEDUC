@@ -40,8 +40,7 @@
 }
 
 /* O <picture> (GIF + PNG parado) não cria caixa própria: a imagem segue medindo pelo invólucro */
-.pc-mascote picture,
-.pc-moldura__reservado picture {
+.pc-mascote picture {
   display: contents;
 }
 
