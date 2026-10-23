@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/benchware-wave.gif" alt="Benchware acenando" width="280">
+  <img src="assets/benchware-wave-fixed.gif" alt="Benchware acenando" width="280">
   <h1>PCEDUC</h1>
   <p><strong>Aprenda hardware jogando: trilhas, pontos e conquistas.</strong></p>
   <p>Projeto de extensão da <strong>UNINASSAU Campina Grande</strong> — Ciência da Computação</p>
@@ -23,8 +23,8 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 | Área | Tecnologias |
 | --- | --- |
 | Aplicativo mobile | Flutter e Dart |
-| Back-end e web | C# e ASP.NET Core MVC |
-| Banco de dados | MySQL |
+| Back-end e web | Flutter, Dart e HTML5, CSS3 e JAVASCRIPT |
+| Banco de dados | Supabase |
 | Design e prototipagem | Figma |
 | Versionamento | Git e GitHub |
 
