@@ -1,3 +1,54 @@
+# IDEs and editor settings
+.vscode/
+.idea/
+.fleet/
+*.iml
+
+# Flutter and Dart generated files
+.dart_tool/
+.pub/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+**/android/.gradle/
+**/android/local.properties
+**/android/**/build/
+**/android/.cxx/
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/.last_build_id
+
+# JavaScript dependencies and build output
+node_modules/
+dist/
+coverage/
+.next/
+.nuxt/
+.vite/
+
+# Supabase local development artifacts
+supabase/.temp/
+.supabase/
+
+# Local environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs, temporary files, and operating-system metadata
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
 # Agentes e configuração local do Claude Code (não versionar)
 .claude/
 CLAUDE.md
