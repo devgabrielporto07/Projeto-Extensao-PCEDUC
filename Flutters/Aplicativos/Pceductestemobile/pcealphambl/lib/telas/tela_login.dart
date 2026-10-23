@@ -7,6 +7,7 @@ import '../widgets/campo_pc_educ.dart';
 import '../widgets/layout_auth.dart';
 import '../widgets/secao_social.dart';
 import 'tela_cadastro.dart';
+import 'tela_trilhas.dart';
 
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key, this.emailInicial});
@@ -59,8 +60,9 @@ class _TelaLoginState extends State<TelaLogin> {
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Login feito! (a tela principal ainda não existe)')),
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const TelaTrilhas()),
     );
   }
 

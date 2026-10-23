@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'cores.dart';
 
 class Tema {
+  static final ValueNotifier<bool> modoEscuro = ValueNotifier(false);
+
   static ThemeData get tema {
     final base = ThemeData(useMaterial3: true, colorSchemeSeed: Cores.azulFundo);
     return base.copyWith(

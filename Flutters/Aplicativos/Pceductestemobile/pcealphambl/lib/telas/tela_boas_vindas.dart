@@ -32,7 +32,7 @@ class TelaBoasVindas extends StatelessWidget {
                             children: [
                               Image.asset(
                                 'assets/images/logopc.png',
-                                height: tamanho.height * 0.2,
+                                height: tamanho.height * 0.4,
                                 errorBuilder: (_, _, _) => const Icon(
                                   Icons.memory,
                                   size: 100,

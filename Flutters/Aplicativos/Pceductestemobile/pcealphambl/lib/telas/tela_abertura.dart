@@ -60,7 +60,7 @@ class _TelaAberturaState extends State<TelaAbertura> {
                             children: [
                               Image.asset(
                                 'assets/images/logopc.png',
-                                height: tamanho.height * 0.25,
+                                height: tamanho.height * 0.4,
                                 errorBuilder: (_, _, _) => const Icon(
                                   Icons.memory,
                                   size: 120,
