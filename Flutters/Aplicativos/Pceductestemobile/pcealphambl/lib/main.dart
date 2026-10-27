@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'core/cores.dart';
 import 'core/tema.dart';
 import 'telas/tela_abertura.dart';
-
-void main() => runApp(const PcEducApp());
+void main() {
+  runApp(const PcEducApp());
+}
 
 class PcEducApp extends StatelessWidget {
   const PcEducApp({super.key});

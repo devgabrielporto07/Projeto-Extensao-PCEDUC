@@ -12,49 +12,56 @@ class TelaTrilhas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: FundoPcEduc(
-        child: SafeArea(
-          bottom: false,
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              TextoContorno(
-                'Trilhas',
-                estilo: Tema.tituloPixel(tamanho: 48, cor: Cores.verdeNeon),
-                larguraContorno: 8,
+    // 1. O ValueListenableBuilder fica a "ouvir" a mudança de tema em tempo real
+    return ValueListenableBuilder<bool>(
+      valueListenable: Tema.modoEscuro,
+      builder: (context, isDark, _) {
+        
+        return Scaffold(
+          extendBody: true,
+          body: FundoPcEduc(
+            child: SafeArea(
+              bottom: false,
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  TextoContorno(
+                    'Trilhas',
+                    estilo: Tema.tituloPixel(tamanho: 48, cor: Cores.verdeNeon),
+                    larguraContorno: 8,
+                  ),
+                  const SizedBox(height: 4),
+                  TextoContorno(
+                    'Escolha seu caminho do conhecimento',
+                    estilo: Tema.tituloPixel(tamanho: 16, cor: Cores.branco),
+                    larguraContorno: 4,
+                  ),
+                  const SizedBox(height: 24),
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        _buildTrilhaAtiva(context),
+                        const SizedBox(height: 16),
+                        _buildTrilhaBloqueada('Trilha 2: Por dentro do PC', 'Conclua a Trilha 1 para liberar', isDark),
+                        const SizedBox(height: 16),
+                        _buildTrilhaBloqueada('Trilha 3: Montando um PC', 'Conclua a Trilha 2 para liberar', isDark),
+                        const SizedBox(height: 16),
+                        _buildTrilhaBloqueada('Trilha 4: Redes e internet', 'Conclua a Trilha 3 para liberar', isDark),
+                        const SizedBox(height: 16),
+                        _buildTrilhaBloqueada('Trilha 5: Programação básica', 'Conclua a Trilha 4 para liberar', isDark),
+                        const SizedBox(height: 100),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 4),
-              TextoContorno(
-                'Escolha seu caminho do conhecimento',
-                estilo: Tema.tituloPixel(tamanho: 16, cor: Cores.branco),
-                larguraContorno: 4,
-              ),
-              const SizedBox(height: 24),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    _buildTrilhaAtiva(context),
-                    const SizedBox(height: 16),
-                    _buildTrilhaBloqueada('Trilha 2: Por dentro do PC', 'Conclua a Trilha 1 para liberar'),
-                    const SizedBox(height: 16),
-                    _buildTrilhaBloqueada('Trilha 3: Montando um PC', 'Conclua a Trilha 2 para liberar'),
-                    const SizedBox(height: 16),
-                    _buildTrilhaBloqueada('Trilha 4: Redes e internet', 'Conclua a Trilha 3 para liberar'),
-                    const SizedBox(height: 16),
-                    _buildTrilhaBloqueada('Trilha 5: Programação básica', 'Conclua a Trilha 4 para liberar'),
-                    const SizedBox(height: 100),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-      bottomNavigationBar: _buildBottomNavBar(context),
+          bottomNavigationBar: _buildBottomNavBar(context, isDark),
+        );
+      },
     );
   }
 
@@ -70,7 +77,6 @@ class TelaTrilhas extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Botão Jogar (Azul) com Clique
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -112,7 +118,7 @@ class TelaTrilhas extends StatelessWidget {
                       ),
                       child: const Text(
                         'Nível 1 de 4',
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800),
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.w800, color: Cores.preto),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -157,7 +163,7 @@ class TelaTrilhas extends StatelessWidget {
                         child: Center(
                           child: Text(
                             '15% concluído',
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800, color: Cores.preto),
                           ),
                         ),
                       ),
@@ -180,7 +186,7 @@ class TelaTrilhas extends StatelessWidget {
                     SizedBox(width: 4),
                     Text(
                       'Estudar',
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
+                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12, color: Cores.preto),
                     ),
                   ],
                 ),
@@ -192,11 +198,11 @@ class TelaTrilhas extends StatelessWidget {
     );
   }
 
-  Widget _buildTrilhaBloqueada(String titulo, String subtitulo) {
+  Widget _buildTrilhaBloqueada(String titulo, String subtitulo, bool isDark) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFFE2E8F0),
+        color: isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Cores.preto, width: 3),
       ),
@@ -208,11 +214,11 @@ class TelaTrilhas extends StatelessWidget {
               children: [
                 Text(
                   titulo,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: Cores.preto),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: isDark ? Colors.white : Cores.preto),
                 ),
                 Text(
                   subtitulo,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Color(0xFF64748B)),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: isDark ? Colors.white70 : const Color(0xFF64748B)),
                 ),
               ],
             ),
@@ -220,46 +226,45 @@ class TelaTrilhas extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Cores.branco,
+              color: isDark ? const Color(0xFF334155) : Cores.branco,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: Cores.preto, width: 2),
             ),
-            child: const Icon(Icons.lock, color: Cores.preto),
+            child: Icon(Icons.lock, color: isDark ? Colors.white : Cores.preto),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildBottomNavBar(BuildContext context) {
+  Widget _buildBottomNavBar(BuildContext context, bool isDark) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.bottomCenter,
       children: [
         Container(
           height: 70,
-          decoration: const BoxDecoration(
-            color: Cores.branco,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            border: Border(top: BorderSide(color: Cores.preto, width: 3)),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.grey[900] : Cores.branco,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            border: const Border(top: BorderSide(color: Cores.preto, width: 3)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildNavItem(Icons.home, 'Início', isActive: true),
-              _buildNavItem(Icons.person, 'Perfil'),
+              _buildNavItem(Icons.home, 'Início', isActive: true, isDark: isDark),
+              _buildNavItem(Icons.person, 'Perfil', isDark: isDark),
               const SizedBox(width: 48),
-              _buildNavItem(Icons.star, 'Conquistas'),
+              _buildNavItem(Icons.star, 'Conquistas', isDark: isDark),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const TelaMenu()));
                 },
-                child: _buildNavItem(Icons.menu, 'Menu'),
+                child: _buildNavItem(Icons.menu, 'Menu', isDark: isDark),
               ),
             ],
           ),
         ),
-        // Botão Central Verde com Clique
         Positioned(
           top: -24,
           child: GestureDetector(
@@ -281,21 +286,23 @@ class TelaTrilhas extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icone, String texto, {bool isActive = false}) {
-    final cor = isActive ? Cores.verdeNeon : const Color(0xFF94A3B8);
+  Widget _buildNavItem(IconData icone, String texto, {bool isActive = false, required bool isDark}) {
+    final corInativo = isDark ? Colors.white54 : const Color(0xFF94A3B8);
+    final cor = isActive ? Cores.verdeNeon : corInativo;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icone, color: isActive ? Cores.preto : cor, size: 28),
-        Text(
-          texto,
-          style: TextStyle(
-            color: isActive ? Cores.preto : cor,
-            fontSize: 10,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
-          ),
+        Container(
+          padding: isActive ? const EdgeInsets.all(4) : EdgeInsets.zero,
+          decoration: isActive ? BoxDecoration(color: Cores.verdeNeon, borderRadius: BorderRadius.circular(8), border: Border.all(color: Cores.preto, width: 2)) : null,
+          child: Icon(icone, color: isActive ? Cores.preto : cor, size: isActive ? 24 : 28),
         ),
+        if (!isActive)
+          Text(
+            texto,
+            style: TextStyle(color: cor, fontSize: 10, fontWeight: FontWeight.w600),
+          ),
       ],
     );
   }

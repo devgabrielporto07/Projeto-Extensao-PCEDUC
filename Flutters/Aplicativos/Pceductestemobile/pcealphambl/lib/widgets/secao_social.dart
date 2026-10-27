@@ -3,9 +3,14 @@ import '../core/cores.dart';
 import 'botao_social.dart';
 
 class SecaoSocial extends StatelessWidget {
-  const SecaoSocial({super.key, required this.textoDivisor});
-
+  const SecaoSocial({
+    super.key, 
+    required this.textoDivisor,
+    this.aoPressionarApple, // <- Novo parâmetro para o nosso atalho
+  });
+  
   final String textoDivisor;
+  final VoidCallback? aoPressionarApple;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class SecaoSocial extends StatelessWidget {
             Expanded(
               child: BotaoSocial(
                 icone: const Icon(Icons.apple, size: 26),
-                aoPressionar: () {},
+                aoPressionar: aoPressionarApple, // <- Ação ligada ao botão da maçã
               ),
             ),
             const SizedBox(width: 12),

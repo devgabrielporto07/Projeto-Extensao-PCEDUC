@@ -9,6 +9,7 @@ import '../widgets/secao_social.dart';
 import 'tela_cadastro.dart';
 import 'tela_trilhas.dart';
 
+
 class TelaLogin extends StatefulWidget {
   const TelaLogin({super.key, this.emailInicial});
 
@@ -135,7 +136,15 @@ class _TelaLoginState extends State<TelaLogin> {
               aoPressionar: _entrando ? null : _entrar,
             ),
             const SizedBox(height: 16),
-            const SecaoSocial(textoDivisor: 'ou entre com'),
+            SecaoSocial(
+              textoDivisor: 'ou entre com',
+              aoPressionarApple: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const TelaTrilhas()),
+                );
+              },
+            ),
           ],
         ),
       ),

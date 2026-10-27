@@ -3,90 +3,98 @@ import '../core/cores.dart';
 import '../core/tema.dart';
 import '../widgets/fundo_pc_educ.dart';
 import '../widgets/texto_contorno.dart';
-import "tela_menu.dart";
+import 'tela_menu.dart';
 
 class TelaTrilhaDetalhe extends StatelessWidget {
   const TelaTrilhaDetalhe({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: FundoPcEduc(
-        child: SafeArea(
-          bottom: false,
-          child: Column(
-            children: [
-              _buildCabecalho(context),
-              Expanded(
-                child: Stack(
-                  children: [
-                    _buildMapaNiveis(),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 90, left: 16, right: 16),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(
-                                  color: Cores.branco,
-                                  borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(color: Cores.preto, width: 3),
+    // Adicionamos o "espião" aqui também! Ele vai atualizar a ecrã 
+    // instantaneamente quer mude para escuro ou volte para o claro.
+    return ValueListenableBuilder<bool>(
+      valueListenable: Tema.modoEscuro,
+      builder: (context, isDark, _) {
+        return Scaffold(
+          extendBody: true,
+          body: FundoPcEduc(
+            child: SafeArea(
+              bottom: false,
+              child: Column(
+                children: [
+                  _buildCabecalho(context, isDark),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        _buildMapaNiveis(),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 90, left: 16, right: 16),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: isDark ? Colors.grey[850] : Cores.branco,
+                                      borderRadius: BorderRadius.circular(16),
+                                      border: Border.all(color: Cores.preto, width: 3),
+                                    ),
+                                    child: Text(
+                                      'Bem-vindo ao PC-educ! Bora começar pelo básico do hardware?',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700, 
+                                        fontSize: 13,
+                                        color: isDark ? Colors.white : Cores.preto
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 ),
-                                child: const Text(
-                                  'Bem-vindo ao PC-educ! Bora começar pelo básico do hardware?',
-                                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-                                  textAlign: TextAlign.center,
+                                const SizedBox(width: 8),
+                                
+                                // O SEU MASCOTE GIF
+                                Image.asset(
+                                  'assets/images/pose_8.gif',
+                                  width: 90,  
+                                  height: 110, 
+                                  fit: BoxFit.contain,
+                                  errorBuilder: (_, _, _) => const Icon(Icons.smart_toy, size: 50, color: Cores.preto),
                                 ),
-                              ),
+                              ],
                             ),
-                            const SizedBox(width: 8),
-                            
-                            // SEU MASCOTE (GIF) ESTÁ AQUI
-                            Image.asset(
-                              'assets/images/pose_8.gif', // <-- Coloque o nome exato do seu arquivo aqui!
-                              width: 90,  
-                              height: 110, 
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, _, _) => const Icon(Icons.smart_toy, size: 50, color: Cores.preto),
-                            ),
-
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-      
-      // NOVA NAVBAR ADICIONADA AQUI
-      bottomNavigationBar: _buildBottomNavBar(context),
+          bottomNavigationBar: _buildBottomNavBar(context, isDark),
+        );
+      },
     );
   }
 
-  Widget _buildCabecalho(BuildContext context) {
+  Widget _buildCabecalho(BuildContext context, bool isDark) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-      decoration: const BoxDecoration(
-        color: Cores.branco,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
-        border: Border(bottom: BorderSide(color: Cores.preto, width: 4)),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.grey[900] : Cores.branco,
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(32)),
+        border: const Border(bottom: BorderSide(color: Cores.preto, width: 4)),
       ),
       child: Column(
         children: [
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Cores.preto),
+                icon: Icon(Icons.arrow_back_ios, color: isDark ? Colors.white : Cores.preto),
                 onPressed: () => Navigator.pop(context),
               ),
               Expanded(
@@ -101,19 +109,23 @@ class TelaTrilhaDetalhe extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Conceitos básicos de hardware',
-            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
+            style: TextStyle(
+              fontWeight: FontWeight.w800, 
+              fontSize: 14,
+              color: isDark ? Colors.white : Cores.preto
+            ),
           ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildChip(Icons.local_fire_department, '3 dias'),
+              _buildChip(Icons.local_fire_department, '3 dias', isDark),
               const SizedBox(width: 8),
-              _buildChip(Icons.star, '40 XP'),
+              _buildChip(Icons.star, '40 XP', isDark),
               const SizedBox(width: 8),
-              _buildChip(Icons.check_circle, '0 de 4 níveis'),
+              _buildChip(Icons.check_circle, '0 de 4 níveis', isDark),
             ],
           ),
         ],
@@ -121,19 +133,19 @@ class TelaTrilhaDetalhe extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(IconData icone, String texto) {
+  Widget _buildChip(IconData icone, String texto, bool isDark) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: Cores.branco,
+        color: isDark ? Colors.grey[800] : Cores.branco,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Cores.preto, width: 2),
       ),
       child: Row(
         children: [
-          Icon(icone, size: 16, color: Cores.preto),
+          Icon(icone, size: 16, color: isDark ? Colors.white : Cores.preto),
           const SizedBox(width: 4),
-          Text(texto, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 11)),
+          Text(texto, style: TextStyle(fontWeight: FontWeight.w800, fontSize: 11, color: isDark ? Colors.white : Cores.preto)),
         ],
       ),
     );
@@ -193,73 +205,75 @@ class TelaTrilhaDetalhe extends StatelessWidget {
     );
   }
 
-  // MÉTODOS DA NAVBAR INFERIOR
-  Widget _buildBottomNavBar(BuildContext context) {
+  Widget _buildBottomNavBar(BuildContext context, bool isDark) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.bottomCenter,
       children: [
         Container(
           height: 70,
-          decoration: const BoxDecoration(
-            color: Cores.branco,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            border: Border(top: BorderSide(color: Cores.preto, width: 3)),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.grey[900] : Cores.branco,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+            border: const Border(top: BorderSide(color: Cores.preto, width: 3)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // Para navegar de volta ao início ao clicar no ícone "Início"
               GestureDetector(
                 onTap: () => Navigator.pop(context), 
-                child: _buildNavItem(Icons.home, 'Início', isActive: true),
+                child: _buildNavItem(Icons.home, 'Início', isDark: isDark),
               ),
-              _buildNavItem(Icons.person, 'Perfil'),
-              const SizedBox(width: 48), // Espaço para o botão central
-              _buildNavItem(Icons.star, 'Conquistas'),
+              _buildNavItem(Icons.person, 'Perfil', isDark: isDark),
+              const SizedBox(width: 48),
+              _buildNavItem(Icons.star, 'Conquistas', isDark: isDark),
               GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const TelaMenu()));
-                  },
-                  child: _buildNavItem(Icons.menu, 'Menu'),
-               ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const TelaMenu()));
+                },
+                child: _buildNavItem(Icons.menu, 'Menu', isDark: isDark),
+              ),
             ],
           ),
         ),
-        // Botão Central Verde
         Positioned(
           top: -24,
-          child: Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              color: Cores.verdeNeon,
-              shape: BoxShape.circle,
-              border: Border.all(color: Cores.preto, width: 4),
-              boxShadow: const [BoxShadow(color: Cores.preto, offset: Offset(0, 4))],
+          child: GestureDetector(
+            onTap: () => Navigator.pop(context), 
+            child: Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                color: Cores.verdeNeon,
+                shape: BoxShape.circle,
+                border: Border.all(color: Cores.preto, width: 4),
+                boxShadow: const [BoxShadow(color: Cores.preto, offset: Offset(0, 4))],
+              ),
+              child: const Icon(Icons.play_arrow, color: Cores.preto, size: 40),
             ),
-            child: const Icon(Icons.play_arrow, color: Cores.preto, size: 40),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildNavItem(IconData icone, String texto, {bool isActive = false}) {
-    final cor = isActive ? Cores.verdeNeon : const Color(0xFF94A3B8);
+  Widget _buildNavItem(IconData icone, String texto, {bool isActive = false, required bool isDark}) {
+    final corInativo = isDark ? Colors.white54 : const Color(0xFF94A3B8);
+    final cor = isActive ? Cores.verdeNeon : corInativo;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icone, color: isActive ? Cores.preto : cor, size: 28),
-        Text(
-          texto,
-          style: TextStyle(
-            color: isActive ? Cores.preto : cor,
-            fontSize: 10,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
-          ),
+        Container(
+          padding: isActive ? const EdgeInsets.all(4) : EdgeInsets.zero,
+          decoration: isActive ? BoxDecoration(color: Cores.verdeNeon, borderRadius: BorderRadius.circular(8), border: Border.all(color: Cores.preto, width: 2)) : null,
+          child: Icon(icone, color: isActive ? Cores.preto : cor, size: isActive ? 24 : 28),
         ),
+        if (!isActive)
+          Text(
+            texto,
+            style: TextStyle(color: cor, fontSize: 10, fontWeight: FontWeight.w600),
+          ),
       ],
     );
   }
