@@ -1,0 +1,66 @@
+/*
+  PCEDUC — erro.css
+  Página 404 (404.html): cabeçalho com o logo e bloco central com o mascote "erro-404".
+  Usa os tokens de base.css, o botão 3D de components.css e o mascote de mascote.css.
+*/
+
+.pc-erro {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.pc-erro__topo {
+  display: flex;
+  align-items: center;
+  padding: var(--pc-espaco-2) var(--pc-espaco-3);
+  border-bottom: var(--pc-contorno);
+}
+
+/* Mesmo visual do logo do site (layout.css não é carregado aqui) */
+.pc-erro__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pc-espaco-2);
+  min-height: 2.75rem;
+  color: var(--pc-destaque-verde-texto);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.75rem;
+  font-weight: var(--pc-peso-titulo);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.pc-erro__logo:hover {
+  color: var(--pc-destaque-verde-texto);
+}
+
+/* Ícone do mascote ao lado do nome, igual ao logo do site */
+.pc-erro__logo-img {
+  flex-shrink: 0;
+  width: auto;
+  height: 2.5rem;
+}
+
+.pc-erro__conteudo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pc-espaco-3);
+  padding: var(--pc-espaco-5) var(--pc-espaco-3);
+  text-align: center;
+}
+
+.pc-erro__mascote {
+  --pc-mascote-tamanho: clamp(10rem, 45vw, 15rem);
+}
+
+.pc-erro__texto {
+  max-width: 36ch;
+  margin-bottom: var(--pc-espaco-3);
+  color: var(--pc-texto-suave);
+  font-size: 1.0625rem;
+}
