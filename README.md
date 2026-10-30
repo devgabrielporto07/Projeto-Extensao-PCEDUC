@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="assets/benchware-wave-fixed.gif" alt="Benchware acenando" width="280">
+  <img src="Documentação/gif-Readme/benchware-wave-fixed.gif" alt="Benchware acenando" width="280">
   <h1>PCEDUC</h1>
   <p><strong>Aprenda hardware jogando: trilhas, pontos e conquistas.</strong></p>
   <p>Projeto de extensão da <strong>UNINASSAU Campina Grande</strong> — Ciência da Computação</p>
-  <p><a href="https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&t=ofcFB11myQ6Vvf07-1">🎮 Conheça o protótipo</a></p>
+  </p>
 </div>
 
 ---
@@ -32,13 +32,17 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 
 | Colaborador(a) | Perfil |
 | --- | --- |
-| Professora Danielly | [@daniellygualberto](https://github.com/daniellygualberto) |
+| Professor Daniel | [@danielccosta9](https://github.com/danielccosta9) |
 | Gabriel Porto | [@devgabrielporto07](https://github.com/devgabrielporto07) |
 | Daniel Mota | [@dplayerf](https://github.com/dplayerf) |
 | Luiz Kaynan | [@kaynan-CC](https://github.com/kaynan-CC) |
 | Pedro Vinicius | [@PedroVini09](https://github.com/PedroVini09) |
 | Alfredo Alves | [@Alfredinkapps](https://github.com/Alfredinkapps) |
 | Sara Arruda | [@Sararruda](https://github.com/Sararruda) |
+
+## 🌐 Site demonstrativo
+
+Acesse a [demonstração online do PCEDUC](https://devgabrielporto07.github.io/Projeto-Extensao-PCEDUC/) para conhecer o projeto. Para navegar pelas telas do aplicativo, confira também o [protótipo no Figma](https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&t=ofcFB11myQ6Vvf07-1).
 
 ## 📄 Licença
 
