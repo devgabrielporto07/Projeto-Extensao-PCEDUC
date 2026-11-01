@@ -16,9 +16,15 @@ class Validadores {
     return null;
   }
 
-  static String? senha(String? v) {
+    static String? senha(String? v) {
     if (v == null || v.isEmpty) return 'Digite uma senha.';
     if (v.length < 6) return 'Use pelo menos 6 caracteres.';
+    if (!RegExp(r'[a-z]').hasMatch(v)) return 'Inclua uma letra minúscula.';
+    if (!RegExp(r'[A-Z]').hasMatch(v)) return 'Inclua uma letra maiúscula.';
+    if (!RegExp(r'[0-9]').hasMatch(v)) return 'Inclua um número.';
+    if (!RegExp(r'''[!@#$%^&*()_+\-=\[\]{};':"\\|<>?,./`~]''').hasMatch(v)) {
+      return 'Inclua um símbolo, como ! @ # \$ %.';
+    }
     return null;
   }
 }

@@ -103,7 +103,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
             CampoPcEduc(
               rotulo: 'Senha',
               icone: Icons.lock_outline,
-              dica: 'Mínimo 6 caracteres',
+              dica: 'Letras, número e símbolo',
               ehSenha: true,
               controller: _senha,
               validator: Validadores.senha,

@@ -80,7 +80,7 @@ class AuthServico {
       case 'email_exists':
         return 'Este e-mail já tem uma conta.';
       case 'weak_password':
-        return 'Senha fraca. Use pelo menos 6 caracteres.';
+        return 'Senha fraca. Use 6 ou mais caracteres, com maiúscula, minúscula, número e símbolo.';
       case 'over_request_rate_limit':
       case 'over_email_send_rate_limit':
         return 'Muitas tentativas. Aguarde um pouco e tente de novo.';
