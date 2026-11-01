@@ -68,6 +68,32 @@ class AuthServico {
     }
   }
 
+  /// Troca a senha de quem está logado.
+  /// Primeiro confere a senha atual (reautenticando), depois grava a nova.
+  static Future<String?> alterarSenha({
+    required String senhaAtual,
+    required String novaSenha,
+  }) async {
+    try {
+      final email = _db.auth.currentUser?.email;
+      if (email == null) return 'Sessão expirada. Entre novamente.';
+
+      try {
+        await _db.auth.signInWithPassword(email: email, password: senhaAtual);
+      } on AuthException catch (e) {
+        if (e.code == 'invalid_credentials') return 'Senha atual incorreta.';
+        return _traduzir(e);
+      }
+
+      await _db.auth.updateUser(UserAttributes(password: novaSenha));
+      return null;
+    } on AuthException catch (e) {
+      return _traduzir(e);
+    } catch (_) {
+      return 'Não foi possível conectar. Verifique sua internet.';
+    }
+  }
+
   static Future<void> sair() => _db.auth.signOut();
 
   static String _traduzir(AuthException e) {
@@ -79,6 +105,8 @@ class AuthServico {
       case 'user_already_exists':
       case 'email_exists':
         return 'Este e-mail já tem uma conta.';
+      case 'same_password':
+        return 'A nova senha precisa ser diferente da atual.';
       case 'weak_password':
         return 'Senha fraca. Use 6 ou mais caracteres, com maiúscula, minúscula, número e símbolo.';
       case 'over_request_rate_limit':

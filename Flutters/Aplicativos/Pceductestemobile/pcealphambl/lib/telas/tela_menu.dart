@@ -5,6 +5,8 @@ import '../widgets/fundo_pc_educ.dart';
 import '../widgets/texto_contorno.dart';
 import 'tela_login.dart';
 import '../servicos/auth_servico.dart';
+import 'tela_editar_perfil.dart';
+import 'tela_alterar_senha.dart';
 
 class TelaMenu extends StatefulWidget {
   const TelaMenu({super.key});
@@ -64,9 +66,17 @@ class _TelaMenuState extends State<TelaMenu> {
                       _buildCartaoBase(
                         corFundoCartao,
                         [
-                          _buildItemMenu(Icons.edit, 'Editar perfil', corTexto, traling: const Icon(Icons.chevron_right)),
+                          _buildItemMenu(Icons.edit, 'Editar perfil', corTexto,
+                          traling: const Icon(Icons.chevron_right),
+                         onTap: () => Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (_) => const TelaEditarPerfil()),)),
                           _buildLinhaDivisoria(),
-                          _buildItemMenu(Icons.lock, 'Alterar senha', corTexto, traling: const Icon(Icons.chevron_right)),
+                          _buildItemMenu(Icons.lock, 'Alterar senha', corTexto,
+                          traling: const Icon(Icons.chevron_right),
+                          onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const TelaAlterarSenha()),)),
                         ],
                       ),
                       const SizedBox(height: 20),
