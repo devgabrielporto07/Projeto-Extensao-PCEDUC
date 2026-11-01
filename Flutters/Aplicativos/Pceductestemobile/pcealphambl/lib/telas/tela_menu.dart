@@ -4,6 +4,7 @@ import '../core/tema.dart';
 import '../widgets/fundo_pc_educ.dart';
 import '../widgets/texto_contorno.dart';
 import 'tela_login.dart';
+import '../servicos/auth_servico.dart';
 
 class TelaMenu extends StatefulWidget {
   const TelaMenu({super.key});
@@ -13,8 +14,10 @@ class TelaMenu extends StatefulWidget {
 }
 
 class _TelaMenuState extends State<TelaMenu> {
-  // Lógica para sair da conta
-  void _sairDaConta() {
+    // Lógica para sair da conta do BACKEND
+  Future<void> _sairDaConta() async {
+    await AuthServico.sair();
+    if (!mounted) return;
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => const TelaLogin()),
