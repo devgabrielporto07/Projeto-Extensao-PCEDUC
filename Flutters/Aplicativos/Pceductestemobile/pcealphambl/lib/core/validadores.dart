@@ -9,9 +9,9 @@ class Validadores {
   }
 
   static String? email(String? v) {
-    final texto = v?.trim() ?? ''; // mesma ideia do no texto
+    final texto = v?.trim() ?? '';
     if (texto.isEmpty) return 'Digite seu e-mail.';
-    final valido = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(texto); // validar o email o formato gabriel@exemplo
+    final valido = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(texto);
     if (!valido) return 'E-mail inválido.';
     return null;
   }

@@ -6,13 +6,14 @@ import '../widgets/texto_contorno.dart';
 import '../core/progresso.dart';
 import 'tela_trilha_detalhe.dart';
 import 'tela_menu.dart';
+import 'tela_perfil.dart';
+import 'tela_conquistas.dart'; // <-- Import da nova ecrã
 
 class TelaTrilhas extends StatelessWidget {
   const TelaTrilhas({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // 1. O ValueListenableBuilder fica a "ouvir" a mudança de tema em tempo real
     return ValueListenableBuilder<bool>(
       valueListenable: Tema.modoEscuro,
       builder: (context, isDark, _) {
@@ -250,12 +251,24 @@ class TelaTrilhas extends StatelessWidget {
             border: const Border(top: BorderSide(color: Cores.preto, width: 3)),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildNavItem(Icons.home, 'Início', isActive: true, isDark: isDark),
-              _buildNavItem(Icons.person, 'Perfil', isDark: isDark),
-              const SizedBox(width: 48),
-              _buildNavItem(Icons.star, 'Conquistas', isDark: isDark),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const TelaPerfil()));
+                },
+                child: _buildNavItem(Icons.person, 'Perfil', isDark: isDark),
+              ),
+              
+              const SizedBox(width: 88), 
+              
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const TelaConquistas()));
+                },
+                child: _buildNavItem(Icons.star, 'Conquistas', isDark: isDark),
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => const TelaMenu()));
