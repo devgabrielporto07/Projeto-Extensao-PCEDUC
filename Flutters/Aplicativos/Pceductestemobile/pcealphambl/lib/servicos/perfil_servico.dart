@@ -6,6 +6,7 @@ class Perfil {
     this.nome,
     this.usuario,
     this.fotoUrl,
+    this.email,
     this.xp = 0,
     this.sequenciaDias = 0,
   });
@@ -13,13 +14,15 @@ class Perfil {
   final String? nome;
   final String? usuario;
   final String? fotoUrl;
+  final String? email; // vem do login (auth), não da tabela perfis
   final int xp;
   final int sequenciaDias;
 
-  factory Perfil.deMapa(Map<String, dynamic> m) => Perfil(
+  factory Perfil.deMapa(Map<String, dynamic> m, {String? email}) => Perfil(
         nome: m['nome'] as String?,
         usuario: m['usuario'] as String?,
         fotoUrl: m['foto_url'] as String?,
+        email: email,
         xp: (m['xp'] as num?)?.toInt() ?? 0,
         sequenciaDias: (m['sequencia_dias'] as num?)?.toInt() ?? 0,
       );
@@ -41,7 +44,7 @@ class PerfilServico {
           .maybeSingle();
 
       if (dados == null) return null;
-      return Perfil.deMapa(dados);
+      return Perfil.deMapa(dados, email: _db.auth.currentUser?.email);
     } catch (_) {
       return null;
     }
