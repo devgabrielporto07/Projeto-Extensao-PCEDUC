@@ -7,6 +7,7 @@ class Perfil {
     this.usuario,
     this.fotoUrl,
     this.email,
+    this.nomeSugerido,
     this.xp = 0,
     this.sequenciaDias = 0,
   });
@@ -15,14 +16,18 @@ class Perfil {
   final String? usuario;
   final String? fotoUrl;
   final String? email; // vem do login (auth), não da tabela perfis
+
+  /// Nome que o Google informou (só para pré-preencher; o aluno confirma ou troca).
+  final String? nomeSugerido;
   final int xp;
   final int sequenciaDias;
 
-  factory Perfil.deMapa(Map<String, dynamic> m, {String? email}) => Perfil(
+  factory Perfil.deMapa(Map<String, dynamic> m, {String? email, String? nomeSugerido}) => Perfil(
         nome: m['nome'] as String?,
         usuario: m['usuario'] as String?,
         fotoUrl: m['foto_url'] as String?,
         email: email,
+        nomeSugerido: nomeSugerido,
         xp: (m['xp'] as num?)?.toInt() ?? 0,
         sequenciaDias: (m['sequencia_dias'] as num?)?.toInt() ?? 0,
       );
@@ -44,7 +49,16 @@ class PerfilServico {
           .maybeSingle();
 
       if (dados == null) return null;
-      return Perfil.deMapa(dados, email: _db.auth.currentUser?.email);
+      final meta = _db.auth.currentUser?.userMetadata;
+      var sugerido = ((meta?['full_name'] ?? meta?['name']) as String?)?.trim();
+      if (sugerido != null && sugerido.length > 50) sugerido = sugerido.substring(0, 50);
+      if (sugerido != null && sugerido.length < 2) sugerido = null;
+
+      return Perfil.deMapa(
+        dados,
+        email: _db.auth.currentUser?.email,
+        nomeSugerido: sugerido,
+      );
     } catch (_) {
       return null;
     }

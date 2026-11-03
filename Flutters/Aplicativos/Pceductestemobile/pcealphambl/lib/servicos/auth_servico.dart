@@ -9,6 +9,10 @@ class AuthServico {
   // Mesmo padrão do CHECK da coluna perfis.usuario.
   static final _padraoUsuario = RegExp(r'^[a-z0-9._]{3,20}$');
 
+  // Endereço de retorno do login social. Precisa ser IGUAL ao que está cadastrado em
+  // Supabase > Authentication > URL Configuration e no AndroidManifest.xml.
+  static const _retornoLoginSocial = 'io.supabase.pceduc://login-callback/';
+
   /// true se já existe uma sessão salva no aparelho (usar na TelaAbertura).
   static bool get logado => _db.auth.currentSession != null;
 
@@ -65,6 +69,27 @@ class AuthServico {
       return _traduzir(e);
     } catch (_) {
       return 'Não foi possível conectar. Verifique sua internet.';
+    }
+  }
+
+  /// Avisa quando o login muda (entrou, saiu, token renovado).
+  /// O login com Google termina "do lado de fora" do app (no navegador) e a sessão
+  /// chega depois, por aqui.
+  static Stream<AuthState> get aoMudar => _db.auth.onAuthStateChange;
+
+  /// Abre o login do Google no navegador. Devolve null se o navegador abriu,
+  /// ou uma mensagem de erro. A SESSÃO só chega depois, pelo [aoMudar].
+  static Future<String?> entrarComGoogle() async {
+    try {
+      final abriu = await _db.auth.signInWithOAuth(
+        OAuthProvider.google,
+        redirectTo: _retornoLoginSocial,
+      );
+      return abriu ? null : 'Não foi possível abrir o login do Google.';
+    } on AuthException catch (e) {
+      return _traduzir(e);
+    } catch (_) {
+      return 'Não foi possível abrir o login do Google.';
     }
   }
 

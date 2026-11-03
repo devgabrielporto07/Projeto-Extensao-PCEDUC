@@ -55,7 +55,7 @@ class _TelaEditarPerfilState extends State<TelaEditarPerfil> {
     }
 
     setState(() {
-      _nome.text = perfil.nome ?? '';
+      _nome.text = perfil.nome ?? perfil.nomeSugerido ?? '';
       _usuario.text = perfil.usuario ?? '';
       _email.text = perfil.email ?? '';
       _fotoUrl = perfil.fotoUrl;
