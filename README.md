@@ -23,8 +23,9 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 | Área | Tecnologias |
 | --- | --- |
 | Aplicativo mobile | Flutter e Dart |
-| Back-end e web | Flutter, Dart e HTML5, CSS3 e JAVASCRIPT |
-| Banco de dados | Supabase |
+| Front-end web | HTML5, CSS3 e JavaScript |
+| Back-end e API REST | C# e ASP.NET Core |
+| Banco de dados | Supabase (PostgreSQL)|
 | Design e prototipagem | Figma |
 | Versionamento | Git e GitHub |
 
