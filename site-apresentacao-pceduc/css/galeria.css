@@ -1,0 +1,188 @@
+/*
+  PCEDUC — galeria.css
+  Galeria "Telas do app" (F007/F014): faixa com scroll-snap (sem JS), carrossel com 1 tela no centro e
+  vizinhas menores (com JS), controles, indicadores e o reservado "Tela em breve" (RN003).
+  Carregado depois de components.css (usa .pc-btn).
+*/
+
+/* ===== Base: faixa rolável (vale sem JS) ===== */
+/* A largura do slide usa cqi (largura da galeria), então centralizar o 1º e o último slide é só padding */
+.pc-galeria {
+  --pc-galeria-slide: min(70cqi, 18.5rem);
+  container-type: inline-size;
+}
+
+.pc-galeria__trilho {
+  position: relative; /* referência do offsetLeft dos slides para o JS */
+  display: flex;
+  gap: var(--pc-espaco-3);
+  padding: var(--pc-espaco-2) calc(50cqi - var(--pc-galeria-slide) / 2) var(--pc-espaco-3);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  border-radius: var(--pc-raio);
+}
+
+.pc-galeria__trilho:focus-visible {
+  outline: var(--pc-foco);
+  outline-offset: 2px;
+}
+
+.pc-galeria__slide {
+  flex: 0 0 var(--pc-galeria-slide);
+  margin: 0;
+  scroll-snap-align: center;
+}
+
+/* As PNG já têm a moldura do iPhone: sem moldura CSS, só a sombra sólida (sem desfoque) do estilo 3D */
+.pc-galeria__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 var(--pc-profundidade) 0 var(--pc-azul-escuro));
+}
+
+.pc-galeria__legenda {
+  margin-top: 0.75rem;
+  color: var(--pc-texto-suave);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+/* Sem JS e com espaço: as 4 telas lado a lado, sem rolagem */
+@container (min-width: 36rem) {
+  .pc-galeria:not(.pc-galeria--carrossel) .pc-galeria__trilho {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding-inline: 0;
+    overflow: visible;
+  }
+}
+
+/* ===== Carrossel (classe posta pelo main.js) ===== */
+.pc-galeria--carrossel {
+  display: grid;
+  gap: var(--pc-espaco-3);
+}
+
+/* Com botões e indicadores, a barra de rolagem é redundante; o arrastar continua.
+   A máscara só esmaece as bordas (alfa, sem cor) para as vizinhas não parecerem cortadas */
+.pc-galeria--carrossel .pc-galeria__trilho {
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 1.5rem, #000 calc(100% - 1.5rem), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 1.5rem, #000 calc(100% - 1.5rem), transparent);
+}
+
+.pc-galeria--carrossel .pc-galeria__trilho::-webkit-scrollbar {
+  display: none;
+}
+
+/* "Coverflow" leve: só transform/opacity; a tela atual em tamanho cheio */
+.pc-galeria--carrossel .pc-galeria__slide {
+  opacity: 0.45;
+  transform: scale(0.86);
+  transition: transform 300ms ease-out, opacity 300ms ease-out;
+}
+
+.pc-galeria--carrossel .pc-galeria__slide.is-atual {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== Controles: [anterior] indicadores [próxima] numa linha só ===== */
+.pc-carrossel__controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pc-espaco-2);
+}
+
+.pc-carrossel__indicadores {
+  display: flex;
+  justify-content: center;
+}
+
+.pc-carrossel__seta {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Coluna estreita (celular): o texto do botão some da tela mas continua sendo o nome acessível;
+   fica só a seta num botão quadrado de 48px, para caber na mesma linha dos indicadores */
+@container (max-width: 31.99rem) {
+  .pc-carrossel__botao {
+    width: 3rem;
+    padding: 0;
+  }
+
+  .pc-carrossel__rotulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+@container (min-width: 32rem) {
+  .pc-carrossel__controles {
+    gap: var(--pc-espaco-3);
+  }
+}
+
+/* Alvo de toque de 44px; o ponto visível é o ::before */
+.pc-carrossel__indicador {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.pc-carrossel__indicador::before {
+  content: "";
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: var(--pc-borda);
+  border-radius: var(--pc-raio-total);
+  transition: width var(--pc-transicao), background-color var(--pc-transicao);
+}
+
+.pc-carrossel__indicador[aria-current="true"]::before {
+  width: 1.75rem;
+  background-color: var(--pc-azul);
+}
+
+/* ===== Reservado "Tela em breve" (RN003: imagem que não carregou) ===== */
+/* Só aqui existe moldura CSS de celular; proporção 1:2 igual à das PNG, para o slide não mudar de altura */
+.pc-celular {
+  padding: 0.375rem;
+  background-color: var(--pc-superficie-alt);
+  border: 2px solid var(--pc-azul);
+  border-radius: 1.25rem;
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
+}
+
+.pc-celular__tela--reservada {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 2;
+  padding: var(--pc-espaco-2);
+  color: var(--pc-texto-suave);
+  font-family: var(--pc-fonte-titulo);
+  text-align: center;
+  border: 2px dashed var(--pc-borda);
+  border-radius: 0.875rem;
+}
+
+/* ===== Link do protótipo ===== */
+.pc-galeria__prototipo {
+  margin-top: var(--pc-espaco-5);
+  text-align: center;
+}

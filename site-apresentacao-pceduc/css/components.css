@@ -1,0 +1,479 @@
+/*
+  PCEDUC — components.css
+  Componentes pc-*: seções, botões 3D, cartões, selos de ícone, passos,
+  equipe, download, rodapé e animações de entrada. A galeria de telas fica em galeria.css.
+*/
+
+/* ===== Seções ===== */
+.pc-secao {
+  padding-block: var(--pc-espaco-5);
+}
+
+.pc-secao__titulo {
+  margin-bottom: var(--pc-espaco-4);
+}
+
+.pc-secao__intro {
+  max-width: 60ch;
+  margin-bottom: var(--pc-espaco-4);
+  color: var(--pc-texto-suave);
+}
+
+.pc-selo {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: var(--pc-espaco-1) 0.75rem;
+  background-color: var(--pc-amarelo);
+  color: var(--pc-preto);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--pc-raio-pequeno);
+}
+
+.pc-grade {
+  display: grid;
+  gap: var(--pc-espaco-3);
+}
+
+/* auto-fit: as colunas se ajustam à largura disponível sem media queries */
+.pc-grade--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.pc-grade--3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
+}
+
+/* ===== Cartões ===== */
+.pc-card {
+  padding: var(--pc-espaco-4);
+  background-color: var(--pc-superficie);
+  border: var(--pc-contorno);
+  border-radius: var(--pc-raio);
+  box-shadow: var(--pc-sombra-superficie);
+}
+
+.pc-card__titulo {
+  margin-bottom: var(--pc-espaco-2);
+}
+
+.pc-card__texto {
+  color: var(--pc-texto-suave);
+}
+
+.pc-card--destaque {
+  border-color: var(--pc-azul);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
+}
+
+/* ===== Botões "3D": sombra sólida embaixo que some no :active (o botão afunda) ===== */
+.pc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pc-espaco-2);
+  min-height: 3rem;
+  padding: 0.75rem var(--pc-espaco-4);
+  border: 2px solid transparent;
+  border-radius: 0.875rem;
+  font-family: var(--pc-fonte-texto);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--pc-transicao), box-shadow var(--pc-transicao), border-color var(--pc-transicao), color var(--pc-transicao);
+}
+
+.pc-btn--grande {
+  min-height: 3.5rem;
+  padding: var(--pc-espaco-3) 2rem;
+  font-size: 1.0625rem;
+}
+
+.pc-btn--verde {
+  background-color: var(--pc-verde);
+  color: var(--pc-preto);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-verde-escuro);
+}
+
+.pc-btn--azul {
+  background-color: var(--pc-azul);
+  color: var(--pc-preto);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
+}
+
+.pc-btn--contorno {
+  background-color: transparent;
+  border-color: var(--pc-borda);
+  color: var(--pc-destaque-texto);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-borda);
+}
+
+.pc-btn--verde:hover,
+.pc-btn--azul:hover {
+  color: var(--pc-preto);
+}
+
+.pc-btn--contorno:hover {
+  border-color: var(--pc-destaque-texto);
+  color: var(--pc-link-hover);
+}
+
+.pc-btn--verde:active,
+.pc-btn--azul:active,
+.pc-btn--contorno:active {
+  transform: translateY(var(--pc-profundidade));
+  box-shadow: 0 0 0 transparent;
+}
+
+/* ===== 1. Hero ===== */
+.pc-hero {
+  padding-top: var(--pc-espaco-4);
+  text-align: center;
+}
+
+.pc-hero__mascote {
+  width: min(100%, 15rem);
+  margin: 0 auto var(--pc-espaco-3);
+}
+
+.pc-hero__titulo {
+  margin-bottom: var(--pc-espaco-2);
+}
+
+.pc-hero__subtitulo {
+  margin-bottom: 0.75rem;
+  color: var(--pc-destaque-verde-texto);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.pc-hero__texto {
+  max-width: 36ch;
+  margin: 0 auto var(--pc-espaco-4);
+  color: var(--pc-texto-suave);
+  font-size: 1.0625rem;
+}
+
+.pc-hero__acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pc-espaco-3);
+}
+
+.pc-hero__acoes .pc-btn {
+  width: min(100%, 20rem);
+}
+
+.pc-hero__instituicao {
+  margin-top: var(--pc-espaco-4);
+  color: var(--pc-texto-suave);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 480px) {
+  .pc-hero__acoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pc-hero__acoes .pc-btn {
+    width: auto;
+  }
+}
+
+/* ===== 2. Por que ===== */
+.pc-por-que {
+  text-align: center;
+  border-color: var(--pc-azul-escuro);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
+}
+
+.pc-por-que__destaque {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.pc-por-que__texto {
+  color: var(--pc-texto-suave);
+}
+
+.pc-sublinhado {
+  color: var(--pc-destaque-verde-texto);
+  font-weight: 700;
+}
+
+/* ===== Selos de ícone (passos e missões) ===== */
+.pc-selo-icone {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  color: var(--pc-preto);
+  border-radius: 0.75rem;
+}
+
+.pc-selo-icone .pc-icone {
+  width: 1.75rem;
+  height: 1.75rem;
+  stroke-width: 2.25;
+}
+
+/* A sombra 3D usa o tom escuro da mesma cor; o amarelo e o azul claro usam o cinza da paleta */
+.pc-selo-icone--azul {
+  background-color: var(--pc-azul);
+  box-shadow: 0 4px 0 var(--pc-azul-escuro);
+}
+
+.pc-selo-icone--verde {
+  background-color: var(--pc-verde);
+  box-shadow: 0 4px 0 var(--pc-verde-escuro);
+}
+
+.pc-selo-icone--amarelo {
+  background-color: var(--pc-amarelo);
+  box-shadow: 0 4px 0 var(--pc-cinza);
+}
+
+.pc-selo-icone--claro {
+  background-color: var(--pc-azul-claro);
+  box-shadow: 0 4px 0 var(--pc-cinza);
+}
+
+/* ===== 4. Como funciona ===== */
+.pc-passos {
+  display: grid;
+  gap: var(--pc-espaco-3);
+}
+
+.pc-passo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pc-espaco-3);
+}
+
+.pc-passo__numero {
+  color: var(--pc-destaque-texto);
+}
+
+/* ===== 8. Equipe ===== */
+/* Moldura da foto da equipe toda: quadro 16:9 dentro do card, com sombra sólida azul de "porta-retrato" */
+.pc-moldura {
+  margin: 0 0 var(--pc-espaco-4);
+  padding: var(--pc-espaco-3);
+  border-color: var(--pc-azul-escuro);
+  border-width: 3px;
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-azul-escuro);
+}
+
+.pc-moldura__quadro {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--pc-ativo-fundo);
+  border: var(--pc-contorno);
+  border-radius: var(--pc-raio-pequeno);
+}
+
+.pc-moldura__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Foto vertical: o recorte desce até a altura das pessoas, sem o teto nem os balões */
+  object-position: 50% 48%;
+}
+
+.pc-moldura__legenda {
+  margin-top: var(--pc-espaco-3);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.pc-membro {
+  display: flex;
+  align-items: center;
+  gap: var(--pc-espaco-3);
+  padding: var(--pc-espaco-3) 1.25rem;
+}
+
+.pc-membro__avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: var(--pc-branco);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.25rem;
+  font-weight: var(--pc-peso-titulo);
+  background-color: var(--pc-azul-escuro);
+  border-radius: 50%;
+  box-shadow: 0 4px 0 var(--pc-cinza);
+}
+
+/* Cores dos avatares em rodízio pela paleta (texto escuro sobre as cores claras) */
+.pc-equipe > li:nth-child(4n + 2) .pc-membro__avatar {
+  color: var(--pc-preto);
+  background-color: var(--pc-verde);
+}
+
+.pc-equipe > li:nth-child(4n + 3) .pc-membro__avatar {
+  color: var(--pc-preto);
+  background-color: var(--pc-amarelo);
+}
+
+.pc-equipe > li:nth-child(4n + 4) .pc-membro__avatar {
+  color: var(--pc-preto);
+  background-color: var(--pc-azul);
+}
+
+/* Foto real do membro: mesmo círculo do avatar com iniciais, recortada no rosto */
+.pc-membro__avatar--foto {
+  display: block;
+  object-fit: cover;
+  background-color: var(--pc-cinza);
+}
+
+.pc-membro__dados {
+  min-width: 0;
+}
+
+.pc-membro .pc-card__titulo {
+  margin-bottom: 0;
+  font-size: 1.125rem;
+}
+
+.pc-membro__papel {
+  color: var(--pc-destaque-amarelo-texto);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pc-membro__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* ===== 9. Download ===== */
+.pc-download {
+  text-align: center;
+}
+
+.pc-download__texto {
+  margin-bottom: var(--pc-espaco-4);
+  color: var(--pc-texto-suave);
+}
+
+.pc-download__botoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--pc-espaco-3);
+}
+
+.pc-download__botao {
+  flex-wrap: wrap;
+  row-gap: 0.375rem;
+  padding-inline: var(--pc-espaco-3);
+  width: min(100%, 20rem);
+}
+
+/* RN001: desativado fica claramente diferente (tracejado, sem sombra) sem perder contraste */
+.pc-download__botao[aria-disabled="true"] {
+  color: var(--pc-texto-suave);
+  border: 2px dashed var(--pc-borda);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.pc-download__icone {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.pc-download__selo {
+  padding: 0.125rem var(--pc-espaco-2);
+  color: var(--pc-preto);
+  font-size: 0.75rem;
+  background-color: var(--pc-amarelo);
+  border-radius: var(--pc-raio-pequeno);
+}
+
+@media (min-width: 600px) {
+  .pc-download__botoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* ===== Rodapé ===== */
+.pc-rodape {
+  padding-block: var(--pc-espaco-5) var(--pc-espaco-4);
+  text-align: center;
+  border-top: var(--pc-contorno);
+}
+
+.pc-rodape__frase {
+  margin-bottom: var(--pc-espaco-2);
+  color: var(--pc-destaque-verde-texto);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.375rem;
+}
+
+.pc-rodape__marca,
+.pc-rodape__ano {
+  color: var(--pc-texto-suave);
+  font-size: 0.875rem;
+}
+
+.pc-rodape__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 var(--pc-espaco-4);
+  margin-block: var(--pc-espaco-2);
+}
+
+.pc-rodape__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  font-weight: 600;
+}
+
+/* ===== Animações ===== */
+/* Revelar ao rolar: o estado oculto só existe quando o JS confirmou que vai revelar */
+@media (prefers-reduced-motion: no-preference) {
+  .pc-revelar-ativo .pc-revelar {
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: opacity 400ms ease-out, transform 400ms ease-out;
+  }
+
+  .pc-revelar-ativo .pc-revelar.is-visivel {
+    opacity: 1;
+    transform: none;
+  }
+}

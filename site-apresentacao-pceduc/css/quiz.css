@@ -1,0 +1,178 @@
+/*
+  PCEDUC — quiz.css
+  Mini quiz "Experimente": cartão de lição com opções em botões 3D, estados de acerto/erro e feedback.
+  Sem JS aparecem só a pergunta e o <details> com a resposta; o main.js (configurarQuiz) liga o modo interativo.
+*/
+
+/* ===== Cartão da lição ===== */
+.pc-quiz {
+  display: grid;
+  gap: var(--pc-espaco-4);
+}
+
+.pc-quiz__pergunta {
+  font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.5rem);
+}
+
+/* ===== Sem JS: resposta escondida em <details> ===== */
+/* list-item mantém o triângulo de abrir/fechar; o padding garante alvo de toque de 44px */
+.pc-quiz__resposta summary {
+  display: list-item;
+  width: fit-content;
+  padding-block: 0.625rem;
+  color: var(--pc-destaque-texto);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pc-quiz__resposta p {
+  margin-top: var(--pc-espaco-2);
+  color: var(--pc-texto-suave);
+}
+
+.pc-quiz__resposta strong {
+  color: var(--pc-texto);
+}
+
+/* ===== Com JS: opções em botões grandes "3D" ===== */
+/* O display dos blocos abaixo venceria o atributo hidden */
+.pc-quiz__interativo[hidden],
+.pc-quiz__tentar[hidden] {
+  display: none;
+}
+
+.pc-quiz__opcoes {
+  display: grid;
+  gap: var(--pc-espaco-3);
+}
+
+.pc-quiz__opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--pc-espaco-3);
+  width: 100%;
+  min-height: 3.75rem;
+  padding: 0.75rem var(--pc-espaco-3);
+  color: var(--pc-texto);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  background-color: var(--pc-superficie);
+  border: var(--pc-contorno);
+  border-radius: var(--pc-raio);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-borda);
+  cursor: pointer;
+  transition: transform var(--pc-transicao), box-shadow var(--pc-transicao), border-color var(--pc-transicao),
+    background-color var(--pc-transicao);
+}
+
+.pc-quiz__opcao:hover:not(:disabled) {
+  border-color: var(--pc-destaque-texto);
+}
+
+.pc-quiz__opcao:active:not(:disabled) {
+  transform: translateY(var(--pc-profundidade));
+  box-shadow: 0 0 0 transparent;
+}
+
+.pc-quiz__opcao:disabled {
+  cursor: default;
+}
+
+/* Opções que não foram escolhidas nem são a correta recuam (o texto continua acima de 4,5:1) */
+.pc-quiz__opcao:disabled:not([data-pc-estado]) {
+  opacity: 0.7;
+}
+
+/* Quadradinho que recebe o ✓ ou o ✕ depois da resposta */
+.pc-quiz__marca {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: var(--pc-contorno);
+  border-radius: var(--pc-raio-pequeno);
+}
+
+.pc-quiz__icone {
+  display: none;
+  grid-area: 1 / 1;
+  stroke-width: 3;
+}
+
+.pc-quiz__texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-quiz__status {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pc-quiz__status:empty {
+  display: none;
+}
+
+/* ===== Estados (a cor nunca é o único sinal: há ícone e o rótulo "Correta"/"Sua resposta") ===== */
+/* Correta: verde neon com texto escuro (13,55:1) */
+.pc-quiz__opcao[data-pc-estado="correta"] {
+  color: var(--pc-preto);
+  background-color: var(--pc-verde);
+  border-color: var(--pc-verde-escuro);
+  box-shadow: 0 var(--pc-profundidade) 0 var(--pc-verde-escuro);
+}
+
+.pc-quiz__opcao[data-pc-estado="correta"] .pc-quiz__marca {
+  border-color: var(--pc-preto);
+}
+
+.pc-quiz__opcao[data-pc-estado="correta"] .pc-quiz__icone--certo {
+  display: block;
+}
+
+/*
+  Errada: a paleta não tem vermelho, então o erro é cinza com contorno grosso na cor do texto e ✕.
+  Sem sombra e afundada, como um botão que "não voltou" (branco sobre #4A5868 = 7,27:1).
+*/
+.pc-quiz__opcao[data-pc-estado="errada"] {
+  color: var(--pc-branco);
+  background-color: var(--pc-cinza);
+  border: 4px solid var(--pc-texto);
+  box-shadow: none;
+  transform: translateY(var(--pc-profundidade));
+}
+
+.pc-quiz__opcao[data-pc-estado="errada"] .pc-quiz__marca {
+  border-color: var(--pc-branco);
+}
+
+.pc-quiz__opcao[data-pc-estado="errada"] .pc-quiz__icone--errado {
+  display: block;
+}
+
+/* ===== Feedback e "Tentar de novo" ===== */
+/* Margem (e não gap) para a região aria-live vazia não ocupar espaço e continuar na árvore de acessibilidade */
+.pc-quiz__feedback {
+  margin-top: var(--pc-espaco-4);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.pc-quiz__feedback:empty {
+  margin-top: 0;
+}
+
+.pc-quiz__feedback[data-pc-estado="acerto"] {
+  color: var(--pc-destaque-verde-texto);
+  font-family: var(--pc-fonte-titulo);
+  font-size: 1.5rem;
+  font-weight: var(--pc-peso-titulo);
+}
+
+.pc-quiz__tentar {
+  margin-top: var(--pc-espaco-3);
+}
