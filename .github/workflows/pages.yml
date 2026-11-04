@@ -1,5 +1,5 @@
-# Publica a pasta site/ no GitHub Pages a cada push na master (ou manualmente).
-# Requer: Settings -> Pages -> Source: GitHub Actions (ver docs/DECISOES.md, DEC002).
+# Publica o site demonstrativo no GitHub Pages a cada push na master (ou manualmente).
+# Requer: Settings -> Pages -> Source: GitHub Actions.
 name: Publicar site no GitHub Pages
 
 on:
@@ -29,10 +29,32 @@ jobs:
       - name: Configurar o Pages
         uses: actions/configure-pages@v5
 
-      - name: Empacotar a pasta site/
+      - name: Preparar o site para publicação
+        run: |
+          site="site-apresentacao-pceduc"
+          mkdir -p _site
+          cp -R "$site/assets" "$site/css" "$site/html" "$site/js" _site/
+          cp "$site/html/404.html" _site/404.html
+          cat > _site/index.html <<'EOF'
+          <!doctype html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="refresh" content="0; url=html/">
+            <meta name="robots" content="noindex">
+            <title>PCEDUC — Site demonstrativo</title>
+          </head>
+          <body>
+            <p>Redirecionando para o <a href="html/">site demonstrativo do PCEDUC</a>...</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Empacotar o site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _site
 
       - name: Publicar
         id: deployment
