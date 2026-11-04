@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import '../core/cores.dart';
+import '../servicos/auth_servico.dart';
 import '../widgets/fundo_pc_educ.dart';
 import 'tela_boas_vindas.dart';
+import 'tela_trilhas.dart';
 
 class TelaAbertura extends StatefulWidget {
   const TelaAbertura({super.key});
@@ -31,9 +33,12 @@ class _TelaAberturaState extends State<TelaAbertura> {
   void _irParaBoasVindas() {
     _timer?.cancel(); 
     if (!mounted) return;
+    // Quem já está logado (sessão salva no aparelho) pula o login e vai direto às trilhas.
+    final Widget destino =
+        AuthServico.logado ? const TelaTrilhas() : const TelaBoasVindas();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const TelaBoasVindas()),
+      MaterialPageRoute(builder: (_) => destino),
     );
   }
 

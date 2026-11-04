@@ -86,7 +86,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
             CampoPcEduc(
               rotulo: 'Nome de usuário',
               icone: Icons.person_outline,
-              dica: '@seu.usuario',
+              dica: 'seu.usuario',
               controller: _usuario,
               validator: Validadores.usuario,
             ),
@@ -103,7 +103,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
             CampoPcEduc(
               rotulo: 'Senha',
               icone: Icons.lock_outline,
-              dica: 'Mínimo 6 caracteres',
+              dica: 'Letras, número e símbolo',
               ehSenha: true,
               controller: _senha,
               validator: Validadores.senha,
