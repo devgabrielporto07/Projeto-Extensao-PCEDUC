@@ -1,0 +1,22 @@
+comandos-basicos-flutter
+
+Set-Location .\flutter\app\PCEduc
+
+flutter doctor -v            # Diagnostica SDKs e ferramentas instaladas
+flutter doctor --android-licenses # Aceita licenças do Android
+flutter devices              # Lista celulares, emuladores e outros alvos detectados
+flutter emulators             # Lista emuladores disponíveis
+flutter pub get               # Baixa/resolve as dependências do pubspec.yaml
+flutter analyze               # Analisa o código Dart
+flutter test                  # Executa os testes da pasta test/
+flutter run -d <id-do-device> # Compila, instala e abre no dispositivo escolhido
+flutter clean                 # Remove arquivos de build gerados
+flutter build apk --debug     # Gera um APK de desenvolvimento
+
+Flutter run key commands.
+r Hot reload. 
+R Hot restart.
+h List all available interactive commands.
+d Detach (terminate "flutter run" but leave application running).
+c Clear the screen
+q Quit (terminate the application on the device).

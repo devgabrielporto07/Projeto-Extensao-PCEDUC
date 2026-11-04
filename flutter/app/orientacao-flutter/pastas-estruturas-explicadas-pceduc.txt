@@ -1,0 +1,45 @@
+flutter/ => pasta dos projetos Flutter.
+app/ => pasta dos aplicativos.
+
+PCEduc/ => raiz do projeto do aplicativo PCEDUC.
+Dentro de PCEduc/:
+
+android/ => arquivos para compilar e executar no Android.
+
+assets/ => imagens e outros recursos usados pelo app.
+
+lib/ => arquivos Dart do aplicativo.
+	core/ => funcionalidades e configurações compartilhadas.
+	servicos/ => integrações e serviços, como autenticação.
+	telas/ => telas do aplicativo.
+	widgets/ => componentes reutilizáveis da interface.
+
+main.dart => ponto de entrada do app.
+
+test/ => testes automatizados.
+
+web/ => arquivos para executar o app no navegador.
+
+windows/ => arquivos para compilar o app como aplicativo Windows.
+
+.dart_tool/ => arquivos gerados pelo Dart; não enviar ao Git.
+
+.idea/ => configurações locais do Android Studio.
+
+.flutter-plugins-dependencies => arquivo gerado com informações dos plugins.
+
+.gitignore => define arquivos e pastas que o Git deve ignorar.
+
+.metadata => informações do projeto usadas pelo Flutter.
+
+analysis_options.yaml => regras para análise e qualidade do código Dart.
+
+flutter-help-docs.md => documentação de ajuda do projeto.
+
+log_erro.txt => arquivo local de log; não enviar se for temporário.
+
+pceduc.iml => configuração de projeto do IntelliJ/Android Studio.
+
+pubspec.lock => registra as versões exatas das dependências.
+
+pubspec.yaml => configura o projeto, dependências e assets.
