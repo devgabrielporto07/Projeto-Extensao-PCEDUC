@@ -31,19 +31,43 @@ A aplicação está em desenvolvimento. Este repositório reúne a documentaçã
 
 ## 👥 Equipe
 
+### Equipe do projeto de extensão
+
 | Colaborador(a) | Perfil |
 | --- | --- |
-| Professor Daniel | [@danielccosta9](https://github.com/danielccosta9) |
 | Gabriel Porto | [@devgabrielporto07](https://github.com/devgabrielporto07) |
 | Daniel Mota | [@dplayerf](https://github.com/dplayerf) |
 | Luiz Kaynan | [@kaynan-CC](https://github.com/kaynan-CC) |
 | Pedro Vinicius | [@PedroVini09](https://github.com/PedroVini09) |
-| Alfredo Alves | [@Alfredinkapps](https://github.com/Alfredinkapps) |
 | Sara Arruda | [@Sararruda](https://github.com/Sararruda) |
+
+### Colaboradores
+
+| Colaborador(a) | Perfil |
+| --- | --- |
+| Alfredo Alves | [@Alfredinkapps](https://github.com/Alfredinkapps) |
+| Pedro Barbosa | [@Lightis4](https://github.com/Lightis4) |
+
+### Orientadores
+
+| Orientador(a) | Perfil |
+| --- | --- |
+| Professor Daniel | [@danielccosta9](https://github.com/danielccosta9) |
+| Professora Danielly | [@daniellygualberto](https://github.com/daniellygualberto) |
 
 ## 🌐 Site demonstrativo
 
-Acesse a [demonstração online do PCEDUC](https://devgabrielporto07.github.io/Projeto-Extensao-PCEDUC/) para conhecer o projeto. Para navegar pelas telas do aplicativo, confira também o [protótipo no Figma](https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&t=ofcFB11myQ6Vvf07-1).
+Acesse a [demonstração online do PCEDUC](https://devgabrielporto07.github.io/Projeto-Extensao-PCEDUC/) para conhecer o projeto. Para navegar pelas telas do aplicativo, confira o [protótipo no Figma](https://www.figma.com/proto/Nds3cFqZtrh3N2oKh1um8q/Telas-PCEDUC?node-id=10-2&t=ofcFB11myQ6Vvf07-1) ou visite o [projeto publicado na Comunidade do Figma](https://www.figma.com/community/file/1694553235804267657).
+
+Se quiser avaliar cada tela separadamente, veja as prévias em PNG:
+
+- [Abertura](site-apresentacao-pceduc/assets/telas/tela-01.png)
+- [Trilhas](site-apresentacao-pceduc/assets/telas/tela-02.png)
+- [Pergunta](site-apresentacao-pceduc/assets/telas/tela-03.png)
+- [Perfil](site-apresentacao-pceduc/assets/telas/tela-04.png)
+
+Os arquivos PNG são exportações para visualização; o projeto original e publicado está no Figma.
+Para acessar todas as telas separadamente, abra a pasta [`telas-figma`](telas-figma/).
 
 ## 📄 Licença
 
