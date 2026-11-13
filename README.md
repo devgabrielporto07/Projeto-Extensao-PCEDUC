@@ -16,16 +16,24 @@ O projeto é pensado principalmente para estudantes do ensino médio, mas també
 
 ## 🚧 Desenvolvimento
 
-A aplicação está em desenvolvimento. Este repositório reúne a documentação e o design do projeto; o código-fonte será disponibilizado aqui conforme o desenvolvimento avançar.
+O repositório reúne a documentação, o protótipo visual, o site demonstrativo e o código do aplicativo Flutter em [`flutter/app/PCEduc`](flutter/app/PCEduc/). A versão registrada no projeto é **1.0.0+1**.
+
+Esta primeira versão implementa a identidade visual do PCEDUC, o fluxo de boas-vindas, cadastro e login por e-mail e senha com Supabase, além das telas de trilhas, perfil, conquistas e menu. O aplicativo já pode ser executado em um dispositivo Android, mas ainda representa uma parte do produto descrito no PRD:
+
+- A Trilha 1 apresenta o mapa inicial; outras trilhas e etapas permanecem bloqueadas.
+- Alguns dados de perfil, progresso e conquistas são demonstrativos, não um histórico completo de aprendizagem.
+- Recuperação de senha, lembretes diários e controles de sons ainda não estão implementados.
+
+O [PRD](docs/modelo-de-software/prototipagem/prd/prd-pceduc.pdf) descreve também requisitos e funcionalidades planejados que não fazem parte desta versão.
 
 ## 🧰 Tecnologias
 
 | Área | Tecnologias |
 | --- | --- |
 | Aplicativo mobile | Flutter e Dart |
-| Front-end web | HTML5, CSS3 e JavaScript |
-| Back-end e API REST | C# e ASP.NET Core |
-| Banco de dados | Supabase (PostgreSQL)|
+| Autenticação e banco de dados do aplicativo | Supabase Auth e PostgreSQL |
+| Site demonstrativo | HTML5, CSS3 e JavaScript |
+| API REST em C# / ASP.NET Core | Prevista na documentação; não incluída no código desta versão |
 | Design e prototipagem | Figma |
 | Versionamento | Git e GitHub |
 
